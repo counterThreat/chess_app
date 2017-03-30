@@ -2,8 +2,13 @@ class User < ApplicationRecord
   #has_many
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
+         :authentication_keys => [:login]
 
   validates :username,
     :presence => true,
@@ -12,21 +17,16 @@ class User < ApplicationRecord
     }
 
   validate :validate_username
+  attr_accessor :login
 
-  protected
+  private
 
-  def login=(login)
-    @login = login
+  def email_required?
+    false
   end
 
-  def login
-    @login || self.username || self.email
-  end
-
-  def validate_username
-    if User.where(email: username).exists?
-      errors.add(:username, :invalid)
-    end
+  def email_changed?
+    false
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)
@@ -39,6 +39,12 @@ class User < ApplicationRecord
       else
         where(username: conditions[:username]).first
       end
+    end
+  end
+
+  def validate_username
+    if User.where(email: username).exists?
+      errors.add(:username, :invalid)
     end
   end
 
