@@ -35,6 +35,8 @@ gem 'jbuilder', '~> 2.5'
 # front-end dev
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'devise'
+gem 'simple_form'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
