@@ -8,13 +8,13 @@ class User < ApplicationRecord
          :rememberable,
          :trackable,
          :validatable,
-         :authentication_keys => [:login]
+         authentication_keys: [:login]
 
   validates :username,
-    :presence => true,
-    :uniqueness => {
-      :case_sensitive => false
-    }
+            presence: true,
+            uniqueness: {
+              case_sensitive: false
+            }
 
   validate :validate_username
   attr_accessor :login
@@ -32,7 +32,7 @@ class User < ApplicationRecord
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
     else
       if conditions[:username].nil?
         where(conditions).first
@@ -43,9 +43,6 @@ class User < ApplicationRecord
   end
 
   def validate_username
-    if User.where(email: username).exists?
-      errors.add(:username, :invalid)
-    end
+    errors.add(:username, :invalid) if User.where(email: username).exists?
   end
-
 end
