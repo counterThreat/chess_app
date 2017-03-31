@@ -8,7 +8,9 @@ class User < ApplicationRecord
          :rememberable,
          :trackable,
          :validatable,
-         :authentication_keys => [:login]
+         :omniauthable,
+         :authentication_keys => [:login],
+         :omniauth_providers => [:google_oauth2]
 
   validates :username,
     :presence => true,
@@ -18,6 +20,7 @@ class User < ApplicationRecord
 
   validate :validate_username
   attr_accessor :login
+  has_and_belongs_to_many :oauth_providers
 
   private
 
@@ -29,23 +32,32 @@ class User < ApplicationRecord
     false
   end
 
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-    else
-      if conditions[:username].nil?
-        where(conditions).first
-      else
-        where(username: conditions[:username]).first
-      end
-    end
-  end
-
   def validate_username
     if User.where(email: username).exists?
       errors.add(:username, :invalid)
     end
   end
+
+  def self.new_with_session(params, session)
+  super.tap do |user|
+    if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+      user.email = data["email"] if user.email.blank?
+    end
+  end
+  end
+
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(:email => data["email"]).first
+          # Uncomment the section below if you want users to be created if they don't exist
+          # unless user
+          #     user = User.create(name: data["name"],
+          #        email: data["email"],
+          #        password: Devise.friendly_token[0,20]
+          #     )
+          # end
+    user
+  end
+
 
 end

@@ -37,6 +37,14 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'devise'
 gem 'simple_form'
 
+# omniauth
+gem 'omniauth'
+gem "omniauth-google-oauth2"
+gem 'figaro'
+
+#gem 'omniauth-facebook'
+#gem 'omniauth-twitter'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
