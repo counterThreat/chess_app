@@ -40,7 +40,7 @@ class User < ApplicationRecord
 
   def self.new_with_session(params, session)
   super.tap do |user|
-    if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+    if data = session["devise.oogle_oauth2_data"] && session["devise.oogle_oauth2_data"]["extra"]["raw_info"]
       user.email = data["email"] if user.email.blank?
     end
   end
@@ -50,12 +50,13 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.where(:email => data["email"]).first
           # Uncomment the section below if you want users to be created if they don't exist
-          # unless user
-          #     user = User.create(name: data["name"],
-          #        email: data["email"],
-          #        password: Devise.friendly_token[0,20]
-          #     )
-          # end
+          unless user
+            password = Devise.friendly_token[0,20]
+               user = User.create(#name: data["name"],
+                  email: data["email"], username: data["email"],
+                  password: password, password_confirmation: password)
+
+          end
     user
   end
 
