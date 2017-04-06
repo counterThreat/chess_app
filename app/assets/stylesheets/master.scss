@@ -1,7 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
 .clr {
   clear:both;
 }
@@ -55,9 +54,11 @@
 }
 
 .content {
-  margin: 15px;
-  padding: 10px;
-  padding-bottom: 140px;
+  margin-bottom: 150px;
+  margin-right: 15px;
+  margin-left: 15px;
+  position: relative;
+  height:100%;
 }
 
 .navbar .container-fluid {
@@ -90,13 +91,14 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 140px;
+    height: 150px;
+    padding-top: 30px;
 }
 
 .footer-container {
     width: auto;
-    height: auto;
     text-align: center;
+    padding: 0 15px;
 
     a {
         text-decoration: none;
