@@ -11,6 +11,26 @@
 
   <body>
 
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-dark double-nav scrolling-navbar top-nav-collapse">
+      <div class="float-left">
+        <a href="/" data-activates="slide-out" class="button-collapse">
+          <i class="fa fa-bars">
+          </i>
+        </a>
+      </div>
+      <ul class="nav navbar-nav nav-flex-icons ml-auto">
+        <li class="nav-item">
+          <a href="#" id="show_login" class="nav-link">
+              <% if user_signed_in? %>
+                <span class="hidden-sm-down"><li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
+              <% else %>
+                <span class="hidden-sm-down"><li><%= link_to 'Log In', new_user_session_path %></li></span>
+              <% end %>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
     <div class="container">
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
