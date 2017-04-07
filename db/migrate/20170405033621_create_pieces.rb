@@ -1,3 +1,4 @@
+# this is a parent class that will serve as the core model for specific pieces to inherit from
 class CreatePieces < ActiveRecord::Migration[5.0]
   def change
     create_table :pieces do |t|
