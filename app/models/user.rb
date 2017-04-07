@@ -10,7 +10,7 @@ class User < ApplicationRecord
          :validatable,
          :omniauthable,
          omniauth_providers: [:google_oauth2],
-         :authentication_keys => [:login]
+         authentication_keys: [:login]
 
   has_and_belongs_to_many :oauth_credentials
 
