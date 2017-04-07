@@ -42,8 +42,8 @@ gem 'omniauth'
 gem "omniauth-google-oauth2"
 gem 'figaro'
 
-#gem 'omniauth-facebook'
-#gem 'omniauth-twitter'
+# gem 'omniauth-facebook'
+# gem 'omniauth-twitter'
 
 
 # Use Capistrano for deployment
