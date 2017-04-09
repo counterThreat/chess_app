@@ -10,4 +10,6 @@ class Game < ApplicationRecord
       user.piece << piece
     end
   end
+
+  # from here first thing to do is create method for player joining a free game where white player is already present so we need a JOIN method that focuses on the black player since the game is created with the white player
 end
