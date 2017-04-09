@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   describe 'associate_pieces!' do
-    before(:each) do
+    before do
       @game = create(:game)
     end
 

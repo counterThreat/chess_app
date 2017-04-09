@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = current_user.games.create!(game_params.merge(white_player_id: current_user))
+    @game = current_user.games_as_white.create!(game_params.merge(white_player_id: current_user))
     @game.associate_pieces!(current_user, 'white')
     if @game.valid?
       flash[:notice] = 'You are the white player. Begin play!'
@@ -29,11 +29,11 @@ class GamesController < ApplicationController
 
   private
 
-  def current_game
-    @game ||= Game.find(params[:id])
-  end
-
   def game_params
     params.require(:game).permit(:name)
+  end
+
+  def current_game
+    @game ||= Game.find(params[:id])
   end
 end

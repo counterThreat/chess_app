@@ -7,6 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
 require 'support/factory_girl'
+require 'database_cleaner'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -26,6 +27,8 @@ require 'support/factory_girl'
 
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
+# Forces all threads to share the same connection. This works on
+# Capybara because it starts the web server in a thread.
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
