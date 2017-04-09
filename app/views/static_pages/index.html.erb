@@ -1,3 +1,4 @@
+
 <h1>Hello, world!</h1>
 
 <li><%= link_to 'Sign Up', new_user_registration_path %></li>
@@ -17,3 +18,9 @@ Signed in as <%= current_user.username %> Not you?
   <%= link_to "Sign In", new_user_session_path %>
   <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
 <% end %>
+
+<div class="container-fluid pull-right">
+<% if user_signed_in? %>
+<p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>!</p>
+<% end %>
+</div>
