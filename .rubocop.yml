@@ -7,3 +7,5 @@ AllCops:
     - lib/**/*.rake
   Exclude:
     - db/schema.rb
+Documentation:
+  Enabled: false

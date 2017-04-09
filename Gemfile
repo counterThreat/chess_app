@@ -43,6 +43,16 @@ gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'sprockets', '~> 3.7', '>= 3.7.1'
 gem 'devise'
 gem 'simple_form'
+
+
+# omniauth
+gem 'omniauth'
+gem "omniauth-google-oauth2"
+gem 'figaro'
+
+# gem 'omniauth-facebook'
+# gem 'omniauth-twitter'
+
 gem 'autoprefixer-rails'
 
 # Use Capistrano for deployment
