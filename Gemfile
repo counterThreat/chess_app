@@ -65,6 +65,9 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem "factory_girl_rails", "~> 4.0"
   gem 'capybara'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -74,6 +77,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'pry-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -24,3 +24,7 @@ Signed in as <%= current_user.username %> Not you?
 <p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>!</p>
 <% end %>
 </div>
+
+<div class="container-fluid pull-right">
+  <%= link_to games_path %>
+</div>
