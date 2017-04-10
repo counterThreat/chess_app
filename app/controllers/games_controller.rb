@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
-  def index
+  def new
     @game = Game.new
   end
 

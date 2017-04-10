@@ -1,0 +1,10 @@
+<div class="booyah-box col-xs-10 col-xs-offset-1">
+
+<h2>Start a New Game</h2>
+
+<%= simple_form_for @game, method: :new do |f| %>
+<%= f.input :name %>
+<%= f.submit :submit %>
+<% end %>
+
+</div>

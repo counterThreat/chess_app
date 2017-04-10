@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
-  describe 'game#index' do
-    it 'successfully a ppears' do
-      create(:game_with_white_player)
-      get :index, game_with_white_player: { name: 'test game', white_player_id: 0 }
+  describe 'game#new' do
+    it 'links to a landing page to create a game' do
+      user = create(:user)
+      sign_in user
+      get :new
       expect(response).to be_success
     end
   end
