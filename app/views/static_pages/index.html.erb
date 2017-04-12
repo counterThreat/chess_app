@@ -11,11 +11,19 @@
 
 <br>
 
-<% @games.each do |game| %>
-  <% if game.black_player_id == nil %>
-    <span> Open Game(s): <span>
-      <br>
-      <%= game.name %>
-    <%= game.created_at %>
-  <% end %>
-<% end %>
+<div class="contaner-fluid">
+  <h1>Join a Game! </h1>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group">
+        <% @games.black_player_id.each do |game| %>
+          <button type="button" class="list-group-item list-group-item-action">
+            <b><h4><%= game.name %></h4><b>
+            <%= display_date(game.created_at)%>
+            <span class="badge badge-default badge-pill pull-right">Join</span>
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
