@@ -8,3 +8,14 @@
 <br/><br/>
 
 <%= button_to "Start a Game", new_game_path, method: :get, class: 'btn btn-default btn-lg' %>
+
+<br>
+
+<% @games.each do |game| %>
+  <% if game.black_player_id == nil %>
+    <span> Open Game(s): <span>
+      <br>
+      <%= game.name %>
+    <%= game.created_at %>
+  <% end %>
+<% end %>
