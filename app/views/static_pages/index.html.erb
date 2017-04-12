@@ -1,1 +1,10 @@
-<h1>Hello, world!</h1>
+
+<div class="container-fluid pull-right">
+<% if user_signed_in? %>
+<p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out', destroy_user_session_path %></p>
+<% end %>
+</div>
+
+<br/><br/>
+
+<%= button_to "Start a Game", new_game_path, method: :get, class: 'btn btn-default btn-lg' %>

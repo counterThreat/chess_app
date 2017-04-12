@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
   root 'static_pages#index'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :games, only: [:index, :new, :create, :show]
 end

@@ -1,0 +1,163 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.clr {
+  clear:both;
+}
+
+// Nav media
+
+@media only screen and (max-width: 767px) and (min-width: 480px){
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: block;
+        h1 {
+          font-size: 16px !important;
+        }
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+}
+
+// Nav Bar
+
+.header {
+  width: 100%;
+}
+
+.content {
+  margin-bottom: 150px;
+  margin-right: 15px;
+  margin-left: 15px;
+  position: relative;
+  height:100%;
+}
+
+.navbar .container-fluid {
+  margin-right: 15px;
+  padding-top: 5px;
+}
+
+.navbar h1 {
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.navbar-static-top {
+  width:100%;
+  background:transparent !important;
+}
+
+.navbar {
+  border-radius: 0;
+  width:100%;
+}
+
+// Footer
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 150px;
+    padding-top: 30px;
+}
+
+.footer-container {
+    width: auto;
+    text-align: center;
+    padding: 0 15px;
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.footer-content {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    a {
+        color: #000000;
+    }
+}
+
+.footer-social-icons {
+    display: block;
+    padding-bottom: 5px;
+}
+
+.fa {
+    padding: 17px;
+    font-size: 30px;
+    width: 50px;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.fa-reddit {
+    background: #ff5700;
+    color: white;
+}
+
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+}
+
+.fa-google {
+    background: #dd4b39;
+    color: white;
+}
+// Line
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width: 30%;
+    border-style: inset;
+    border-width: 0.10px;
+    opacity: 0.7;
+}
