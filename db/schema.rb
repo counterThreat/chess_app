@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20170409203138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+
+  create_table "bishops", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "games", force: :cascade do |t|
     t.integer  "white_player_id"
@@ -22,7 +29,25 @@ ActiveRecord::Schema.define(version: 20170409203138) do
     t.integer  "player_turn"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+
+  end
+
+  create_table "kings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "knights", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pawns", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+=======
     t.string   "name"
+
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -34,6 +59,17 @@ ActiveRecord::Schema.define(version: 20170409203138) do
     t.integer  "user_id"
     t.boolean  "moved"
     t.boolean  "captured"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+
+  create_table "queens", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rooks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
