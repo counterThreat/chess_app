@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :game do
     name 'test game'
     association :game, :white_user, factory: :user
@@ -41,4 +40,3 @@ FactoryGirl.define do
     y_position 1
   end
 end
-
