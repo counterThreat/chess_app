@@ -78,7 +78,4 @@ class User < ApplicationRecord
   def validate_username
     errors.add(:username, :invalid) if User.where(email: username).exists?
   end
-
-
-
 end
