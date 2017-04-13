@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     @game = current_user.games_as_white.create!(game_params.merge(white_player_id: current_user))
     @game.associate_pieces!(current_user, 'white')
     if @game.valid?
-      flash[:notice] = 'You are the white player. Begin play!'
+      flash[:notice] = 'You are the white player. You will be notified when a black player joines the game!'
       redirect_to game_path(@game)
     else
       render 'index', status: :unprocessable_entity
@@ -32,7 +32,12 @@ class GamesController < ApplicationController
   def update
     @game = current_game
     @game.update_attributes(game_params)
-    redirect_to game_path(@game)
+    if @game.valid?
+      flash[:notice] = 'You are the black player. The white player can now begin the game'
+      redirect_to game_path(@game)
+    else
+      render 'index', status: :unprocessable_entity
+    end
   end
 
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
