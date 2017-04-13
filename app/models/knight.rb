@@ -6,7 +6,6 @@ class Knight < Piece
     move_range.each do |dx, dy|
       available_moves << [(x_position + dx), (y_position + dy)]
     end
-    available_moves.include?([x,y])
+    available_moves.include?([x, y])
   end
-  
 end
