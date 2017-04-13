@@ -19,3 +19,4 @@ FactoryGirl.define do
     black_player_id 1
   end
 end
+
