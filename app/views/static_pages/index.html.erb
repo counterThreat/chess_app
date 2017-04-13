@@ -11,16 +11,16 @@
 
 <br>
 <div class="contaner-fluid">
-  <h1>Join a game! </h1>
+  <h1>Join a game!</h1>
   <div class="row">
     <div class="col-sm-3">
       <div class="list-group">
         <% @games.black_player_id_nil.each do |game| %>
           <%= button_to edit_game_path(game), method: :get, class: 'list-group-item list-group-item-action' do %>
-            <h4><b><%= game.name %><b> - <%= User.find(game.white_player_id).username.capitalize %></h4>
+            <h4><b><%= game.name %><b> - <%= get_username(game.white_player_id) %></h4>
             <%= display_date(game.created_at)%>
             <span class="badge badge-default badge-pill pull-right">Join</span>
-          <%end%>
+          <% end %>
         <% end %>
       </div>
     </div>
