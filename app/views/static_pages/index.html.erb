@@ -1,7 +1,7 @@
 
 <div class="container-fluid pull-right">
 <% if user_signed_in? %>
-<p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out', destroy_user_session_path %></p>
+<p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
 <% end %>
 </div>
 
@@ -18,9 +18,11 @@
       <div class="list-group">
         <% @games.black_player_id.each do |game| %>
           <button type="button" class="list-group-item list-group-item-action">
-            <b><h4><%= game.name %></h4><b>
-            <%= display_date(game.created_at)%>
-            <span class="badge badge-default badge-pill pull-right">Join</span>
+            <%= link_to edit_game_path(game) do %>
+              <b><h4><%= game.name %></h4><b>
+              <%= display_date(game.created_at)%>
+              <span class="badge badge-default badge-pill pull-right">Join</span>
+            <%end%>
           </button>
         <% end %>
       </div>

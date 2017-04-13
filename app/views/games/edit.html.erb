@@ -1,0 +1,12 @@
+<div class="booyah-box col-xs-10 col-xs-offset-1">
+
+<h2>Join This Game</h2>
+
+  <%= simple_form_for @game do |f| %>
+    <%= f.input :black_player_id, input_html: {value: current_user.id } %>
+    <%= f.submit 'Update', class: 'my-btn' %>
+  <% end %>
+
+  <%= current_user.id %>
+
+</div>

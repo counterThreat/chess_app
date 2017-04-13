@@ -25,12 +25,22 @@ class GamesController < ApplicationController
     # render the pieces on the board
   end
 
+  def edit
+    @game = current_game
+  end
+
+  def update
+    @game = current_game
+    @game.update_attributes(game_params)
+    redirect_to game_path(@game)
+  end
+
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
 
   private
 
   def game_params
-    params.require(:game).permit(:name)
+    params.require(:game).permit(:name, :black_player_id)
   end
 
   def current_game
