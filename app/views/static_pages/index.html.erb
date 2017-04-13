@@ -10,20 +10,17 @@
 <%= button_to "Start a Game", new_game_path, method: :get, class: 'btn btn-default btn-lg' %>
 
 <br>
-
 <div class="contaner-fluid">
-  <h1>Join a Game! </h1>
+  <h1>Join a game! </h1>
   <div class="row">
     <div class="col-sm-3">
       <div class="list-group">
         <% @games.black_player_id.each do |game| %>
-          <button type="button" class="list-group-item list-group-item-action">
-            <%= link_to edit_game_path(game) do %>
-              <b><h4><%= game.name %></h4><b>
-              <%= display_date(game.created_at)%>
-              <span class="badge badge-default badge-pill pull-right">Join</span>
-            <%end%>
-          </button>
+          <%= button_to edit_game_path(game), method: :get, class: 'list-group-item list-group-item-action' do %>
+            <b><h4><%= game.name %></h4><b>
+            <%= display_date(game.created_at)%>
+            <span class="badge badge-default badge-pill pull-right">Join</span>
+          <%end%>
         <% end %>
       </div>
     </div>

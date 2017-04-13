@@ -11,7 +11,7 @@ class Game < ApplicationRecord
     end
   end
 
-  #scope method for determining which games do not have a black_player
+  # scope method for determining which games do not have a black_player
   def self.black_player_id
     where(black_player_id: nil)
   end
