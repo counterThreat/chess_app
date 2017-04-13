@@ -11,6 +11,10 @@ class Game < ApplicationRecord
     end
   end
 
+  # scope method for determining which games do not have a black_player
+  def self.black_player_id_nil
+    where(black_player_id: nil)
+  end
   # from here first thing to do is create method for player joining a free game
   # where white player is already present so we need a JOIN method that focuses
   # on the black player since the game is created with the white player

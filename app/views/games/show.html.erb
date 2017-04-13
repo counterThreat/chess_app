@@ -1,3 +1,10 @@
+
+<h3> White Player: <%= User.find(@game.white_player_id).username.capitalize %> </h3>
+
+<% if @game.black_player_id != nil %>
+  <h3> Black Player: <%= User.find(@game.black_player_id).username.capitalize %> </h3>
+<% end %>
+
 <table>
   <% (0..7).each do |row| %>
     <tr class="row">
