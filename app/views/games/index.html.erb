@@ -1,12 +1,4 @@
 
-<div class="container-fluid pull-right">
-<% if user_signed_in? %>
-<p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
-<% end %>
-</div>
-
-<br/><br/>
-
 <div class="container-fluid">
 
   <!-- TRIGGER BUTTON - NEW GAME MODAL -->
