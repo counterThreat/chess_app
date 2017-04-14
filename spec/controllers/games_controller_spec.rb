@@ -37,4 +37,14 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  describe 'game#edit' do
+    it 'returns specific game edit form' do
+      user = create(:user)
+      sign_in user
+      game = create(:game)
+      get :edit, params: { id: game.id }
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
