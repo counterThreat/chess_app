@@ -187,13 +187,3 @@ tr:nth-child(even) td:nth-child(odd) {
 }
 
 // Modal body
-
-/* Important part */
-.modal-dialog{
-    overflow-y: initial !important
-}
-
-.modal-body{
-    height: 250px;
-    overflow-y: auto;
-}
