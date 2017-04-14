@@ -6,6 +6,7 @@ FactoryGirl.define do
   factory :game_with_white_player, class: Game do
     name 'test game'
     white_player_id 0
+    black_player_id nil
   end
 
   factory :game_with_black_player, class: Game do
