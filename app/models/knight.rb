@@ -1,4 +1,5 @@
 class Knight < Piece
+  
   def valid_move?(x_position, y_position)
     return false unless super(x, y)
     move_range = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]]
