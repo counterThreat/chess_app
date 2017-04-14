@@ -73,11 +73,10 @@
           <div class="modal-body">
             <%= simple_form_for @game, method: :new do |f| %>
             <%= f.input :name %>
-            <%= f.submit :submit %>
+            <%= f.submit :submit, class: 'btn btn-info' %>
             <% end %>
           </div>
         </div>
-
       </div>
     </div>
 
