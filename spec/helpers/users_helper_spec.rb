@@ -11,4 +11,10 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe UsersHelper, type: :helper do
+  describe 'get_username' do
+    it 'returns specific user username' do
+      user = create(:user)
+      expect(get_username(user.id)).to eq(user.username)
+    end
+  end
 end
