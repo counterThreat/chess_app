@@ -9,6 +9,11 @@ RSpec.describe Piece, type: :model do
     expect(queen).to be_valid
   end
 
+  it "is not valid without an id" do
+    piece = FactoryGirl.build(:piece, id: nil)
+    expect(piece).not_to be_valid
+  end
+
   it "is not valid without a type" do
     piece = FactoryGirl.build(:piece, type: nil)
     expect(piece).not_to be_valid
