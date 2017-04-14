@@ -15,7 +15,7 @@ class Piece < ApplicationRecord
       puts 'Your path is blocked!'
       return
     end
-    if is_valid?(x_new, y_new) && on_board?
+    if valid_move?(x_new, y_new) && on_board?
       empty_previous
       self.x_position = x_new
       self.y_position = y_new
