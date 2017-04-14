@@ -2,6 +2,13 @@ class Piece < ApplicationRecord
   belongs_to :game
   belongs_to :user
 
+  validates :color, presence: true
+  validates :type, presence: true
+  validates :x_position, presence: true
+  validates :y_position, presence: true
+  validates :game_id, presence: true
+  validates :user_id, presence: true
+
   def on_board?
     if x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
       true
@@ -47,4 +54,6 @@ class Piece < ApplicationRecord
       i += 1
     end
   end
+
+  def capture(x_new, y_new) end
 end
