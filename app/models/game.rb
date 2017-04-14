@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
   has_many :pieces
+  # question: would this still work if we changed has_many to has_one?
   has_many :white_player, class_name: 'User', foreign_key: 'white_player_id'
   has_many :black_player, class_name: 'User', foreign_key: 'black_player_id'
 
@@ -20,6 +21,7 @@ class Game < ApplicationRecord
   # ^^ unnecessary method, can append '.nil' to the end of existing methods 4 same result
 
   def black_player_join!(user)
+    # just need clarification on this method. I think I get but want to clarify
     update(black_player: user)
     associate_pieces!(user, 'black')
     user.games_as_black << self

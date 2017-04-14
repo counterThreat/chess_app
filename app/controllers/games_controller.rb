@@ -18,12 +18,18 @@ class GamesController < ApplicationController
   end
 
   def join
+    # can current_game work here?
+    # Since the Join Game button is on the static_page index and no specific game id is in the url?
     @game = current_game
+    # I thought it might be cool to be able to player against yourself
+    # (unless that will break logic somewhere else)
     if @game.black_player.nil? && current_user != @game.white_player
       @game.black_player_join!(current_user)
       flash[:notice] = 'You are the black player. Begin play!'
       redirect_to game_path(@game)
     else
+      # I have been unable to successfully join a game as a black player.
+      # DB still shows black_player_id as nil after join is clicked
       flash[:alert] = 'Either the game is already full or you are also logged as the white player!'
       redirect_to root_path
     end
