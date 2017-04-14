@@ -42,6 +42,10 @@ RSpec.describe Piece, type: :model do
 
   # Instance Methods
   describe "move method"
-  describe "empty_previous method"
-  describe "is_obstructed method"
+  # describe "empty_previous method"
+  describe "obstructed method" do
+    it "returns false if path is unblocked"
+    it "returns true is path is blocked"
+    it "returns false if the square it is moving to is occupied"
+  end
 end
