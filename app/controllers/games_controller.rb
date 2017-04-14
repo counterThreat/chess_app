@@ -8,7 +8,7 @@ class GamesController < ApplicationController
   def create
     @game = current_user.games_as_white.create!(game_params.merge(white_player_id: current_user))
     @game.associate_pieces!(current_user, 'white')
-    if @game.valid?
+    if @game.save
       flash[:notice] = 'You are the white player. You will be notified when a black player joines the game!'
       redirect_to game_path(@game)
     else
@@ -31,8 +31,10 @@ class GamesController < ApplicationController
 
   def update
     @game = current_game
-    @game.update_attributes(game_params)
-    if @game.valid?
+    current_user.games_as_black.merge!(game_params.update(black_player_id: current_user))
+    # @game.update_attributes(game_params)
+    @game.associate_pieces!(current_user, 'black')
+    if @game.save
       flash[:notice] = 'You are the black player. The white player can now begin the game'
       redirect_to game_path(@game)
     else
