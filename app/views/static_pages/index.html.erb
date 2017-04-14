@@ -39,6 +39,7 @@
                     <%= get_username(game.white_player_id) %>
                   </div>
                   <div class="col-sm-3" style=text-align:center><em>
+                    <%-# I thought a game could not exist without a white_player and the second player is always black? -%>
                     <%= game.white_player.nil? ? 'Play as White' : 'Play as Black' %></em>
                   </div>
                   <div class="col-sm-2">
