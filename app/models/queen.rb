@@ -5,4 +5,3 @@ class Queen < Piece
     diagonal_move?(x, y) || horizontal_move?(x, y) || vertical_move?(x, y)
   end
 end
-
