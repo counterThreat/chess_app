@@ -1,0 +1,89 @@
+
+<div class="container-fluid pull-right">
+<% if user_signed_in? %>
+<p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+<% end %>
+</div>
+
+<br/><br/>
+
+<div class="container-fluid">
+
+  <!-- TRIGGER BUTTON - NEW GAME MODAL -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newModal">Start a Game</button>
+
+<br/><br/>
+
+  <!-- TRIGGER BUTTON - JOIN GAME MODAL -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#joinModal">Join a Game</button>
+
+<!-- JOIN MODAL -->
+<div id="joinModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- join content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title">Join an Existing Game</h3>
+        </div>
+        <div class="modal-body" style="height:250px!important;overflow-y:auto!important">
+          <div class="panel panel-default">
+            <% @games.joinable.each do |game| %>
+            <ul class="list-group">
+              <li class="row list-group-item">
+                  <div class="col-sm-3"><b>game:</b>
+                    <%= game.name %>
+                  </div>
+                  <div class="col-sm-4"><b>opponent:</b>
+                    <%= get_username(game.white_player_id) %>
+                  </div>
+                  <div class="col-sm-3" style=text-align:center><em>
+                    <%-# I thought a game could not exist without a white_player and the second player is always black? -%>
+                    <%= game.white_player.nil? ? 'Play as White' : 'Play as Black' %></em>
+                  </div>
+                  <div class="col-sm-2">
+                    <span class="badge badge-default badge-pill pull-right" style="text-align:center">
+                      <%= link_to 'Join', join_game_path(game.id), { action: :join, method: :patch} %>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+              <% end %>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- end of join modal content -->
+
+  <!-- NEW MODAL -->
+
+  <div id="newModal" class="modal fade" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+        <!-- create content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title" id="newModalLabel">Start a New Game</h3>
+          </div>
+          <div class="modal-body">
+            <%= simple_form_for @game, method: :new do |f| %>
+            <%= f.input :name %>
+            <%= f.submit :submit, class: 'btn btn-info' %>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- end of new modal content -->
+
+
+</div>

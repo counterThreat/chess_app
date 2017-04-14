@@ -1,8 +1,8 @@
 class StaticPagesController < ApplicationController
 
   def index
-    @game = Game.new
-    @games = Game.all
   end
+
+  # def ranking, def profile? [time permitting as a side proj]
 
 end

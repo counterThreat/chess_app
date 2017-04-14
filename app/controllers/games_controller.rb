@@ -1,9 +1,9 @@
 class GamesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, only: [:create, :join] # quit/forefit
   respond_to :html, :json
 
   def index
-    @games = Game.all
+    @games = Game.open.all
     @game = Game.new
   end
 
@@ -18,45 +18,20 @@ class GamesController < ApplicationController
   end
 
   def join
-    # can current_game work here?
-    # Since the Join Game button is on the static_page index and no specific game id is in the url?
     @game = current_game
-    # I thought it might be cool to be able to player against yourself
-    # (unless that will break logic somewhere else)
     if @game.black_player.nil? && current_user != @game.white_player
-      @game.black_player_join!(current_user)
+      current_user.games_as_black.update_attributes(game_params.merge(black_player_id: current_user))
       flash[:notice] = 'You are the black player. Begin play!'
       redirect_to game_path(@game)
     else
-      # I have been unable to successfully join a game as a black player.
-      # DB still shows black_player_id as nil after join is clicked
       flash[:alert] = 'Either the game is already full or you are also logged as the white player!'
       redirect_to root_path
     end
   end
 
   def show
-    @game = current_game
-    respond_to do |format|
-      format.json { render json: @game.pieces }
-      format.html
-    end
+    current_game
     # render the pieces on the board
-  end
-
-  def edit
-    @game = current_game
-  end
-
-  def update
-    @game = current_game
-    @game.update_attributes(game_params)
-    if @game.valid?
-      flash[:notice] = 'You are the black player. The white player can now begin the game'
-      redirect_to game_path(@game)
-    else
-      render 'index', status: :unprocessable_entity
-    end
   end
 
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
@@ -64,10 +39,10 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :black_player_id)
+    params.require(:game).permit(:name)
   end
 
   def current_game
-    @game ||= Game.find(params[:id])
+    @current_game ||= Game.find(params[:id])
   end
 end
