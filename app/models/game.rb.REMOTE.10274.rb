@@ -5,11 +5,6 @@ class Game < ApplicationRecord
 
   validates :name, presence: true
 
-<<<<<<< HEAD
-  def find_piece(x_position, y_position)
-    pieces.find_by(x_position: x_position, y_position: y_position)
-  end
-=======
     def make_newboard
       # create and place white pieces
       (0..7).each do |i|
@@ -39,7 +34,6 @@ class Game < ApplicationRecord
       Queen.create(x_position: 3, y_position: 7, color: 'Black')
       King.create(x_position: 4, y_position: 7, color: 'Black')
     end
->>>>>>> e7d9f7722dfc093819f2b97c7aa67ef3aca6450a
 
   def associate_pieces!(user, color)
     pieces.where(color: color).each do |piece|
