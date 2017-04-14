@@ -10,4 +10,11 @@ RSpec.describe Game, type: :model do
       # need piece model and controller to be more fleshed out to write this test
     end
   end
+
+  describe 'with_one_player' do
+    it 'returns games with one player' do
+      game = create(:game_with_white_player)
+      expect(game.black_player_id).to eq(nil)
+    end
+  end
 end

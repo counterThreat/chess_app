@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :game do
     name 'test game'
+    created_at '2017-04-14 13:45:33.383893795 +0000'
   end
 
   factory :game_with_white_player, class: Game do
