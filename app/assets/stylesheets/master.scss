@@ -177,3 +177,23 @@ tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
   background: rgba(0,0,0, 0.5);
 }
+
+.badge {
+  text-decoration: none;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+// Modal body
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+
+.modal-body{
+    height: 250px;
+    overflow-y: auto;
+}
