@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  root 'games#index'
+  root 'static_pages#index'
   resources :games, only: [:create, :show, :join, :index] do
     member do
       patch 'join'
