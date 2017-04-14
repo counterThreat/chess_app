@@ -9,7 +9,7 @@ class Game < ApplicationRecord
     # create and place white pieces
     (0..7).each do |i|
       Pawn.create(x_position: i, y_position: 1, color: 'White', moved: false)
-    end
+      end
     Rook.create(x_position: 0, y_position: 0, color: 'White', moved: false)
     Rook.create(x_position: 7, y_position: 0, color: 'White', moved: false)
     Knight.create(x_position: 1, y_position: 0, color: 'White', moved: false)
@@ -18,10 +18,12 @@ class Game < ApplicationRecord
     Bishop.create(x_position: 5, y_position: 0, color: 'White', moved: false)
     Queen.create(x_position: 3, y_position: 0, color: 'White', moved: false)
     King.create(x_position: 4, y_position: 0, color: 'White', moved: false)
+    end
+
     # create and place black pieces
     (0..7).each do |i|
       Pawn.create(x_position: i, y_position: 6, color: 'Black', moved: false)
-    end
+      end
     Rook.create(x_position: 0, y_position: 7, color: 'Black', moved: false)
     Rook.create(x_position: 7, y_position: 7, color: 'Black', moved: false)
     Knight.create(x_position: 1, y_position: 7, color: 'Black', moved: false)
@@ -30,7 +32,7 @@ class Game < ApplicationRecord
     Bishop.create(x_position: 5, y_position: 7, color: 'Black', moved: false)
     Queen.create(x_position: 3, y_position: 7, color: 'Black', moved: false)
     King.create(x_position: 4, y_position: 7, color: 'Black', moved: false)
-  end
+    end
 
   def associate_pieces!(user, color)
     pieces.where(color: color).each do |piece|

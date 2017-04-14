@@ -1,5 +1,5 @@
 class Knight < Piece
-  def valid_move?(x, y)
+  def valid_move?(x_, y)
     move_range = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]]
     available_moves = []
 
