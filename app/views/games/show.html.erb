@@ -1,4 +1,8 @@
 
+<div class="page-header">
+  <h1> <%= @game.name %> </h1>
+</div>
+
 <h3> White Player: <%= get_username(@game.white_player_id) %> </h3>
 
 <% if @game.black_player_id != nil %>

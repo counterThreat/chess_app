@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="list-group">
-        <% @games.black_player_id_nil.each do |game| %>
+        <% @games.with_one_player.each do |game| %>
           <%= button_to edit_game_path(game), method: :get, class: 'list-group-item list-group-item-action' do %>
             <h4><b><%= game.name %><b> - <%= get_username(game.white_player_id) %></h4>
             <%= display_date(game.created_at)%>

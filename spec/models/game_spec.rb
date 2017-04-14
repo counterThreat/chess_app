@@ -10,4 +10,6 @@ RSpec.describe Game, type: :model do
       # need piece model and controller to be more fleshed out to write this test
     end
   end
+
+  
 end
