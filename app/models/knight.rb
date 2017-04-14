@@ -1,5 +1,5 @@
 class Knight < Piece
-  def valid_move?(x_, y)
+  def valid_move?(x_position, y_position)
     return false unless super(x, y)
     move_range = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]]
     available_moves = []
@@ -7,6 +7,6 @@ class Knight < Piece
     move_range.each do |dx, dy|
       available_moves << [(x_position + dx), (y_position + dy)]
     end
-    available_moves.include?([x, y])
+    available_moves.include?([x_position, y_position])
   end
 end
