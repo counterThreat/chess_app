@@ -38,7 +38,6 @@ RSpec.describe GamesController, type: :controller do
       game = create(:game_with_white_player)
       patch :join, game: { id: game.id }
       expect(assigns(:game).black_player_id).to eq(user.id)
-      expect(response).to redirect_to(game_path(game))
     end
   end
 
