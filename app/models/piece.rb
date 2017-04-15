@@ -20,7 +20,7 @@ class Piece < ApplicationRecord
   def move(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board?
       attack!(x_new, y_new)
-      game.remove_captured
+      # game.remove_captured
       update(x_position: x_new)
       update(y_position: y_new)
     else
@@ -43,7 +43,6 @@ class Piece < ApplicationRecord
       #  return true
       # end
       if game.find_piece(x_position + i * xdir, y_position + i * ydir).present?
-        puts 'obstructed!'
         return true
       end
       i += 1
