@@ -19,9 +19,10 @@ class Piece < ApplicationRecord
 
   def move(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board?
-      current_piece.attack!(x_new, y_new)
-      current_piece.update(x_position: x_new)
-      current_piece.update(y_position: y_new)
+      attack!(x_new, y_new)
+      game.remove_captured
+      update(x_position: x_new)
+      update(y_position: y_new)
     else
       puts 'Move is not allowed!' # can change this to be a flash method,
       # or delete it
@@ -42,6 +43,7 @@ class Piece < ApplicationRecord
       #  return true
       # end
       if game.find_piece(x_position + i * xdir, y_position + i * ydir).present?
+        puts 'obstructed!'
         return true
       end
       i += 1
@@ -58,13 +60,9 @@ class Piece < ApplicationRecord
     game.find_piece(x_new, y_new)
   end
 
-  def current_piece
-    game.find_piece(x_position, y_position)
-  end
-
   def attack!(x_new, y_new)
     return false if occupied?(x_new, y_new) == false
-    return false if opponent(x_new, y_new).color == current_piece.color
+    return false if opponent(x_new, y_new).color == color
     return opponent(x_new, y_new).update(captured: true) if occupied?(x_new, y_new)
   end
 end
