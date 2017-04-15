@@ -19,7 +19,6 @@ class Piece < ApplicationRecord
 
   def move(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board?
-      # empty_previous
       self.x_position = x_new
       self.y_position = y_new
     else
@@ -27,12 +26,6 @@ class Piece < ApplicationRecord
       # or delete it
     end
   end
-
-  # def empty_previous
-  # x_old = x_position
-  # y_old = y_position
-  # array[x_old][y_old] = 0
-  # end
 
   def obstructed?(x_new, y_new) # Integrate with color
     # The following two lines determine if the differences between x to x_new
@@ -55,14 +48,19 @@ class Piece < ApplicationRecord
     false
   end
 
+  def occupied?(x_new, y_new)
+    return false if game.find_piece(x_new, y_new).nil?
+    true
+  end
+
+  def opponent(x_new, y_new)
+    game.find_piece(x_new, y_new)
+  end
+
   def capture!(x_new, y_new)
-    attacker_color = game.find_piece(x_position, y_position)
-    opponent = game.find_piece(x_new, y_new)
-    return false if opponent.color.nil?
-    if opponent.color == attacker_color
-      false
-    else
-      opponent.update(captured: true)
-    end
+    attacker_color = game.find_piece(x_position, y_position).color
+    return false if occupied(x_new, y_new) == false
+    return false if opponent(x_new, y_new).color == attacker_color
+    return opponent.update(captured: true) if occupied?
   end
 end
