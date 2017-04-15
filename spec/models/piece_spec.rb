@@ -46,6 +46,14 @@ RSpec.describe Piece, type: :model do
   # end
 
   # Instance Methods
+
+  describe "on_board? method" do
+    it "returns false if a piece moves out of bounds" do
+      piece = FactoryGirl.build(:piece, x_position: 10, y_position: 7)
+      expect(piece.on_board?).to eq false
+    end
+  end
+
   describe "move method" do
     it "allows a piece to change x position" do
       piece = FactoryGirl.build(:rook)
@@ -70,8 +78,26 @@ RSpec.describe Piece, type: :model do
   # describe "empty_previous method"
 
   describe "obstructed method" do
-    it "returns false if path is unblocked"
-    it "returns true is path is blocked"
-    it "returns false if there is a piece on the destination square"
+    game2 = FactoryGirl.create(:game)
+    bobby = FactoryGirl.create(:user)
+    deepblue = FactoryGirl.create(:user)
+    piece2 = FactoryGirl.create(:piece, game: game2, user: bobby, color: "black")
+
+    it "returns false if path is unblocked" do
+      x_new = 6
+      y_new = 6
+      expect(piece2.obstructed?(x_new, y_new)).to eq false
+    end
+    it "returns true if path is blocked" do
+      x_new = 1
+      y_new = 1
+      blocker = FactoryGirl.create(:piece, game: game2, user: deepblue, x_position: 2, y_position: 2)
+      expect(piece2.obstructed?(x_new, y_new)).to eq true
+    end
+    it "returns false if there is a piece on the destination square" do
+      x_new = 2
+      y_new = 2
+      expect(piece2.obstructed?(x_new, y_new)).to eq false
+    end
   end
 end

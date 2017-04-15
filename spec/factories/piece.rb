@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :piece do
-    type "rook"
+    type "Rook"
     color "white"
     x_position 4
     y_position 4
