@@ -5,7 +5,6 @@ class Game < ApplicationRecord
 
   validates :name, presence: true
 
-
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
   end

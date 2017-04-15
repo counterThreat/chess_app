@@ -17,15 +17,14 @@ class Piece < ApplicationRecord
     end
   end
 
-  # add obstructed to piece models
-
   def move(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board?
-      empty_previous
+      # empty_previous
       self.x_position = x_new
       self.y_position = y_new
     else
-      puts 'Move is not allowed!'
+      puts 'Move is not allowed!' # can change this to be a flash method,
+      # or delete it
     end
   end
 
