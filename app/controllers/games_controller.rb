@@ -5,6 +5,10 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
+  def index
+    @games = Game.all
+  end
+
   def create
     @game = current_user.games_as_white.create!(game_params.merge(white_player_id: current_user))
     @game.associate_pieces!(current_user, 'white')
