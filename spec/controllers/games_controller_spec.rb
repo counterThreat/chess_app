@@ -47,4 +47,16 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'game#update' do
+    it 'updates game with black_player_id' do
+      user = create(:user)
+      sign_in user
+      game = create(:game_with_white_player)
+      put :update, params: { id: game.id, game: { black_player_id: 1 } }
+      expect(response).to redirect_to game_path(game)
+      game.reload
+      expect(game.black_player_id).to eq(1)
+    end
+  end
 end
