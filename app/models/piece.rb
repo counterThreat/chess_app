@@ -18,24 +18,21 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if obstructed?(x_new, y_new)
-      puts 'Your path is blocked!'
-      return
-    end
-    if is_valid?(x_new, y_new) && on_board?
-      empty_previous
+    if valid_move?(x_new, y_new) && on_board?
+      # empty_previous
       self.x_position = x_new
       self.y_position = y_new
     else
-      puts 'Move is not allowed!'
+      puts 'Move is not allowed!' # can change this to be a flash method,
+      # or delete it
     end
   end
 
-  def empty_previous
-    x_old = x_position
-    y_old = y_position
-    array[x_old][y_old] = 0
-  end
+  # def empty_previous
+  # x_old = x_position
+  # y_old = y_position
+  # array[x_old][y_old] = 0
+  # end
 
   def obstructed?(x_new, y_new) # Integrate with color
     # The following two lines determine if the differences between x to x_new
@@ -46,13 +43,16 @@ class Piece < ApplicationRecord
     i = 1
     dx = (x_new - x_position).abs
     dy = (y_new - y_position).abs
-    until i - 1 == [dx, dy].max
-      # puts "#{self.x+i*xdir},#{self.y+i*ydir}"
-      if array[x_position + i * xdir][y_position + i * ydir] != 0
+    until i == [dx, dy].max
+      # if array[x_position + i * xdir][y_position + i * ydir] != 0
+      #  return true
+      # end
+      if game.find_piece(x_position + i * xdir, y_position + i * ydir).present?
         return true
       end
       i += 1
     end
+    false
   end
 
   def capture(x_new, y_new) end
