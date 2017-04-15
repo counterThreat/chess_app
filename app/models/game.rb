@@ -13,7 +13,7 @@ class Game < ApplicationRecord
   def make_newboard
     # create and place white pieces
     (0..7).each do |i|
-      Pawn.create(x_position: i, y_position: 1, color: 'White')
+      Pawn.create(game_id: id, x_position: i, y_position: 1, color: 'White', user_id: white_player_id)
     end
 
     Rook.create(game_id: id, x_position: 0, y_position: 0, color: 'White', user_id: white_player_id)
@@ -27,7 +27,7 @@ class Game < ApplicationRecord
 
     # create and place black pieces
     (0..7).each do |i|
-      Pawn.create(game_id: id, x_position: i, y_position: 6, color: 'Black')
+      Pawn.create(game_id: id, x_position: i, y_position: 6, color: 'Black', user_id: white_player_id)
     end
 
     Rook.create(game_id: id, x_position: 0, y_position: 7, color: 'Black', user_id: white_player_id)

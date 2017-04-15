@@ -55,5 +55,14 @@ class Piece < ApplicationRecord
     false
   end
 
-  def capture(x_new, y_new) end
+  def capture!(x_new, y_new)
+    attacker_color = game.find_piece(x_position, y_position)
+    opponent = game.find_piece(x_new, y_new)
+    return false if opponent.color.nil?
+    if opponent.color == attacker_color
+      false
+    else
+      opponent.update(captured: true)
+    end
+  end
 end
