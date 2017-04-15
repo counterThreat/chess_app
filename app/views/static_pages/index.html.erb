@@ -4,25 +4,3 @@
 <p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
 <% end %>
 </div>
-
-<br/><br/>
-
-<%= button_to "Start a Game", new_game_path, method: :get, class: 'btn btn-default btn-lg' %>
-
-<br>
-<div class="contaner-fluid">
-  <h1>Join a game!</h1>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="list-group">
-        <% @games.with_one_player.each do |game| %>
-          <%= button_to edit_game_path(game), method: :get, class: 'list-group-item list-group-item-action' do %>
-            <h4><b><%= game.name %><b> - <%= get_username(game.white_player_id) %></h4>
-            <%= display_date(game.created_at)%>
-            <span class="badge badge-default badge-pill pull-right">Join</span>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>

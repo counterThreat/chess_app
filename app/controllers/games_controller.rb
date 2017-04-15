@@ -1,8 +1,13 @@
 class GamesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, only: [:create, :new, :update, :destroy]
 
   def new
     @game = Game.new
+  end
+
+  def index
+    @games = Game.available
+    # @game = Game.new(game_params)
   end
 
   def create
@@ -30,16 +35,23 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game = current_game
-    current_user.games_as_black.merge!(game_params.update(black_player_id: current_user))
-    # @game.update_attributes(game_params)
-    @game.associate_pieces!(current_user, 'black')
-    if @game.save
-      flash[:notice] = 'You are the black player. The white player can now begin the game'
-      redirect_to game_path(@game)
+    if @game.available?
+      @game.update_attributes(game_params.merge!(black_player_id: current_user.id))
+      # @game.update_attributes(game_params)
+      @game.associate_pieces!(current_user, 'black')
+      if @game.save
+        flash[:notice] = 'You are the black player. The white player can now begin the game'
+        redirect_to game_path(@game)
+      end
     else
       render 'index', status: :unprocessable_entity
     end
+  end
+
+  def destroy #forfeit
+    @game = Game.find(params[:id])
+    @game.destroy
+    redirect_to root_path
   end
 
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
@@ -47,7 +59,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :black_player_id)
+    params.require(:game).permit(:name, :black_player_id, :white_player_id)
   end
 
   def current_game

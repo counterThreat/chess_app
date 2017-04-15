@@ -2,8 +2,13 @@ class Game < ApplicationRecord
   has_many :pieces
   has_many :white_player, class_name: 'User', foreign_key: 'white_player_id'
   has_many :black_player, class_name: 'User', foreign_key: 'black_player_id'
-
   validates :name, presence: true
+
+  scope :available, -> { where(black_player_id: nil) }
+
+  def self.available?
+    @current_user.id != :black_player && black_player_id.nil?
+  end
 
     def make_newboard
       # create and place white pieces
@@ -41,10 +46,8 @@ class Game < ApplicationRecord
     end
   end
 
-  # scope method for determining which games do not have a black_player
-  def self.with_one_player
-    where(black_player_id: nil)
-  end
+  # after_create :populate_board, :first_turn!
+
   # from here first thing to do is create method for player joining a free game
   # where white player is already present so we need a JOIN method that focuses
   # on the black player since the game is created with the white player
