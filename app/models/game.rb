@@ -10,6 +10,13 @@ class Game < ApplicationRecord
     pieces.find_by(x_position: x_position, y_position: y_position)
   end
 
+  # def remove_captured
+  #   pieces.where(captured: true) do |piece|
+  #     piece.update(x_position: -1)
+  #     piece.update(y_position: -1)
+  #   end
+  # end
+
   def make_newboard
     # create and place white pieces
     (0..7).each do |i|
