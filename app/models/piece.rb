@@ -49,8 +49,8 @@ class Piece < ApplicationRecord
     false
   end
 
-  def occupied?
-    return false if opponent.nil? || opponent.captured == true
+  def occupied?(x_new, y_new)
+    return false if opponent(x_new, y_new).nil?
     true
   end
 
@@ -63,8 +63,8 @@ class Piece < ApplicationRecord
   end
 
   def attack!(x_new, y_new)
-    return false if occupied? == false
+    return false if occupied?(x_new, y_new) == false
     return false if opponent(x_new, y_new).color == current_piece.color
-    return opponent(x_new, y_new).update(captured: true) if occupied?
+    return opponent(x_new, y_new).update(captured: true) if occupied?(x_new, y_new)
   end
 end
