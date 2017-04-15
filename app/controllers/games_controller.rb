@@ -35,14 +35,13 @@ class GamesController < ApplicationController
   end
 
   def update
-    if @game.available?
-      @game.update_attributes(game_params.merge!(black_player_id: current_user.id))
-      # @game.update_attributes(game_params)
-      @game.associate_pieces!(current_user, 'black')
-      if @game.save
-        flash[:notice] = 'You are the black player. The white player can now begin the game'
-        redirect_to game_path(@game)
-      end
+    @game = current_game
+    @game.update_attributes(game_params.merge!(black_player_id: current_user.id))
+    # @game.update_attributes(game_params)
+    @game.associate_pieces!(current_user, 'black')
+    if @game.save
+      flash[:notice] = 'You are the black player. The white player can now begin the game'
+      redirect_to game_path(@game)
     else
       render 'index', status: :unprocessable_entity
     end

@@ -6,10 +6,6 @@ class Game < ApplicationRecord
 
   scope :available, -> { where(black_player_id: nil) }
 
-  def self.available?
-    @current_user.id != :black_player && black_player_id.nil?
-  end
-
     def make_newboard
       # create and place white pieces
       (0..7).each do |i|
