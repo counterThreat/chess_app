@@ -5,7 +5,7 @@ class Rook < Piece
     elsif x_position == x_new || y_position == y_new
       true
     else
-      false
+      super
     end
   end
 end

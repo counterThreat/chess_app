@@ -5,7 +5,7 @@ class Bishop < Piece
     elsif (x_position - x_new).abs == (y_position - y_new).abs
       true
     else
-      false
+      super
     end
   end
 end
