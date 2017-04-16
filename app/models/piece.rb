@@ -9,6 +9,10 @@ class Piece < ApplicationRecord
   validates :game_id, presence: true
   validates :user_id, presence: true
 
+  def vaild_move?(x_new, y_new)
+    false
+  end
+
   def on_board?
     if x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
       true
