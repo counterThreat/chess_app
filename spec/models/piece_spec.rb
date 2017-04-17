@@ -54,6 +54,32 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+  describe "attack!" do
+    it 'determines if a capture is necessary after a move' do
+
+    end
+  end
+
+  describe 'occupied?' do
+    it 'returns true if a square is occupied' do
+      user = create(:user)
+      game = create(:game)
+      piece = create(:piece, game: game, user: user)
+      x_new = piece.x_position
+      y_new = piece.y_position
+      expect(piece.occupied?(x_new, y_new)).to eq(true)
+    end
+
+    it 'returns false if a square is empty' do
+        user = create(:user)
+        game = create(:game)
+        piece = create(:piece, game: game, user: user)
+        x_new = 0
+        y_new = 0
+        expect(piece.occupied?(x_new,y_new)).to eq(false)
+    end
+  end
+
   describe "move method" do
     it "allows a piece to change x position" do
       game1 = FactoryGirl.create(:game)
