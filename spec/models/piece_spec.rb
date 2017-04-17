@@ -63,11 +63,11 @@ RSpec.describe Piece, type: :model do
       expect(piece1.attack!(piece2.x_position, piece2.y_position)).to eq(false)
     end
 
-    it 'returns false if the square is not occupied' do
+    it 'returns true if the square is not occupied' do
       user1 = create(:user)
       game = create(:game_with_white_and_black_players)
       piece1 = create(:piece, game: game, user_id: user1.id)
-      expect(piece1.occupied?(0, 0)).to eq(false)
+      expect(piece1.attack!(0, 0)).to eq(true)
     end
 
     it 'sets piece to captured if attack successful' do
@@ -80,6 +80,7 @@ RSpec.describe Piece, type: :model do
       piece2.reload
       expect(piece2.captured).to eq(true)
     end
+
   end
 
   describe 'occupied?' do
