@@ -53,6 +53,10 @@ class Piece < ApplicationRecord
     false
   end
 
+  def out_of_bounds?(x_new, y_new)
+    x_new > 8 || x_new < 1 || y_new > 8 || y_new < 1
+  end
+
   def occupied?(x_new, y_new)
     return false if opponent(x_new, y_new).nil?
     true

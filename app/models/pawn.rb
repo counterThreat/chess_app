@@ -1,5 +1,7 @@
 class Pawn < Piece
-  def valid_move?; end
+  def valid_move?
+
+  end
 
   def move!(x_new, y_new)
     correct_direction = color == 'white' ? 1 : -1
@@ -10,5 +12,6 @@ class Pawn < Piece
   def first_move?
     return true if color == 'white' && y_position == 2
     return true if color == 'black' && y_position == 7
+    false
   end
 end
