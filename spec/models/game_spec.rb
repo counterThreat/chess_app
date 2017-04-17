@@ -13,7 +13,7 @@ RSpec.describe Game, type: :model do
     end
 
     it 'has the move_number set to 1' do
-      expect(gsme.move_number).to eq 1
+      expect(game.move_number).to eq 1
     end
 
     it 'has 32 pieces' do

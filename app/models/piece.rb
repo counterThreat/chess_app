@@ -2,6 +2,17 @@ class Piece < ApplicationRecord
   belongs_to :game
   belongs_to :user
 
+  def self.types
+    %w(Pawn Rook Knight Bishop Queen King)
+  end
+
+  scope :pawns, -> { where(type: 'Pawn' ) }
+  scope :rooks, -> { where(type: 'Rook' ) }
+  scope :knights, -> { where(type: 'Knight' ) }
+  scope :bishops, -> { where(type: 'Bishop' ) }
+  scope :queens, -> { where(type: 'Queen' ) }
+  scope :kings, -> { where(type: 'King' ) }
+
   def valid_move?(x_new, y_new)
     return false if out_of_bounds?(x_new, y_new)
     return false if obstructed?(x_new, y_new)
@@ -17,16 +28,14 @@ class Piece < ApplicationRecord
   end
 
   def move!(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board?
-      attack!(x_new, y_new)
-      update(x_position: x_new, y_position: y_new, last_move: game.move_number)
-      game.end_turn!(game.turn)
-    else
-      puts 'Move is not allowed!' # can change this to be a flash method
-      return
-    end
+    return false unless valid_move?(x_new, y_new)
+    attack!(x_new, y_new)
+    update(x_position: x_new, y_position: y_new, last_move: game.move_number)
+    true
   end
 
+=begin
+# kf: this method kept giving me a lot of trouble, i put an alternative way below
   def obstructed?(x_new, y_new) # Integrate with color
     # The following two lines determine if the differences between x to x_new
     # and y to y_new are positive, negative, or zero. This is used to iterate in
@@ -37,15 +46,23 @@ class Piece < ApplicationRecord
     dx = (x_new - x_position).abs
     dy = (y_new - y_position).abs
     until i == [dx, dy].max
-      # if array[x_position + i * xdir][y_position + i * ydir] != 0
-      #  return true
-      # end
-      if game.find_piece(x_position + i * xdir, y_position + i * ydir).present?
-        return true
-      end
+      return true if array[x_position + i * xdir][y_position + i * ydir] != 0
+      return true if game.find_piece(x_position + i * xdir, y_position + i * ydir).present?
       i += 1
     end
     false
+  end
+=end
+
+  def obstructed?(x_new, y_new)
+    x_current = x_new
+    y_current = y_new
+    loop do
+      x_current += (x_new <=> x_current)
+      y_current += (y_new <=> y_current)
+      return false if x_current == x_new && y_current == y_new
+      return true if game.occupied?(x_current_, y_current)
+    end
   end
 
   def out_of_bounds?(x_new, y_new)
@@ -53,8 +70,7 @@ class Piece < ApplicationRecord
   end
 
   def occupied?(x_new, y_new)
-    return false if opponent(x_new, y_new).nil?
-    true
+    game.pieces.where(x_position: x_new, y_position: y_new).take.present?
   end
 
   def opponent(x_new, y_new)
@@ -62,17 +78,35 @@ class Piece < ApplicationRecord
     # where if find_piece?
   end
 
-  def friendly?(x_new, y_new)
+  def same_team?(x_new, y_new)
     return true if color == find_piece(x_new, y_new).color
     false
+  end
+
+  def find_piece(x_new, y_new)
+    pieces.where(x_position: x_new, y_position: y_new).take
   end
 
   def attack!(x_new, y_new)
     return false if occupied?(x_new, y_new) == false
     return false if opponent(x_new, y_new).color == color
+    return false if same_team?(x_new, y_new)
     if occupied?(x_new, y_new)
       opponent(x_new, y_new).update(captured: true, x_position: -1, y_position: -1)
     end
+  end
+
+  def horizontal_move?(x_new, y_new)
+    y_position == y_new && x_position != x_new
+  end
+
+  def vertical_move?(x_new, y_new)
+    x_position == x_new && y_position != y_new
+  end
+
+  def diagonal_move?(x_new, y_new)
+    return false if x_position == x_new && y_position == y_new
+    x_difference(x_new) == y_difference(y_new)
   end
 
   def x_difference(x_new)

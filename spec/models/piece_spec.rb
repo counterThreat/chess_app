@@ -97,9 +97,10 @@ RSpec.describe Piece, type: :model do
     it "returns true if path is blocked" do
       x_new = 1
       y_new = 1
-      blocker = FactoryGirl.create(:piece, game: game2, user: deepblue, x_position: 2, y_position: 2)
+      blocker = FactoryGirl.create(:piece, game: game2, user: deepblue, x_position: 2, y_position: 1)
       expect(piece2.obstructed?(x_new, y_new)).to eq true
     end
+
     it "returns false if there is a piece on the destination square" do
       x_new = 2
       y_new = 2

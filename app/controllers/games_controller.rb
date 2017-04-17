@@ -7,7 +7,7 @@ class GamesController < ApplicationController
   end
 
   def index
-    @games = Game.all
+    @games = Game.where(black_player_id: nil)
   end
 
   def create
@@ -36,9 +36,7 @@ class GamesController < ApplicationController
   def update
     @game = current_game
     if @game.black_player.nil? && current_user != @game.white_player
-      @game.update_attributes(black_player_id: current_user)
-      @game.associate_pieces!(current_user, 'black')
-      current_user.games_as_black << self
+      @game.black_player_update!(current_user)
       flash[:notice] = 'You are the black player. The white player can now begin the game'
       redirect_to game_path(@game)
     else

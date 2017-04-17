@@ -5,19 +5,22 @@ class Game < ApplicationRecord
 
   validates :name, presence: true
 
-  after_create :populate_board, :first_turn! # populate board first
+  after_create :populate_board!, :first_turn! # populate board first
 
-  def populate_board
-    create_pawns
-    create_back_rows
+  def associate_pieces!(user, color)
+    pieces.where(color: color).each do |piece|
+      user.pieces << piece
+    end
+  end
+
+  def black_player_update!(user)
+    update(black_player: user)
+    associate_pieces!(user, 'black')
+    user.games_as_black << self
   end
 
   def first_turn!
     update(turn: 'white', player_turn: 1)
-  end
-
-  def find_piece(x_new, y_new)
-    pieces.where(x_position: x_new, y_position: y_new).take
   end
 
   def end_turn!(color)
@@ -43,14 +46,19 @@ class Game < ApplicationRecord
     black_player.increment!(:games_played)
   end
 
-  def create_pawns
+  def populate_board!
+    create_pawns!
+    create_back_rows!
+  end
+
+  def create_pawns!
     (1..8).each do |x|
       pieces << Pawn.create(color: 'white', x_position: x, y_position: 2)
       pieces << Pawn.create(color: 'black', x_position: x, y_position: 7)
     end
   end
 
-  def create_back_rows
+  def create_back_rows!
     # white back
     Rook.create(game_id: id, x_position: 0, y_position: 0, color: 'White', user_id: white_player_id)
     Rook.create(game_id: id, x_position: 7, y_position: 0, color: 'White', user_id: white_player_id)
@@ -70,12 +78,6 @@ class Game < ApplicationRecord
     Bishop.create(game_id: id, x_position: 5, y_position: 7, color: 'Black', user_id: white_player_id)
     Queen.create(game_id: id, x_position: 3, y_position: 7, color: 'Black', user_id: white_player_id)
     King.create(game_id: id, x_position: 4, y_position: 7, color: 'Black', user_id: white_player_id)
-  end
-
-  def associate_pieces!(user, color)
-    pieces.where(color: color).each do |piece|
-      user.pieces << piece
-    end
   end
 
   # scope method for determining which games do not have a black_player
