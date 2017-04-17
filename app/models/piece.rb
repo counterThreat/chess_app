@@ -9,7 +9,7 @@ class Piece < ApplicationRecord
   validates :game_id, presence: true
   validates :user_id, presence: true
 
-  def vaild_move?(x_new, y_new)
+  def valid_move?(x_new, y_new)
     false
   end
 
@@ -42,9 +42,6 @@ class Piece < ApplicationRecord
     dx = (x_new - x_position).abs
     dy = (y_new - y_position).abs
     until i == [dx, dy].max
-      # if array[x_position + i * xdir][y_position + i * ydir] != 0
-      #  return true
-      # end
       if game.find_piece(x_position + i * xdir, y_position + i * ydir).present?
         return true
       end
