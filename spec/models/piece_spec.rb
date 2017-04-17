@@ -46,15 +46,39 @@ RSpec.describe Piece, type: :model do
 
   # Instance Methods
 
-  describe "on_board? method" do
-    it "returns false if a piece moves out of bounds" do
+  describe 'on_board? method' do
+    it 'returns false if a piece moves out of bound' do
       piece = FactoryGirl.build(:piece, x_position: 10, y_position: 7)
       expect(piece.on_board?).to eq false
     end
   end
 
-  describe "attack!" do
-    it 'determines if a capture is necessary after a move' do
+  describe 'attack!' do
+    it 'returns false if opponent color is equal to attacker color' do
+      user1 = create(:user)
+      user2 = create(:user)
+      game = create(:game_with_white_and_black_players)
+      piece1 = create(:piece, game: game, user_id: user1.id)
+      piece2 = create(:rook, game: game, user_id: user2.id)
+      expect(piece1.attack!(piece2.x_position, piece2.y_position)).to eq(false)
+    end
+
+    it 'returns false if the square is not occupied' do
+      user1 = create(:user)
+      game = create(:game_with_white_and_black_players)
+      piece1 = create(:piece, game: game, user_id: user1.id)
+      expect(piece1.occupied?(0, 0)).to eq(false)
+    end
+
+    it 'sets piece to captured if attack successful' do
+      user1 = create(:user)
+      user2 = create(:user)
+      game = create(:game_with_white_and_black_players)
+      piece1 = create(:piece, game: game, user_id: user1.id)
+      piece2 = create(:bishop, game: game, user_id: user2.id)
+      piece1.attack!(piece2.x_position, piece2.y_position)
+      piece2.reload
+      expect(piece2.captured).to eq(true)
     end
   end
 
@@ -63,18 +87,14 @@ RSpec.describe Piece, type: :model do
       user = create(:user)
       game = create(:game)
       piece = create(:piece, game: game, user: user)
-      x_new = piece.x_position
-      y_new = piece.y_position
-      expect(piece.occupied?(x_new, y_new)).to eq(true)
+      expect(piece.occupied?(piece.x_position, piece.y_position)).to eq(true)
     end
 
     it 'returns false if a square is empty' do
       user = create(:user)
       game = create(:game)
       piece = create(:piece, game: game, user: user)
-      x_new = 0
-      y_new = 0
-      expect(piece.occupied?(x_new, y_new)).to eq(false)
+      expect(piece.occupied?(0, 0)).to eq(false)
     end
   end
 
@@ -118,12 +138,14 @@ RSpec.describe Piece, type: :model do
       y_new = 6
       expect(piece2.obstructed?(x_new, y_new)).to eq false
     end
+
     it "returns true if path is blocked" do
       x_new = 1
       y_new = 1
       blocker = FactoryGirl.create(:piece, game: game2, user: deepblue, x_position: 2, y_position: 2)
       expect(piece2.obstructed?(x_new, y_new)).to eq true
     end
+
     it "returns false if there is a piece on the destination square" do
       x_new = 2
       y_new = 2
