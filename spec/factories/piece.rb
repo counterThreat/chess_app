@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :piece do
     type "Rook"
-    color "white"
+    color "White"
     x_position 4
     y_position 4
     sequence(:game_id) { |a| a }
@@ -11,8 +11,8 @@ FactoryGirl.define do
   end
 
   factory :rook do
-    type "rook"
-    color "white"
+    type "Rook"
+    color "White"
     x_position 3
     y_position 3
     sequence(:game_id) { |a| a }
@@ -22,8 +22,8 @@ FactoryGirl.define do
   end
 
   factory :bishop do
-    type "bishop"
-    color "white"
+    type "Bishop"
+    color "Black"
     x_position 2
     y_position 2
     sequence(:game_id) { |a| a }
