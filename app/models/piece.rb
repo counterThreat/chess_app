@@ -22,7 +22,7 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board?
+    if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new) != false
       attack!(x_new, y_new)
       update(x_position: x_new)
       update(y_position: y_new)
@@ -60,7 +60,6 @@ class Piece < ApplicationRecord
   end
 
   def attack!(x_new, y_new)
-    return false if occupied?(x_new, y_new) == false
     return false if opponent(x_new, y_new).color == color
     if occupied?(x_new, y_new)
       opponent(x_new, y_new).update(captured: true, x_position: -1, y_position: -1)
