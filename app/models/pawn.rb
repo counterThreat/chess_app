@@ -1,11 +1,11 @@
 class Pawn < Piece
   def valid_move?; end
 
-  def move!(next_x, next_y)
+  def move!(x_new, y_new)
     correct_direction = color == 'white' ? 1 : -1
   end
 
-  def within_movement_constraints?(next_x, next_y); end
+  def within_movement_constraints?(x_new, y_new); end
 
   def first_move?
     return true if color == 'white' && y_position == 2

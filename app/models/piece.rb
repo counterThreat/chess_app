@@ -21,11 +21,11 @@ class Piece < ApplicationRecord
     end
   end
 
-  def move(x_new, y_new)
+  def move!(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board?
       attack!(x_new, y_new)
-      update(x_position: x_new)
-      update(y_position: y_new)
+      update(x_position: x_new, y_position: y_new, last_moved: game.move_number)
+      true
     else
       puts 'Move is not allowed!' # can change this to be a flash method
       return
