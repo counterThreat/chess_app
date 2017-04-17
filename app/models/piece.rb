@@ -10,7 +10,9 @@ class Piece < ApplicationRecord
   validates :user_id, presence: true
 
   def valid_move?(x_new, y_new)
-    false
+    return false if out_of_bounds?(x_new, y_new)
+    return false if obstructed?(x_new, y_new)
+    true
   end
 
   def on_board?
@@ -24,8 +26,8 @@ class Piece < ApplicationRecord
   def move!(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board?
       attack!(x_new, y_new)
-      update(x_position: x_new, y_position: y_new, last_moved: game.move_number)
-      true
+      update(x_position: x_new, y_position: y_new, last_move: game.move_number)
+      game.end_turn!(game.turn)
     else
       puts 'Move is not allowed!' # can change this to be a flash method
       return
@@ -41,7 +43,7 @@ class Piece < ApplicationRecord
     i = 1
     dx = (x_new - x_position).abs
     dy = (y_new - y_position).abs
-    until i == [dx, dy].max
+    until i == [x_difference, y_difference].max
       # if array[x_position + i * xdir][y_position + i * ydir] != 0
       #  return true
       # end
@@ -73,5 +75,13 @@ class Piece < ApplicationRecord
     if occupied?(x_new, y_new)
       opponent(x_new, y_new).update(captured: true, x_position: -1, y_position: -1)
     end
+  end
+
+  def x_difference(x_new)
+    (x_position - x_new).abs
+  end
+
+  def y_difference(y_new)
+    (y_position - y_new).abs
   end
 end
