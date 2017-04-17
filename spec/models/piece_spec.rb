@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe Piece, type: :model do
   # Validations
   it "has a valid factory" do
@@ -56,7 +55,6 @@ RSpec.describe Piece, type: :model do
 
   describe "attack!" do
     it 'determines if a capture is necessary after a move' do
-
     end
   end
 
@@ -71,12 +69,12 @@ RSpec.describe Piece, type: :model do
     end
 
     it 'returns false if a square is empty' do
-        user = create(:user)
-        game = create(:game)
-        piece = create(:piece, game: game, user: user)
-        x_new = 0
-        y_new = 0
-        expect(piece.occupied?(x_new,y_new)).to eq(false)
+      user = create(:user)
+      game = create(:game)
+      piece = create(:piece, game: game, user: user)
+      x_new = 0
+      y_new = 0
+      expect(piece.occupied?(x_new, y_new)).to eq(false)
     end
   end
 
