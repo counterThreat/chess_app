@@ -25,20 +25,15 @@ class Game < ApplicationRecord
     draw! if stalemate?(turn)
   end
 
-  def checkmate?(turn)
-  end
+  def checkmate?(turn); end
 
-  def check?(turn)
-  end
+  def check?(turn); end
 
-  def stalemate?(turn)
-  end
+  def stalemate?(turn); end
 
-  def draw!(turn)
-  end
+  def draw!(turn); end
 
-  def game_over!(turn)
-  end
+  def game_over!(turn); end
 
   def game_played!
     white_player.increment!(:games_played)
