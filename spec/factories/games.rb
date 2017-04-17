@@ -16,7 +16,7 @@ FactoryGirl.define do
 
   factory :game_with_white_and_black_players, class: Game do
     name 'test game'
-    white_player_id 0
-    black_player_id 1
+    sequence(:white_player_id) { |a| a }
+    sequence(:black_player_id) { |b| b }
   end
 end
