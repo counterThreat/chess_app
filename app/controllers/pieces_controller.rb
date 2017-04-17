@@ -7,10 +7,10 @@ class PiecesController < ApplicationController
     elsif current_piece.move(x_value, y_value)
       render json: { success: true }
     else
-      render json: { success: false, message: 'Not a valid move.'}
+      render json: { success: false, message: 'Not a valid move.' }
     end
   end
-  
+
   private
 
   def current_game
