@@ -8,6 +8,11 @@ class Game < ApplicationRecord
 
   after_create :populate_board!, :first_turn!
 
+  def find_piece(x_position, y_position)
+    pieces.find_by(x_position: x_position, y_position: y_position)
+    # need to add finding the color associated with it too, right?
+  end
+
   def first_turn!
     update(turn: 'white', player_turn: 1)
   end
