@@ -4,7 +4,7 @@ RSpec.describe Pawn, type: :model do
   describe 'valid_move?' do
     context 'white pawn, x = 5, y = 2' do
       before do
-        game = create(:empty_board)
+        game = create(:game)
         pawn = Pawn.create(x_position: 5, y_position: 2, color: 'white')
         black_pawn = Pawn.create(x_position: 8, y_position: 7, color: 'black', last_move: 0)
         game.pieces << pawn
@@ -48,13 +48,14 @@ RSpec.describe Pawn, type: :model do
 
     context 'determining first move' do
       before do
-        game = create(:empty_board)
+        game = create(:game)
+        game.send(:game_with_players_and_pieces)
         pawn = Pawn.create(x_position: 5, y_position: 2, color: 'white')
         game.pieces << pawn
       end
 
       it 'finds first move as true' do
-        expect(pawn.first_move?).to eq true
+        expect(pawn.first_turn?).to eq true
       end
 
       it 'can move two squares' do

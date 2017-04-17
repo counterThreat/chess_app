@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
-  describe 'game#new' do
+  describe 'GET /new' do
     it 'links to a landing page to create a game' do
       user = create(:user)
       sign_in user
@@ -10,35 +10,37 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
-  describe 'game#create' do
-    it 'creates a new game with the current user as the white player' do
+  describe 'POST /create' do
+    it 'creates and redirects to a new game w user as white player' do
       user = create(:user)
       sign_in user
-      post :create, params: { game: { name: 'test name' } }
+      post :create, game: { name: 'test name' }
       expect(assigns(:game).white_player_id).to eq(user.id)
-    end
-
-    it 'creates a new game and redirects the user to the game path' do
-      user = create(:user)
-      sign_in user
-      post :create, params: { game: { name: 'test name' } }
-      expect(response).to redirect_to game_path(assigns(:game))
+      expect(response).to redirect_to(game_path(assigns(:game)))
     end
   end
 
-  describe 'game#show' do
+  describe 'GET /index' do
+    it 'successfully returns the index' do
+      create(:game)
+      get :index, params: { game: { name: 'test game' } }
+      expect(response).to be_success
+    end
+  end
+
+  describe 'GET /show' do
     # let(:game) { create(:game) }
     # describe 'current game loads' do
     it 'returns the current_game w/o error' do
       user = create(:user)
       sign_in user
       game = create(:game)
-      get :show, params: { id: game.id }
+      get :show, params: { id: game.id }, format: :json
       expect(response).to be_success
     end
   end
 
-  describe 'game#edit' do
+  describe 'GET /edit' do
     it 'returns specific game edit form' do
       user = create(:user)
       sign_in user
@@ -48,15 +50,14 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
-  describe 'game#update' do
+  describe 'PATCH /update' do
     it 'updates game with black_player_id' do
       user = create(:user)
       sign_in user
       game = create(:game_with_white_player)
-      put :update, params: { id: game.id, game: { black_player_id: 1 } }
-      expect(response).to redirect_to game_path(game)
-      game.reload
-      expect(game.black_player_id).to eq(1)
+      patch :update, id: game
+      expect(assigns(:game).black_player_id).to eq(user.id)
+      expect(response).to redirect_to(game_path(game))
     end
   end
 end

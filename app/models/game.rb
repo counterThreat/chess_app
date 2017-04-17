@@ -5,7 +5,12 @@ class Game < ApplicationRecord
 
   validates :name, presence: true
 
-  after_create :populate_board!, :first_turn! # populate board first
+  after_create :populate_board, :first_turn! # populate board first
+
+  def populate_board
+    create_pawns
+    create_back_rows
+  end
 
   def first_turn!
     update(turn: 'white', player_turn: 1)
@@ -38,11 +43,6 @@ class Game < ApplicationRecord
     black_player.increment!(:games_played)
   end
 
-  def populate_board!
-    create_pawns
-    create_back_rows
-  end
-
   def create_pawns
     (1..8).each do |x|
       pieces << Pawn.create(color: 'white', x_position: x, y_position: 2)
@@ -72,8 +72,10 @@ class Game < ApplicationRecord
     King.create(game_id: id, x_position: 4, y_position: 7, color: 'Black', user_id: white_player_id)
   end
 
-  def associate_pieces!
-    pieces.where(color: 'Black').update(user_id: black_player_id)
+  def associate_pieces!(user, color)
+    pieces.where(color: color).each do |piece|
+      user.pieces << piece
+    end
   end
 
   # scope method for determining which games do not have a black_player

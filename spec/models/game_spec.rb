@@ -1,9 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+  context 'successfully creates' do
+    before do
+      game = create(:game)
+      game.send(:populate_board)
+      game.send(:first_turn!)
+    end
+
+    it 'has first turn go to the white player' do
+      expect(game.turn).to eq 'white'
+    end
+
+    it 'has the move_number set to 1' do
+      expect(gsme.move_number).to eq 1
+    end
+
+    it 'has 32 pieces' do
+      expect(game.pieces.count).to eq 32
+    end
+  end
+
   describe 'associate_pieces!' do
     before do
-      @game = create(:game)
+      game = create(:game)
+      game.send(:populate_board)
+      game.send(:first_turn!)
     end
 
     it 'associates the pieces with the color of the respective player as white or black' do
