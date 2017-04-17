@@ -2,13 +2,6 @@ class Piece < ApplicationRecord
   belongs_to :game
   belongs_to :user
 
-  validates :color, presence: true
-  validates :type, presence: true
-  validates :x_position, presence: true
-  validates :y_position, presence: true
-  validates :game_id, presence: true
-  validates :user_id, presence: true
-
   def valid_move?(x_new, y_new)
     return false if out_of_bounds?(x_new, y_new)
     return false if obstructed?(x_new, y_new)
@@ -67,10 +60,6 @@ class Piece < ApplicationRecord
   def opponent(x_new, y_new)
     game.find_piece(x_new, y_new)
     # where if find_piece?
-  end
-
-  def find_piece(x_new, y_new)
-    game.pieces.where(x_position: x_new, y_position: y_new).take
   end
 
   def friendly?(x_new, y_new)

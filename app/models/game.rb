@@ -2,14 +2,17 @@ class Game < ApplicationRecord
   has_many :pieces
   has_many :white_player, class_name: 'User', foreign_key: 'white_player_id'
   has_many :black_player, class_name: 'User', foreign_key: 'black_player_id'
-  after_create :make_newboard
 
   validates :name, presence: true
 
-  after_create :populate_board!, :first_turn!
+  after_create :populate_board!, :first_turn! # populate board first
 
   def first_turn!
     update(turn: 'white', player_turn: 1)
+  end
+
+  def find_piece(x_new, y_new)
+    pieces.where(x_position: x_new, y_position: y_new).take
   end
 
   def end_turn!(color)
@@ -35,12 +38,20 @@ class Game < ApplicationRecord
     black_player.increment!(:games_played)
   end
 
-  def make_newboard
-    # create and place white pieces
-    (0..7).each do |i|
-      Pawn.create(game_id: id, x_position: i, y_position: 1, color: 'White', user_id: white_player_id)
-    end
+  def populate_board!
+    create_pawns
+    create_back_rows
+  end
 
+  def create_pawns
+    (1..8).each do |x|
+      pieces << Pawn.create(color: 'white', x_position: x, y_position: 2)
+      pieces << Pawn.create(color: 'black', x_position: x, y_position: 7)
+    end
+  end
+
+  def create_back_rows
+    # white back
     Rook.create(game_id: id, x_position: 0, y_position: 0, color: 'White', user_id: white_player_id)
     Rook.create(game_id: id, x_position: 7, y_position: 0, color: 'White', user_id: white_player_id)
     Knight.create(game_id: id, x_position: 1, y_position: 0, color: 'White', user_id: white_player_id)
@@ -50,11 +61,7 @@ class Game < ApplicationRecord
     Queen.create(game_id: id, x_position: 3, y_position: 0, color: 'White', user_id: white_player_id)
     King.create(game_id: id, x_position: 4, y_position: 0, color: 'White', user_id: white_player_id)
 
-    # create and place black pieces
-    (0..7).each do |i|
-      Pawn.create(game_id: id, x_position: i, y_position: 6, color: 'Black', user_id: white_player_id)
-    end
-
+    # black back
     Rook.create(game_id: id, x_position: 0, y_position: 7, color: 'Black', user_id: white_player_id)
     Rook.create(game_id: id, x_position: 7, y_position: 7, color: 'Black', user_id: white_player_id)
     Knight.create(game_id: id, x_position: 1, y_position: 7, color: 'Black', user_id: white_player_id)

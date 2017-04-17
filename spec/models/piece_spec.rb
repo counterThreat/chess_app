@@ -59,7 +59,7 @@ RSpec.describe Piece, type: :model do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
       piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.move(4, 3)
+      piece.move!(4, 3)
       expect(piece.x_position).to eq 4
     end
 
@@ -67,7 +67,7 @@ RSpec.describe Piece, type: :model do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
       piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.move(3, 4)
+      piece.move!(3, 4)
       expect(piece.y_position).to eq 4
     end
 
@@ -75,7 +75,7 @@ RSpec.describe Piece, type: :model do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
       piece = FactoryGirl.create(:bishop, game: game1, user: elvis)
-      piece.move(1, 1)
+      piece.move!(1, 1)
       expect(piece.x_position).to eq 1
       expect(piece.y_position).to eq 1
     end

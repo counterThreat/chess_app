@@ -38,7 +38,7 @@ FactoryGirl.define do
     x_position 2
     y_position 2
     sequence(:game_id) { |a| a }
-    sequence(:user_id) { |b| a }
+    sequence(:user_id) { |_b| a }
     moved false
     captured false
   end
