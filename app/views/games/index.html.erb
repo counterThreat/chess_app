@@ -1,0 +1,29 @@
+<br>
+<div class="container-fluid">
+  <h1>Join a Game!</h1><br/>
+<div class="join-table">
+    <!-- style="height:600px!important;overflow-y:auto!important" -->
+    <% @games.each do |game| %>
+    <ul class="list-group">
+      <li class="row list-group-item">
+          <div class="col-sm-3"><b>game:</b>
+            <%= game.name %>
+          </div>
+          <div class="col-sm-3"><b>opponent:</b>
+            <%= get_username(game.white_player_id) %>
+            <br/>
+            <small><%= display_date(game.created_at)%></small>
+          </div>
+          <div class="col-sm-3" style=text-align:center><em>
+            <%= game.white_player.nil? ? 'Play as White' : 'Play as Black' %></em>
+          </div>
+          <div class="col-sm-3">
+            <span class="badge badge-default badge-pill pull-right" style="text-align:center;text-decoration:none">
+              <%= link_to 'Join', game_path(game.id), { action: :patch, method: :update} %>
+            </span>
+          </div>
+        </li>
+      </ul>
+      <% end %>
+</div>
+</div>
