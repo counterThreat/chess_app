@@ -5,12 +5,11 @@ class Pawn < Piece
   end
 
   def move!(x_new, y_new)
-    correct_direction = color == 'white' ? 1 : -1
     super
   end
 
   def pawn_possible?(x_new, y_new)
-    color_direction = color == 'white' ? 1 : -1
+    correct_direction = color == 'white' ? 1 : -1
     return true if forward_one_square?(x_new, y_new, correct_direction)
     return true if forward_two_squares?(x_new, y_new, correct_direction)
     return true if capture_diagonally?(x_new, y_new, correct_direction)
@@ -33,7 +32,7 @@ class Pawn < Piece
     correct_distance_one = y_position + correct_direction
     return false if occupied?(x_new, y_new)
     return false unless x_new == x_position
-    return false unless y_new == correct_distance
+    return false unless y_new == correct_distance_one
     true
   end
 
@@ -41,7 +40,7 @@ class Pawn < Piece
     correct_distance_two = y_position + (correct_direction * 2)
     return false unless first_move?
     return false unless x_new == x_position
-    return false unless y_new == y_position
+    return false unless y_new == correct_distance_two
     return false if occupied?(x_position, (y_position + correct_direction)) || occupied?(x_new, y_new)
     true
   end

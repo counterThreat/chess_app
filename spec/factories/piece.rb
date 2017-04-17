@@ -31,4 +31,15 @@ FactoryGirl.define do
     moved false
     captured false
   end
+
+  factory :pawn do
+    type "pawn"
+    color "white"
+    x_position 2
+    y_position 2
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| a }
+    moved false
+    captured false
+  end
 end

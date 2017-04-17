@@ -69,6 +69,15 @@ class Piece < ApplicationRecord
     # where if find_piece?
   end
 
+  def find_piece(x_new, y_new)
+    game.pieces.where(x_position: x_new, y_position: y_new).take
+  end
+
+  def friendly?(x_new, y_new)
+    return true if color == find_piece(x_new, y_new).color
+    false
+  end
+
   def attack!(x_new, y_new)
     return false if occupied?(x_new, y_new) == false
     return false if opponent(x_new, y_new).color == color
