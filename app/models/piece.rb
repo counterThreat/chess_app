@@ -43,7 +43,7 @@ class Piece < ApplicationRecord
     i = 1
     dx = (x_new - x_position).abs
     dy = (y_new - y_position).abs
-    until i == [x_difference, y_difference].max
+    until i == [dx, dy].max
       # if array[x_position + i * xdir][y_position + i * ydir] != 0
       #  return true
       # end
