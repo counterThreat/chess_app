@@ -13,6 +13,11 @@ class Piece < ApplicationRecord
     false
   end
 
+  def find_piece(x_position, y_position)
+    pieces.find_by(x_position: x_position, y_position: y_position)
+    # need to add finding the color associated with it too, right?
+  end
+
   def on_board?
     if x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
       true
@@ -60,6 +65,7 @@ class Piece < ApplicationRecord
 
   def opponent(x_new, y_new)
     game.find_piece(x_new, y_new)
+    # where if find_piece?
   end
 
   def attack!(x_new, y_new)

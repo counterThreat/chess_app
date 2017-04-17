@@ -6,8 +6,38 @@ class Game < ApplicationRecord
 
   validates :name, presence: true
 
-  def find_piece(x_position, y_position)
-    pieces.find_by(x_position: x_position, y_position: y_position)
+  after_create :populate_board!, :first_turn!
+
+  def first_turn!
+    update(turn: 'white', player_turn: 1)
+  end
+
+  def end_turn!(color)
+    player_color = color == 'white' ? 'black' : 'white'
+    increment!(:move_number)
+    update(turn: player_color)
+    game_over!(turn) if checkmate?(turn)
+    draw! if stalemate?(turn)
+  end
+
+  def checkmate?(turn)
+  end
+
+  def check?(turn)
+  end
+
+  def stalemate?(turn)
+  end
+
+  def draw!(turn)
+  end
+
+  def game_over!(turn)
+  end
+
+  def game_played!
+    white_player.increment!(:games_played)
+    black_player.increment!(:games_played)
   end
 
   def make_newboard
