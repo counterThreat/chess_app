@@ -80,7 +80,6 @@ RSpec.describe Piece, type: :model do
       piece2.reload
       expect(piece2.captured).to eq(true)
     end
-
   end
 
   describe 'occupied?' do
