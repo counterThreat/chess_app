@@ -177,3 +177,8 @@ tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
   background: rgba(0,0,0, 0.5);
 }
+
+a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
