@@ -10,7 +10,7 @@ class Piece < ApplicationRecord
   validates :user_id, presence: true
 
   def valid_move?(x_new, y_new)
-    false
+    return false if exposes_king_to_attack?(x, y)
   end
 
   def on_board?
