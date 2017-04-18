@@ -14,8 +14,8 @@ RSpec.describe GamesController, type: :controller do
     it 'creates and redirects to a new game w user as white player' do
       user = create(:user)
       sign_in user
-      post :create, game: { name: 'test name' }
-      expect(assigns(:game).white_player.id).to eq(user.id)
+      post :create, game: { name: 'test game' }
+      expect(assigns(:game).white_player_id).to eq(user.id)
       expect(response).to redirect_to(game_path(assigns(:game)))
     end
   end
@@ -54,10 +54,10 @@ RSpec.describe GamesController, type: :controller do
     it 'updates game with black_player_id' do
       user = create(:user)
       sign_in user
-      game = create(:game)
+      game = create(:game_with_white_player)
       patch :update, id: game
-      expect(assigns(:game).black_player.id).to eq(user.id)
-      expect(response).to redirect_to(game_path(:game))
+      expect(assigns(:game).black_player_id).to eq(user.id)
+      expect(response).to redirect_to(game_path(game))
     end
   end
 end
