@@ -53,6 +53,18 @@ class Piece < ApplicationRecord
     false
   end
 
+  def vertical_move?(x_new, y_new)
+    x_position == x_new && y_position != y_new
+  end
+
+  def x_diff(x_new)
+    (x_new - x_position).abs
+  end
+
+  def y_diff(y_new)
+    (y_new - y_position).abs
+  end
+
   def occupied?(x_new, y_new)
     return false if opponent(x_new, y_new).nil?
     true
