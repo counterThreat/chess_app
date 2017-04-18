@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417185944) do
+ActiveRecord::Schema.define(version: 20170418000037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20170417185944) do
     t.string   "name"
     t.string   "turn"
     t.integer  "move_number"
+    t.index ["black_player_id"], name: "index_games_on_black_player_id", using: :btree
+    t.index ["white_player_id"], name: "index_games_on_white_player_id", using: :btree
   end
 
   create_table "pieces", force: :cascade do |t|

@@ -8,5 +8,6 @@ class Knight < Piece
       available_moves << [(x_position + dx), (y_position + dy)]
     end
     available_moves.include?([x_position, y_position])
+    true
   end
 end

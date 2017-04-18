@@ -1,11 +1,6 @@
 class Bishop < Piece
   def valid_move?(x_new, y_new)
-    if obstructed?(x_new, y_new)
-      false
-    elsif (x_position - x_new).abs == (y_position - y_new).abs
-      true
-    else
-      super
-    end
+    return false if obstructed?(x_new, y_new)
+    return true if diagonal_move?(x_new, y_new)
   end
 end

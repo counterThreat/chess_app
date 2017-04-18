@@ -19,12 +19,4 @@ FactoryGirl.define do
     white_player_id 0
     black_player_id 1
   end
-
-  factory :empty_board, class: Game do
-    name 'test game'
-    white_player_id 0
-    black_player_id 1
-
-    after(:build) { |game| game.class.skip_callback(:create, :after, :populate_board) }
-  end
 end
