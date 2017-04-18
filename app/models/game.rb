@@ -48,6 +48,15 @@ class Game < ApplicationRecord
   def self.with_one_player
     where(black_player_id: nil)
   end
+
+  def opponent_pieces_on_board(color)
+    opposite_color = color == 'black' ? 'white' : 'black'
+    pieces.where(x_position: 0..7, y_position: 0..7, color: opposite_color.to_s).to_a
+  end
+
+  def current_player_pieces_on_board(color)
+    pieces.where(x_position: 0..7, y_position: 0..7, color: color.to_s).to_a
+  end
   # from here first thing to do is create method for player joining a free game
   # where white player is already present so we need a JOIN method that focuses
   # on the black player since the game is created with the white player
