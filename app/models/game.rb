@@ -2,12 +2,19 @@ class Game < ApplicationRecord
   has_many :pieces
   has_one :white_player, class_name: 'User', foreign_key: 'white_player_id'
   has_one :black_player, class_name: 'User', foreign_key: 'black_player_id'
-  after_create :make_newboard
+  after_create :populate_board!
 
   validates :name, presence: true
 
+  enum current_player: [:current_player_is_black_player, :current_player_is_white_player]
+
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
+  end
+
+  def populate_board!
+    make_newboard
+    current_player_is_white_player!
   end
 
   def make_newboard
@@ -42,6 +49,10 @@ class Game < ApplicationRecord
 
   def associate_pieces!
     pieces.where(color: 'Black').update(user_id: black_player_id)
+  end
+
+  def update_current_player!(color)
+    color == 'white' ? current_player_is_black_player! : current_player_is_white_player!
   end
 
   # scope method for determining which games do not have a black_player

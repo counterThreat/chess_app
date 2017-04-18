@@ -1,13 +1,10 @@
 class Piece < ApplicationRecord
   belongs_to :game
-  belongs_to :user
+  belongs_to :player, class_name: 'User'
 
-  #   validates :color, presence: true
-  #   validates :type, presence: true
-  #   validates :x_position, presence: true
-  #   validates :y_position, presence: true
-  #   validates :game_id, presence: true
+  validates :type, :x_position, :y_position, :color, presence: true
 
+  enum color: [:black, :white]
   # def valid_move?(x_new, y_new)
   #   return false if exposes_king_to_attack?(x, y)
   # end
@@ -53,8 +50,24 @@ class Piece < ApplicationRecord
     false
   end
 
+  def moved?
+    updated_at != created_at
+  end
+
+  def opposite_color?
+    black? ? 'white' : 'black'
+  end
+
   def vertical_move?(x_new, y_new)
     x_position == x_new && y_position != y_new
+  end
+
+  def horizontal_move?(x_new, y_new)
+    y_position == y_new && x_position != x_new
+  end
+
+  def diagonal_move?(x_new, y_new)
+    x_diff(x_new) == y_diff(y_new)
   end
 
   def x_diff(x_new)

@@ -13,9 +13,6 @@ class User < ApplicationRecord
          authentication_keys: [:login]
 
   has_and_belongs_to_many :oauth_credentials
-
-  has_many :games_as_white, class_name: 'Game', foreign_key: 'white_player_id'
-  has_many :games_as_black, class_name: 'Game', foreign_key: 'black_player_id'
   has_many :pieces
 
   validates :username,
@@ -51,6 +48,11 @@ class User < ApplicationRecord
     end
     user
   end
+
+  Game.where(
+    'white_player_id = :player_id OR black_player_id = :player_id',
+    player_id: id
+  )
 
   private
 

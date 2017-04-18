@@ -16,16 +16,14 @@ class Pawn < Piece
     super
   end
 
-  private
-
   def valid_vertical_move?(x_new, y_new)
     return false if exceeds_bounds?(y_new)
-    return false if occupied(x_new, y_new)
+    return false if occupied?(x_new, y_new)
     !obstructed?(x_new, y_new)
   end
 
   def exceeds_bounds?(y_new)
-    y_diff(y_new) > y_move_factor
+    y_diff(y_new) > y_determinant
   end
 
   def diagonal_move?(x_new, y_new)
@@ -35,11 +33,6 @@ class Pawn < Piece
   def valid_capture?(x_new, y_new)
     return false unless diagonal_move?(x_new, y_new)
     opponent_at?(x_new, y_new)
-  end
-
-  def promote?(y_new)
-    return true if y_new == 7 || y_new.zero?
-    false
   end
 
   def moved?

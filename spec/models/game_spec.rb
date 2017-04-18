@@ -21,4 +21,14 @@ RSpec.describe Game, type: :model do
       expect(game.black_player_id).to eq(nil)
     end
   end
+
+  describe '#players' do
+    it 'returns both players' do
+      white_player = create(:user)
+      black_player = create(:user)
+      game = create(:game, white_player: white_player, black_player: black_player)
+      expect(game.players).to include white_player
+      expect(game.players).to include black_player
+    end
+  end
 end
