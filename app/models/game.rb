@@ -23,7 +23,7 @@ class Game < ApplicationRecord
     Bishop.create(game_id: id, x_position: 2, y_position: 0, color: 'White', user_id: white_player_id)
     Bishop.create(game_id: id, x_position: 5, y_position: 0, color: 'White', user_id: white_player_id)
     Queen.create(game_id: id, x_position: 3, y_position: 0, color: 'White', user_id: white_player_id)
-    King.create(game_id: id, x_position: 4, y_position: 0, color: 'White', user_id: white_player_id)
+    King.create(game_id: id, x_position: 4, y_position: 0, color: 'White', user_id: white_player_id, unicode: '&#9812;')
 
     # create and place black pieces
     (0..7).each do |i|
@@ -37,7 +37,7 @@ class Game < ApplicationRecord
     Bishop.create(game_id: id, x_position: 2, y_position: 7, color: 'Black', user_id: white_player_id)
     Bishop.create(game_id: id, x_position: 5, y_position: 7, color: 'Black', user_id: white_player_id)
     Queen.create(game_id: id, x_position: 3, y_position: 7, color: 'Black', user_id: white_player_id)
-    King.create(game_id: id, x_position: 4, y_position: 7, color: 'Black', user_id: white_player_id)
+    King.create(game_id: id, x_position: 4, y_position: 7, color: 'Black', user_id: white_player_id, unicode: '&#9818;')
   end
 
   def associate_pieces!

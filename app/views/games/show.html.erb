@@ -21,3 +21,18 @@
     </tr>
   <% end %>
 </table>
+
+<h3>image - id - type - color - x - y - user</h3>
+<% @game.pieces.where(type: 'King').each do |piece| %>
+  <ul>
+    <li class='<%= piece.color %><%= piece.type %>' style="text-size:40px;">
+      <%= raw piece.unicode%>
+      <%= piece.id %> -
+      <%= piece.type %> -
+      <%= piece.color %> -
+      <%= piece.x_position %> -
+      <%= piece.y_position %> -
+      <%= get_username(piece.user_id) %>
+    </li>
+  </ul>
+<% end %>
