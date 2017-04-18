@@ -4,7 +4,8 @@ RSpec.describe Pawn, type: :model do
   describe 'valid_move?' do
     context 'white pawn, x = 5, y = 2' do
       before do
-        game = FactoryGirl.create(:empty_board)
+        user = FactoryGirl.create(:user)
+        game = FactoryGirl.create(:game)
         game.pieces.each(&:destroy)
         white_pawn = FactoryGirl.create(:piece, game: game)
         game.pieces << white_pawn
@@ -47,7 +48,7 @@ RSpec.describe Pawn, type: :model do
 
     context 'determining first move' do
       before do
-        game = FactoryGirl.create(:empty_board)
+        game = FactoryGirl.create(:game)
         game.pieces.each(&:destroy)
         white_pawn = FactoryGirl.create(:piece, game: game)
         game.pieces << white_pawn
