@@ -2,29 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   context 'successfully creates' do
-    it 'has a name' do
-      elvis = FactoryGirl.create(:user)
-      game = FactoryGirl.create(:game)
-      expect(game.name).to eq 'test game'
+    before do
+      @game = create(:game)
+      @game.send(:populate_board!)
+      @game.send(:first_turn!)
     end
 
-    it 'has a white player' do
-      elvis = FactoryGirl.create(:user)
-      game = FactoryGirl.create(:game_with_white_only)
-      expect(game.white_player_id).to eq 0
+    it 'has 32 pieces' do
+      expect(@game.pieces.count).to eq(32)
     end
 
-    it 'has both white and black players' do
-      elvis = FactoryGirl.create(:user)
-      game = FactoryGirl.create(:game_with_white_and_black)
-      expect(game.white_player_id).to eq 0
-      expect(game.black_player_id).to eq 1
+    it 'turn is white after creation' do
+      expect(@game.turn).to eq('white')
     end
 
-    it 'has a black_player' do
-      elvis = FactoryGirl.create(:user)
-      game = FactoryGirl.create(:game_with_black_only)
-      expect(game.black_player_id).to eq 1
+    it 'has 1 as move_number' do
+      expect(@game.move_number).to eq(1)
     end
   end
 end

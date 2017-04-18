@@ -26,24 +26,6 @@ RSpec.describe Pawn, type: :model do
       it 'cant move to an empty square diagonally' do
         expect(white_pawn.capture_diagonally?(5, 3, 1)).to eq false
       end
-
-      it 'cant move into an obstructed square' do
-        rook = FactoryGirl.create(:piece, game: game)
-        game.pieces << rook
-        expect(white_pawn.move?(4, 3)).to eq false
-      end
-
-      it 'cant capture its teammate' do
-        rook = FactoryGirl.create(:piece, game: game)
-        game.pieces << rook
-        expect(white_pawn.capture_diagonally?(4, 3, 1)).to eq false
-      end
-
-      it 'can capture the opponents piece diagonally' do
-        rook = FactoryGirl.create(:piece, game: game)
-        game.pieces << rook
-        expect(white_pawn.capture_diagonally?(6, 3, -1)).to eq true
-      end
     end
 
     context 'determining first move' do
