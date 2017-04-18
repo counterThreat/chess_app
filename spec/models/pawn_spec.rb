@@ -5,6 +5,7 @@ RSpec.describe Pawn, type: :model do
     context 'white pawn, x = 5, y = 2' do
       before do
         user = FactoryGirl.create(:user)
+        sign_in user
         game = FactoryGirl.create(:game)
         game.pieces.each(&:destroy)
         white_pawn = FactoryGirl.create(:piece, game: game, user: user)
@@ -48,6 +49,8 @@ RSpec.describe Pawn, type: :model do
 
     context 'determining first move' do
       before do
+        user = FactoryGirl.create(:user)
+        sign_in user
         game = FactoryGirl.create(:game)
         game.pieces.each(&:destroy)
         white_pawn = FactoryGirl.create(:piece, game: game)
