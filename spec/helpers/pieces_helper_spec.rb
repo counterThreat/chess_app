@@ -11,5 +11,6 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe PiecesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'something' do
+  end
 end
