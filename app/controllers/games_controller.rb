@@ -17,7 +17,7 @@ class GamesController < ApplicationController
     flash[:notice] = 'You are the white player. You will be notified when a black player joins the game!'
     redirect_to game_path(@game)
   rescue ActiveRecord::RecordInvalid
-    flash[:alert] = 'Something went wrong. Please try again!'
+    flash[:alert] = 'Something went wrong. Please try again.'
     redirect_to games_path
   end
 
@@ -41,8 +41,8 @@ class GamesController < ApplicationController
       flash[:notice] = 'You are the black player. The white player can now begin the game'
       redirect_to game_path(@game)
     else
-      flash[:alert] = 'The game is full'
-      render 'index', status: :unprocessable_entity
+      flash[:alert] = 'This game is no longer available.'
+      redirect_to games_path
     end
   end
 
