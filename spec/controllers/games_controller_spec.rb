@@ -15,7 +15,7 @@ RSpec.describe GamesController, type: :controller do
       user = create(:user)
       sign_in user
       post :create, game: { name: 'test name' }
-      expect(assigns(:game).white_player).to eq(user.id)
+      expect(assigns(:game).white_player.id).to eq(user.id)
       expect(response).to redirect_to(game_path(assigns(:game)))
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe GamesController, type: :controller do
       sign_in user
       game = create(:game)
       patch :update, id: game
-      expect(assigns(:game).black_player).to eq(user.id)
+      expect(assigns(:game).black_player.id).to eq(user.id)
       expect(response).to redirect_to(game_path(:game))
     end
   end
