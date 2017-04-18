@@ -1,12 +1,14 @@
 class Game < ApplicationRecord
+  belongs_to :white_player, class_name: 'User', foreign_key: 'white_player_id'
+  belongs_to :black_player, class_name: 'User', foreign_key: 'black_player_id'
+
   has_many :pieces
-  has_one :white_player, class_name: 'User', foreign_key: 'white_player_id'
-  has_one :black_player, class_name: 'User', foreign_key: 'black_player_id'
-  after_create :populate_board!
 
   validates :name, presence: true
 
   enum current_player: [:current_player_is_black_player, :current_player_is_white_player]
+
+  after_create :populate_board!
 
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
@@ -15,6 +17,18 @@ class Game < ApplicationRecord
   def populate_board!
     make_newboard
     current_player_is_white_player!
+  end
+
+  def full?
+    players.count == 2
+  end
+
+  def players
+    [white_player, black_player].compact
+  end
+
+  def includes_player?(player)
+    players.include?(player)
   end
 
   def make_newboard

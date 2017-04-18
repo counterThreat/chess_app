@@ -13,7 +13,6 @@ class User < ApplicationRecord
          authentication_keys: [:login]
 
   has_and_belongs_to_many :oauth_credentials
-  has_many :pieces
 
   validates :username,
             presence: true,
@@ -51,7 +50,7 @@ class User < ApplicationRecord
 
   Game.where(
     'white_player_id = :player_id OR black_player_id = :player_id',
-    player_id: id
+    player_id: :user_id
   )
 
   private
