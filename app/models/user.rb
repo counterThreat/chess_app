@@ -20,6 +20,9 @@ class User < ApplicationRecord
               case_sensitive: false
             }
 
+  #has_many :players, through: :games, validate: false
+  #has_many :games, validate: false
+
   validate :validate_username
   attr_accessor :login
   has_and_belongs_to_many :oauth_providers
@@ -48,11 +51,12 @@ class User < ApplicationRecord
     user
   end
 
+=begin
   Game.where(
     'white_player_id = :player_id OR black_player_id = :player_id',
     player_id: :user_id
   )
-
+=end
   private
 
   def email_required?

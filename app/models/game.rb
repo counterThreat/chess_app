@@ -1,10 +1,10 @@
 class Game < ApplicationRecord
-  belongs_to :white_player, class_name: 'User', foreign_key: 'white_player_id'
-  belongs_to :black_player, class_name: 'User', foreign_key: 'black_player_id'
+  #belongs_to :white_player, class_name: 'User', foreign_key: 'white_player_id'
+  #belongs_to :black_player, class_name: 'User', foreign_key: 'black_player_id'
 
   has_many :pieces
 
-  validates :name, presence: true
+  validates_presence_of :name
 
   enum current_player: [:current_player_is_black_player, :current_player_is_white_player]
 
