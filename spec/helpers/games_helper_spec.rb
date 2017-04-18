@@ -14,7 +14,7 @@ RSpec.describe GamesHelper, type: :helper do
   describe 'display_date' do
     it 'converts game.created_at time to specific format' do
       game = create(:game)
-      expect(display_date(game.created_at)).to eq('April 14 2017')
+      expect(display_date(game.created_at)).to eq('April 18 2017')
     end
   end
 end
