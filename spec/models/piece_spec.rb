@@ -24,6 +24,11 @@ RSpec.describe Piece, type: :model do
       @rook.send(:move!, 4, 1)
       expect(@rook.last_move).to eq(@game.move_number)
     end
+
+    after(:all) do
+      @game.destroy
+      @rook.destroy
+    end
   end
 
   # Validations

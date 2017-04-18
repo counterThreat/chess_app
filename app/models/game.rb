@@ -1,6 +1,5 @@
 class Game < ApplicationRecord
   has_many :pieces
-
   belongs_to :white_player, class_name: 'User', foreign_key: 'white_player_id'
   belongs_to :black_player, class_name: 'User', foreign_key: 'black_player_id'
 
@@ -36,11 +35,11 @@ class Game < ApplicationRecord
   end
 
   def forfeit_by!(user)
-    if user == white_player
-      winner = black_player
-    else
-      winner = white_player
-    end
+    winner = if user == white_player
+               black_player
+             else
+               white_player
+             end
     update!(winning_player_id: winner)
   end
 

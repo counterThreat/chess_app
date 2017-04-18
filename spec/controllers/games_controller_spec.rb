@@ -12,8 +12,9 @@ RSpec.describe GamesController, type: :controller do
 
   describe 'POST /create' do
     it 'creates and redirects to a new game w user as white player' do
-      user = create(:user)
+      user = FactoryGirl.create :user
       sign_in user
+      game = FactoryGirl.create :game
       post :create, game: { name: 'test game' }
       expect(assigns(:game).white_player_id).to eq(user.id)
       expect(response).to redirect_to(game_path(assigns(:game)))
@@ -22,8 +23,10 @@ RSpec.describe GamesController, type: :controller do
 
   describe 'GET /index' do
     it 'successfully returns the index' do
+      user = create(:user)
+      sign_in user
       create(:game)
-      get :index, params: { game: { name: 'test game' } }
+      get :index
       expect(response).to be_success
     end
   end

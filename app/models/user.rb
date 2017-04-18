@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def games
-    Game.where("black_player_id = ? OR white_player_id = ?", self.id, self.id)
+    Game.where('black_player_id = ? OR white_player_id = ?', id, id)
   end
 
   def validate_username

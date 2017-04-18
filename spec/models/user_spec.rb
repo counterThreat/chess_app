@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     @user = FactoryGirl.build(:user)
   end
 
-  it 'should create a new user from valid attributes' do
+  it 'creates a new user from valid attributes' do
     User.create!(@user_attr)
   end
 end
