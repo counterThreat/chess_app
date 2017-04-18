@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :games_as_white, class_name: 'Game', foreign_key: 'white_player_id'
   has_many :games_as_black, class_name: 'Game', foreign_key: 'black_player_id'
   has_many :pieces
+  accepts_nested_attributes_for :games_as_black, :games_as_white
 
   validates :username,
             presence: true,
@@ -73,6 +74,10 @@ class User < ApplicationRecord
         where(username: conditions[:username]).first
       end
     end
+  end
+
+  def games
+    Game.where("black_player_id = ? OR white_player_id = ?", self.id, self.id)
   end
 
   def validate_username

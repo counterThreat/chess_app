@@ -26,6 +26,24 @@ RSpec.describe GamesController, type: :controller do
       get :index, params: { game: { name: 'test game' } }
       expect(response).to be_success
     end
+
+    it 'assigns games with only the white player' do
+      game = create(:game_with_white_player)
+      get :index
+      expect(assigns(:games)).to include game
+    end
+
+    it 'assigns games with only black players to @games' do
+      game = create(:game_with_black_player)
+      get :index
+      expect(assigns(:games)).to include game
+    end
+
+    it 'does not list games with both players' do
+      game = create(:game_with_white_and_black_players)
+      get :index
+      expect(assigns(:games)).not_to include game
+    end
   end
 
   describe 'GET /show' do
@@ -57,7 +75,7 @@ RSpec.describe GamesController, type: :controller do
       game = create(:game_with_white_player)
       patch :update, id: game
       expect(assigns(:game).black_player_id).to eq(user.id)
-      expect(response).to redirect_to(game_path(game))
+      expect(response).to redirect_to(game_path(:game))
     end
   end
 end

@@ -47,13 +47,6 @@ RSpec.describe Piece, type: :model do
 
   # Instance Methods
 
-  describe "on_board? method" do
-    it "returns false if a piece moves out of bounds" do
-      piece = FactoryGirl.build(:piece, x_position: 10, y_position: 7)
-      expect(piece.on_board?).to eq false
-    end
-  end
-
   describe "move method" do
     it "allows a piece to change x position" do
       game1 = FactoryGirl.create(:game)
@@ -72,10 +65,21 @@ RSpec.describe Piece, type: :model do
     end
 
     it "allows a piece to move diagonally" do
-      @game = Game.create
-      @white_bishop = Bishop.create(x_position: 3, y_position: 1, color: 'white')
-      @white_bishop.diagonal_move?(4,2)
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      piece = FactoryGirl.create(:bishop, game: game1, user: elvis, params: { x_position: 3, y_position: 1 })
+      piece.diagonal_move?(4, 2)
       expect(response).to eq true
+    end
+  end
+
+  describe 'can move method' do
+    it 'returns true' do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
+      piece.can_move?(4, 3)
+      expect(reponse).to eq true
     end
   end
 
@@ -92,10 +96,11 @@ RSpec.describe Piece, type: :model do
       y_new = 6
       expect(piece2.obstructed?(x_new, y_new)).to eq false
     end
+
     it "returns true if path is blocked" do
       x_new = 1
       y_new = 1
-      blocker = FactoryGirl.create(:piece, game: game2, user: deepblue, x_position: 2, y_position: 1)
+      FactoryGirl.create(:piece, game: game2, user: deepblue, x_position: 2, y_position: 1)
       expect(piece2.obstructed?(x_new, y_new)).to eq true
     end
 
@@ -103,26 +108,6 @@ RSpec.describe Piece, type: :model do
       x_new = 2
       y_new = 2
       expect(piece2.obstructed?(x_new, y_new)).to eq false
-    end
-  end
-
-  describe 'valid moves' do
-    context 'white pawn and white rook' do
-      before do
-        @game = Game.create
-        @game.pieces.each(&:destroy)
-        @white_pawn = Pawn.create(x_position: 8, y_position: 2, color: 'white')
-        @white_rook = Rook.create(x_position: 1, y_position: 1, color: 'white')
-        @game.pieces << @white_pawn
-        @game.pieces << @white_rook
-      end
-
-      context 'a pawn cant go off the board' do
-        it 'returns false if the pawn goes out of bounds' do
-          @white_pawn.move!(8, 4)
-          expect(@white_pawn.move!(8, 4)).to be(false)
-        end
-      end
     end
   end
 end

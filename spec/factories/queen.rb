@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :queen do
+  factory :queen, parent: :piece, class: 'Queen' do
   end
 end

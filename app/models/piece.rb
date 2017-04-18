@@ -17,6 +17,7 @@ class Piece < ApplicationRecord
     if color == game.turn && game.winning_player_id.nil?
       # return false for check logic
       game.end_turn!(game.turn) if move!(x_new, y_new)
+      true
     end
   end
 
@@ -67,7 +68,7 @@ class Piece < ApplicationRecord
   end
 
   def out_of_bounds?(x_new, y_new)
-    x_new > 7 || x_new < 1 || y_new > 7 || y_new < 1
+    x_new > 7 || x_new < 0 || y_new > 7 || y_new < 0
   end
 
   def opponent(x_new, y_new)
@@ -92,15 +93,15 @@ class Piece < ApplicationRecord
     end
   end
 
-  def horizontal_move?(x_new, y_new)
+  def horizontal?(x_new, y_new)
     y_position == y_new && x_position != x_new
   end
 
-  def vertical_move?(x_new, y_new)
+  def vertical?(x_new, y_new)
     x_position == x_new && y_position != y_new
   end
 
-  def diagonal_move?(x_new, y_new)
+  def diagonal?(x_new, y_new)
     return false if x_position == x_new && y_position == y_new
     x_difference(x_new) == y_difference(y_new)
   end

@@ -1,13 +1,14 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
-
   def new
     @game = Game.new
+    @game_data = game_data
+    @current_user_data = current_user_data
   end
 
   def index
-    @games = Game.where(black_player_id: nil)
+    @games = Game.available_games.all
   end
 
   def create
@@ -45,12 +46,35 @@ class GamesController < ApplicationController
     end
   end
 
-  def destroy
-  end
-
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
 
   private
+
+  def current_user_data
+    current_user_data = {
+      id: current_user.id,
+      username: current_user.username
+    }
+  end
+
+  def game_data
+    game_data = {
+      id: @game.id,
+      name: @game.name,
+      env: Rails.env
+    }
+
+    game_data[:white_player] = {
+      id: @game.white_player_id,
+      color: 'white'
+    }
+
+    game_data[:black_player] = {
+      id: @game.black_player_id,
+      color: 'black'
+    }
+    game_data
+  end
 
   def game_params
     params.require(:game).permit(:name)

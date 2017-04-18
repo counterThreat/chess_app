@@ -4,65 +4,65 @@ RSpec.describe Pawn, type: :model do
   describe 'valid_move?' do
     context 'white pawn, x = 5, y = 2' do
       before do
-        game = Game.create
+        game = FactoryGirl.create(:empty_board)
         game.pieces.each(&:destroy)
-        @white_pawn = Pawn.create(x_position: 5, y_position: 3, color: 'white')
-        game.pieces << @white_pawn
+        white_pawn = FactoryGirl.create(:piece, game: game)
+        game.pieces << white_pawn
       end
 
       it 'can move one square forward' do
-        expect(@white_pawn.forward_one_square?(5, 3, 1)).to eq true
+        expect(white_pawn.forward_one_square?(5, 3, 1)).to eq true
       end
 
       it 'cant move backwards' do
-        expect(@white_pawn.forward_one_square?(5, 1, 1)).to eq false
+        expect(white_pawn.forward_one_square?(5, 1, 1)).to eq false
       end
 
       it 'cant move forward two squares' do
-        expect(@white_pawn.forward_two_squares?(5, 4, 1)).to eq false
+        expect(white_pawn.forward_two_squares?(5, 4, 1)).to eq false
       end
 
       it 'cant move to an empty square diagonally' do
-        expect(@white_pawn.capture_diagonally?(5, 3, 1)).to eq false
+        expect(white_pawn.capture_diagonally?(5, 3, 1)).to eq false
       end
 
       it 'cant move into an obstructed square' do
-        @rook = Rook.create(x_position: 4, y_position: 3, color: 'white')
-        game.pieces << @rook
-        expect(@white_pawn.move?(4, 3)).to eq false
+        rook = FactoryGirl.create(:piece, game: game)
+        game.pieces << rook
+        expect(white_pawn.move?(4, 3)).to eq false
       end
 
       it 'cant capture its teammate' do
-        @rook = Rook.create(x_position: 4, y_position: 3, color: 'white')
-        game.pieces << @rook
-        expect(@white_pawn.capture_diagonally?(4, 3, 1)).to eq false
+        rook = FactoryGirl.create(:piece, game: game)
+        game.pieces << rook
+        expect(white_pawn.capture_diagonally?(4, 3, 1)).to eq false
       end
 
       it 'can capture the opponents piece diagonally' do
-        @rook = Rook.create(x_position: 6, y_position: 3, color: 'black')
-        game.pieces << @rook
-        expect(@white_pawn.capture_diagonally?(6, 3, -1)).to eq true
+        rook = FactoryGirl.create(:piece, game: game)
+        game.pieces << rook
+        expect(white_pawn.capture_diagonally?(6, 3, -1)).to eq true
       end
     end
 
     context 'determining first move' do
       before do
-        game = Game.create
+        game = FactoryGirl.create(:empty_board)
         game.pieces.each(&:destroy)
-        @white_pawn = Pawn.create(x_position: 5, y_position: 2, color: 'white')
-        game.pieces << @white_pawn
+        white_pawn = FactoryGirl.create(:piece, game: game)
+        game.pieces << white_pawn
       end
 
       it 'finds first move as true' do
-        expect(@white_pawn.first_turn?).to eq true
+        expect(white_pawn.first_turn?).to eq true
       end
 
       it 'can move two squares' do
-        expect(@white_pawn.forward_two_squares?(5, 4, 1)).to eq true
+        expect(white_pawn.forward_two_squares?(5, 4, 1)).to eq true
       end
 
       it 'can move one square' do
-        expect(@white_pawn.forward_one_square?(5, 3, 1)).to eq true
+        expect(white_pawn.forward_one_square?(5, 3, 1)).to eq true
       end
     end
   end
