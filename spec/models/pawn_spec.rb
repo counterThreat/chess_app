@@ -7,7 +7,7 @@ RSpec.describe Pawn, type: :model do
         user = FactoryGirl.create(:user)
         game = FactoryGirl.create(:game)
         game.pieces.each(&:destroy)
-        white_pawn = FactoryGirl.create(:piece, game: game)
+        white_pawn = FactoryGirl.create(:piece, game: game, user: user)
         game.pieces << white_pawn
       end
 

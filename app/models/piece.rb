@@ -48,14 +48,6 @@ class Piece < ApplicationRecord
   end
 =end
 
-  private
-
-  def valid_move?(x_new, y_new)
-    return false if out_of_bounds?(x_new, y_new)
-    return false if obstructed?(x_new, y_new)
-    true
-  end
-
   def obstructed?(x_new, y_new)
     x_current = x_new
     y_current = y_new
@@ -65,6 +57,14 @@ class Piece < ApplicationRecord
       return false if x_current == x_new && y_current == y_new
       return true if game.occupied?(x_current_, y_current)
     end
+  end
+
+  private
+
+  def valid_move?(x_new, y_new)
+    return false if out_of_bounds?(x_new, y_new)
+    return false if obstructed?(x_new, y_new)
+    true
   end
 
   def out_of_bounds?(x_new, y_new)
