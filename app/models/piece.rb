@@ -7,7 +7,6 @@ class Piece < ApplicationRecord
   validates :x_position, presence: true
   validates :y_position, presence: true
   validates :game_id, presence: true
-  validates :user_id, presence: true
 
   # def valid_move?(x_new, y_new)
   #   return false if exposes_king_to_attack?(x, y)
