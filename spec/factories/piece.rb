@@ -32,16 +32,14 @@ FactoryGirl.define do
     captured false
   end
 
-=begin
-  factory :pawn do
-    type "Pawn"
-    color "White"
-    x_position 1
-    y_position 1
-    sequence(:game_id) { |a| a }
-    sequences(:user_id) { |b| b }
-    moved false
-    captured false
-  end
-=end
+  #   factory :pawn do
+  #     type "Pawn"
+  #     color "White"
+  #     x_position 1
+  #     y_position 1
+  #     sequence(:game_id) { |a| a }
+  #     sequences(:user_id) { |b| b }
+  #     moved false
+  #     captured false
+  #   end
 end
