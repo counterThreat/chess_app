@@ -1,6 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Piece, type: :model do
+  describe 'move!' do
+    before do
+      @game = create(:empty_game)
+      @rook = Rook.new(x_position: 1, y_position: 1, color: 'white', last_move: nil)
+      @game.pieces << @rook
+    end
+
+    it 'updates x' do
+      @rook.send(:move!, 3, 1)
+      expect(@rook.x_position).to eq 1
+      expect(@rook.y_position).to eq 5
+    end
+
+    it 'updates y' do
+      @rook.send(:move!, 4, 1)
+      expect(@rook.x_position).to eq 4
+      expect(@rook.y_position).to eq 1
+    end
+
+    it 'updates last_move' do
+      @rook.send(:move!, 4, 1)
+      expect(@rook.last_move).to eq(@game.move_number)
+    end
+  end
+
   # Validations
   it "has a valid factory" do
     game1 = FactoryGirl.create(:game)
@@ -44,45 +69,6 @@ RSpec.describe Piece, type: :model do
   # describe "subclass interactions" do
   # it "allows subclasses to be obstructed"
   # end
-
-  # Instance Methods
-
-  describe "move method" do
-    it "allows a piece to change x position" do
-      game1 = FactoryGirl.create(:game)
-      elvis = FactoryGirl.create(:user)
-      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.move!(4, 3)
-      expect(piece.x_position).to eq 4
-    end
-
-    it "allows a piece to change y position" do
-      game1 = FactoryGirl.create(:game)
-      elvis = FactoryGirl.create(:user)
-      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.move!(3, 4)
-      expect(piece.y_position).to eq 4
-    end
-
-    it "allows a piece to move diagonally" do
-      game1 = FactoryGirl.create(:game)
-      elvis = FactoryGirl.create(:user)
-      piece = FactoryGirl.create(:bishop, game: game1, user: elvis, params: { x_position: 3, y_position: 1 })
-      piece.diagonal_move?(4, 2)
-      expect(response).to eq true
-    end
-  end
-
-  describe 'can move method' do
-    it 'returns true' do
-      game1 = FactoryGirl.create(:game)
-      elvis = FactoryGirl.create(:user)
-      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.can_move?(4, 3)
-      expect(reponse).to eq true
-    end
-  end
-
   # describe "empty_previous method"
 
   describe "obstructed method" do
