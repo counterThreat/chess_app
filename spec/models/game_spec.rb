@@ -21,4 +21,10 @@ RSpec.describe Game, type: :model do
       expect(game.black_player_id).to eq(nil)
     end
   end
+
+  describe 'check method' do
+    it 'returns the color of the king in check when in check by opponent'
+    it 'returns color of the king in check when in friendly check'
+    it 'returns nil when neither king is in check'
+  end
 end
