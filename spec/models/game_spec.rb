@@ -23,8 +23,25 @@ RSpec.describe Game, type: :model do
   end
 
   describe 'check method' do
-    it 'returns the color of the king in check when in check by opponent'
-    it 'returns color of the king in check when in friendly check'
-    it 'returns nil when neither king is in check'
+    user3 = FactoryGirl.create(:user)
+    user4 = FactoryGirl.create(:user)
+    check_game = FactoryGirl.create(:game_with_white_and_black_players, white_player_id: user3.id, black_player_id: user4.id)
+    king = FactoryGirl.create(:king, color: 'White', game: check_game, user_id: check_game.white_player_id)
+    rook = FactoryGirl.create(:rook, color: 'White', game: check_game,
+    user_id: check_game.white_player_id, x_position: 0, y_position: 1)
+    bishop = FactoryGirl.create(:bishop, color: 'Black', game: check_game,
+    user_id: check_game.black_player_id, x_position: 2, y_position: 3)
+
+    it 'returns the color of the king in check when in check by opponent' do
+      bishop.move(1, 2)
+      expect(check_game.check).to eq 'White'
+    end
+    it 'returns color of the king in check when in friendly check' do
+      rook.move(0,0)
+      expect(check_game.check).to eq 'White'
+    end
+    it 'returns nil when neither king is in check' do
+      expect(check_game.check).to eq nil
+    end
   end
 end

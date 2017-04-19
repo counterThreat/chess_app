@@ -10,7 +10,7 @@ FactoryGirl.define do
     captured false
   end
 
-  factory :rook, class: Piece do
+  factory :rook do
     type "Rook"
     color "White"
     x_position 3
@@ -21,7 +21,7 @@ FactoryGirl.define do
     captured false
   end
 
-  factory :bishop do, class: Piece do
+  factory :bishop do
     type "Bishop"
     color "Black"
     x_position 2
@@ -32,11 +32,11 @@ FactoryGirl.define do
     captured false
   end
 
-  factory :king do, class: Piece do
+  factory :king do
     type "King"
     color "White"
-    x_position
-    y_position
+    x_position 3
+    y_position 0
     sequence(:game_id) { |a| a }
     sequence(:user_id) { |b| b }
     moved false
