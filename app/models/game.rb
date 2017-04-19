@@ -53,6 +53,5 @@ class Game < ApplicationRecord
   # on the black player since the game is created with the white player
 
   def check
-
   end
 end
