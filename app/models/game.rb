@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
   has_many :pieces
-  has_one :white_player, class_name: 'User', foreign_key: 'white_player_id'
-  has_one :black_player, class_name: 'User', foreign_key: 'black_player_id'
+  belongs_to :white_player, class_name: 'User', required: false
+  belongs_to :black_player, class_name: 'User', required: false
   after_create :make_newboard
 
   validates :name, presence: true
