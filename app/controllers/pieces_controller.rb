@@ -1,6 +1,7 @@
 class PiecesController < ApplicationController
   def index
-    render json: Piece.order(:game_id)
+    @game = Game.find(params[:game_id])
+    render json: @game.pieces
   end
 
   # def update
