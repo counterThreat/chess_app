@@ -56,7 +56,7 @@ class Piece < ApplicationRecord
   def moved?
     updated_at != created_at
   end
-  
+
   def vertical_move?(x_new, y_new)
     x_position == x_new && y_position != y_new
   end

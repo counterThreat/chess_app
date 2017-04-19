@@ -29,7 +29,7 @@ RSpec.describe Pawn, type: :model do
 
     it 'returns true if valid_capture? is true' do
       FactoryGirl.create(:bishop, game: mygame, user: doug)
-      newmove = pawn.valid_capture?(2,2)
+      newmove = pawn.valid_capture?(2, 2)
       expect(newmove).to eq true
     end
 
