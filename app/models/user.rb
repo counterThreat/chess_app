@@ -20,8 +20,8 @@ class User < ApplicationRecord
               case_sensitive: false
             }
 
-  #has_many :players, through: :games, validate: false
-  #has_many :games, validate: false
+  has_many :players, through: :games, validate: false
+  has_many :games, validate: false
 
   validate :validate_username
   attr_accessor :login

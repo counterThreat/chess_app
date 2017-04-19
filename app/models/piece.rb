@@ -1,10 +1,10 @@
 class Piece < ApplicationRecord
-  belongs_to :game
-  belongs_to :player, class_name: 'User'
+  belongs_to :game, validate: false
+  belongs_to :player, class_name: 'User', validate: false
 
   validates :type, :x_position, :y_position, :color, presence: true
 
-  enum color: [:black, :white]
+  enum color: [:white, :black]
   # def valid_move?(x_new, y_new)
   #   return false if exposes_king_to_attack?(x, y)
   # end
