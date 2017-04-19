@@ -35,7 +35,7 @@ FactoryGirl.define do
   factory :king do
     type "King"
     color "White"
-    x_position 3
+    x_position 4
     y_position 0
     sequence(:game_id) { |a| a }
     sequence(:user_id) { |b| b }
