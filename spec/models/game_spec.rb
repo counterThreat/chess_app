@@ -6,7 +6,7 @@ RSpec.describe Game, type: :model do
       user1 = create(:user)
       user2 = create(:user)
       game = create(:game_with_white_and_black_players, white_player_id: user1.id, black_player_id: user2.id)
-      piece = create(:bishop, color: 'Black', game: game, user_id: game.white_player_id)
+      piece = create(:bishop, color: 'black', game: game, user_id: game.white_player_id)
       game.associate_pieces!
       piece.reload
       expect(piece.user_id).to eq(game.black_player_id)
