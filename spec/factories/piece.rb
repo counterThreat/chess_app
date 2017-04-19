@@ -31,7 +31,7 @@ FactoryGirl.define do
     moved false
     captured false
   end
-
+  
   factory :pawn do
     type "Pawn"
     color "white"
