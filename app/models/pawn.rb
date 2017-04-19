@@ -1,5 +1,4 @@
 class Pawn < Piece
-  class Pawn < Piece
     FIRST_MOVE = 2
     SECOND_MOVE = 1
 
@@ -10,7 +9,7 @@ class Pawn < Piece
     end
 
     def pawn_possible?(x_new, y_new)
-      valid_vertical_move?(x_new, y_new) || valid_capture?(x_new, y_new)
+      (vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) || valid_capture?(x_new, y_new)
     end
 
     def move(x_new, y_new)
@@ -18,16 +17,16 @@ class Pawn < Piece
     end
 
     def valid_vertical_move?(x_new, y_new)
-      return false if exceeds_bounds?(y_new)
+      return false if y_out_of_bounds?(y_new)
       return false if occupied?(x_new, y_new)
       !obstructed?(x_new, y_new)
     end
 
-    def exceeds_bounds?(y_new)
-      y_diff(y_new) > y_determinant
+    def y_out_of_bounds?(y_new)
+      y_diff(y_new) > y_move
     end
 
-    def diagonal_move?(x_new, y_new)
+    def pawn_diagonal_move?(x_new, y_new)
       x_diff(x_new) == 1 && y_diff(y_new) == 1
     end
 
@@ -42,15 +41,23 @@ class Pawn < Piece
 
     def forward_move?(y_new)
       y_distance = y_new - y_position
-      white? ? y_distance > 0 : y_distance < 0
+      if color == 'white'
+        y_distance > 0
+      else
+        y_distance < 0
+      end
     end
 
     def forward_direction
-      white? ? 1 : -1
+      if color == 'white'
+        1
+      else
+        -1
+      end
     end
 
-    def backward
-      y + -forward_direction
+    def backward(y_new)
+      y_new + -forward_direction
     end
 
     def opponent_at?(x_new, y_new)
@@ -62,8 +69,7 @@ class Pawn < Piece
       !piece.nil? && piece.color != color
     end
 
-    def y_determinant
+    def y_move
       moved? ? SECOND_MOVE : FIRST_MOVE
     end
   end
-end

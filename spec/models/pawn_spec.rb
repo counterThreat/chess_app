@@ -7,12 +7,13 @@ RSpec.describe Pawn, type: :model do
     pawn = FactoryGirl.create(:pawn, game: mygame, user: madonna)
 
     it 'returns true if valid_move? is true' do
-      newmove = pawn.valid_move?(1,2)
+      newmove = pawn.valid_move?(1, 2)
       expect(newmove).to eq true
     end
 
     it 'returns false if valid_move? is false' do
-      newmove = pawn.valid_move?(4,2)
+      newmove = pawn.valid_move?(4, 2)
+      expect(newmove).to eq false
     end
   end
 
@@ -27,13 +28,14 @@ RSpec.describe Pawn, type: :model do
     end
 
     it 'returns true if valid_capture? is true' do
+      FactoryGirl.create(:bishop, game: mygame, user: doug)
       newmove = pawn.valid_capture?(2,2)
       expect(newmove).to eq true
     end
 
-    it 'returns false if y exceeds bounds' do
-      newmove = pawn.exceeds_bounds?(1, 4)
-      expect(newmove).to eq false
+    it 'returns true if y exceeds bounds' do
+      newmove = pawn.y_out_of_bounds?(4)
+      expect(newmove).to eq true
     end
   end
 end
