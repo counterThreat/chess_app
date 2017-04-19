@@ -3,11 +3,11 @@ class PiecesController < ApplicationController
     render json: Piece.order(:game_id)
   end
 
-  def update
-    piece = Piece.find(params[:id])
-    piece.update_attributes(piece_params)
-    render json: piece
-  end
+  # def update
+  # #   piece = Piece.find(params[:id])
+  # #   piece.update_attributes(piece_params)
+  # #   render json: piece
+  # # end
 end
 
 private
