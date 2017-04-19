@@ -1,6 +1,6 @@
 class PiecesController < ApplicationController
   def index
-    @game = Game.find(params[:id])
+    @game = Game.find(params[:game_id])
     render json: @game.pieces
   end
 
