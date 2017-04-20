@@ -52,11 +52,12 @@ class Game < ApplicationRecord
   # where white player is already present so we need a JOIN method that focuses
   # on the black player since the game is created with the white player
 
-  def check(color)
-    king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces.where.not(color: color)
-    opponents.each do |opponent|
-      return king.color if opponent.valid_move?(king.x_position, king.y_position)
+  def check
+    black_king = pieces.find_by(type: 'King', color: 'Black')
+    white_king = pieces.find_by(type: 'King', color: 'White')
+    pieces.each do |piece|
+      return 'Black' if piece.valid_move?(black_king.x_position, black_king.y_position)
+      return 'White' if piece.valid_move?(white_king.x_position, white_king.y_position)
     end
   end
 end
