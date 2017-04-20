@@ -7,42 +7,37 @@ RSpec.describe King, type: :model do
     king = FactoryGirl.create(:king, game: mygame, user: anna)
 
     it 'returns true if moving one square east' do
-      newmove = king.valid_move?(4, 0)
+      newmove = king.valid_move?(5, 0)
       expect(newmove).to eq true
     end
 
     it 'returns true if moving one square west' do
-      newmove = king.valid_move?(2, 0)
+      newmove = king.valid_move?(3, 0)
       expect(newmove).to eq true
     end
 
     it 'returns true if moving one square north' do
-      newmove = king.valid_move?(3, 1)
-      expect(newmove).to eq true
-    end
-
-    it 'returns true if moving one square northeast' do
       newmove = king.valid_move?(4, 1)
       expect(newmove).to eq true
     end
 
+    it 'returns true if moving one square northeast' do
+      newmove = king.valid_move?(5, 1)
+      expect(newmove).to eq true
+    end
+
     it 'returns true if moving one square northwest' do
-      newmove = king.valid_move?(2, 1)
+      newmove = king.valid_move?(3, 1)
       expect(newmove).to eq true
     end
 
     it 'returns false if moving more than one square north' do
-      newmove = king.valid_move?(3, 5)
+      newmove = king.valid_move?(4, 5)
       expect(newmove).to eq false
     end
 
     it 'returns false if moving more than one square east' do
       newmove = king.valid_move?(7, 0)
-      expect(newmove).to eq false
-    end
-
-    it 'returns false if moving more than one square southwest' do
-      newmove = king.valid_move?(0, 4)
       expect(newmove).to eq false
     end
 
