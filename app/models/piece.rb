@@ -30,7 +30,6 @@ class Piece < ApplicationRecord
         attack!(x_new, y_new)
         update!(x_position: x_new)
         update!(y_position: y_new)
-        game.check
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
