@@ -27,33 +27,33 @@ RSpec.describe Game, type: :model do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
       check_game = FactoryGirl.create(:game)
-      white_king = FactoryGirl.create(:king, color: 'White', game: check_game, user_id: user3.id)
-      black_king = FactoryGirl.create(:king, color: 'Black', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
-      bishop = FactoryGirl.create(:bishop, color: 'Black', game: check_game, x_position: 1, y_position: 1, user_id: user4.id)
+      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id)
+      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
+      bishop = FactoryGirl.create(:bishop, color: 'black', game: check_game, x_position: 1, y_position: 1, user_id: user4.id)
       bishop.move(2, 2)
-      expect(check_game.check).to eq 'White'
+      expect(check_game.check).to eq 'white'
     end
 
     it 'returns color of the king in check when in friendly check' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
       check_game = FactoryGirl.create(:game)
-      white_king = FactoryGirl.create(:king, color: 'White', game: check_game, user_id: user3.id)
-      black_king = FactoryGirl.create(:king, color: 'Black', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
-      rook = FactoryGirl.create(:rook, color: 'White', game: check_game,
+      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id)
+      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
+      rook = FactoryGirl.create(:rook, color: 'white', game: check_game,
       user_id: user3.id, x_position: 0, y_position: 1)
       rook.move(0, 0)
-      expect(check_game.check).to eq 'White'
+      expect(check_game.check).to eq 'white'
     end
     it 'returns nil when neither king is in check' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
       check_game = FactoryGirl.create(:game)
-      white_king = FactoryGirl.create(:king, color: 'White', game: check_game, user_id: user3.id)
-      black_king = FactoryGirl.create(:king, color: 'Black', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
-      rook = FactoryGirl.create(:rook, color: 'White', game: check_game,
+      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id)
+      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
+      rook = FactoryGirl.create(:rook, color: 'white', game: check_game,
       user_id: user3.id, x_position: 0, y_position: 1)
-      bishop = FactoryGirl.create(:bishop, color: 'Black', game: check_game, x_position: 1, y_position: 1, user_id: user4.id)
+      bishop = FactoryGirl.create(:bishop, color: 'black', game: check_game, x_position: 1, y_position: 1, user_id: user4.id)
       expect(check_game.check).to eq nil
     end
   end
