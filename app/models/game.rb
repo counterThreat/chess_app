@@ -59,5 +59,6 @@ class Game < ApplicationRecord
       return 'Black' if piece.valid_move?(black_king.x_position, black_king.y_position)
       return 'White' if piece.valid_move?(white_king.x_position, white_king.y_position)
     end
+    nil
   end
 end
