@@ -102,14 +102,20 @@ RSpec.describe Piece, type: :model do
     it "allows a piece to change x position" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: elvis.id)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: michael.id, x_position: 7, y_position: 6)
       piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.move(4, 3)
-      expect(piece.x_position).to eq 4
+      piece.move(5, 3)
+      expect(piece.x_position).to eq 5
     end
 
     it "allows a piece to change y position" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: elvis.id)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: michael.id, x_position: 7, y_position: 6)
       piece = FactoryGirl.create(:rook, game: game1, user: elvis)
       piece.move(3, 4)
       expect(piece.y_position).to eq 4
@@ -118,6 +124,10 @@ RSpec.describe Piece, type: :model do
     it "allows a piece to move diagonally" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: elvis.id)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: michael.id, x_position: 7, y_position: 6)
+      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
       piece = FactoryGirl.create(:bishop, game: game1, user: elvis)
       piece.move(1, 1)
       expect(piece.x_position).to eq 1
