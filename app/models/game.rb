@@ -56,8 +56,8 @@ class Game < ApplicationRecord
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
     pieces.each do |piece|
-      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position)
-      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position)
+      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white'
+      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black'
     end
     nil
   end

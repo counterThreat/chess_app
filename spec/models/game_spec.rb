@@ -34,7 +34,7 @@ RSpec.describe Game, type: :model do
       expect(check_game.check).to eq 'white'
     end
 
-    it 'returns color of the king in check when in friendly check' do
+    it 'returns nil when king is in check by piece of same color' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
       check_game = FactoryGirl.create(:game)
@@ -43,7 +43,7 @@ RSpec.describe Game, type: :model do
       rook = FactoryGirl.create(:rook, color: 'white', game: check_game,
       user_id: user3.id, x_position: 0, y_position: 1)
       rook.move(0, 0)
-      expect(check_game.check).to eq 'white'
+      expect(check_game.check).to eq nil
     end
     it 'returns nil when neither king is in check' do
       user3 = FactoryGirl.create(:user)
