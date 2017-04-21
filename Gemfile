@@ -72,6 +72,8 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
+  # used for viewing overall test coverage of target code
+  gem 'simplecov', require: false
 end
 
 group :development do
