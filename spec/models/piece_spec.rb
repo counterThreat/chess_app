@@ -102,14 +102,20 @@ RSpec.describe Piece, type: :model do
     it "allows a piece to change x position" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
       piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece.move(4, 3)
-      expect(piece.x_position).to eq 4
+      piece.move(5, 3)
+      expect(piece.x_position).to eq 5
     end
 
     it "allows a piece to change y position" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
       piece = FactoryGirl.create(:rook, game: game1, user: elvis)
       piece.move(3, 4)
       expect(piece.y_position).to eq 4
@@ -118,6 +124,10 @@ RSpec.describe Piece, type: :model do
     it "allows a piece to move diagonally" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
       piece = FactoryGirl.create(:bishop, game: game1, user: elvis)
       piece.move(1, 1)
       expect(piece.x_position).to eq 1
@@ -125,7 +135,35 @@ RSpec.describe Piece, type: :model do
     end
   end
 
-  # describe "empty_previous method"
+  describe "move method in relation to check" do
+    it "does not allow a king to move itself into check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 6, y_position: 1)
+      white_king.move(4, 1)
+      white_king.reload
+      expect(white_king.y_position).to eq 0
+    end
+
+    it "does not allow a piece to make a move that exposes that piece's king to check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 6, y_position: 1)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 0)
+      black_rook.move(6, 0)
+      white_rook.move(5, 1)
+      white_rook.reload
+      expect(white_rook.x_position).to eq 5
+      expect(white_rook.y_position).to eq 0
+    end
+  end
+
 
   describe "obstructed method" do
     game2 = FactoryGirl.create(:game)
