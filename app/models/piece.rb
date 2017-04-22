@@ -31,14 +31,13 @@ class Piece < ApplicationRecord
         update(x_position: x_new, y_position: y_new)
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
+        else
+          update(moved: true) if moved?
         end
       end
     else
       puts 'Move is not allowed!' # can change this to be a flash method
       return
-    end
-    if moved?
-      update(moved: true)
     end
   end
 

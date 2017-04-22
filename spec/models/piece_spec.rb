@@ -99,6 +99,14 @@ RSpec.describe Piece, type: :model do
   end
 
   describe "move method" do
+    it "records if move has taken place" do
+      user = FactoryGirl.create(:user)
+      user2 = FactoryGirl.create(:user)
+      game = FactoryGirl.create(:game, black_player_id: user2.id, white_player_id: user.id)
+      rook = FactoryGirl.create(:rook, game: game, user_id: user.id)
+      rook.move(3, 4)
+      expect(rook.moved).to eq(true)
+    end
     it "allows a piece to change x position" do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
