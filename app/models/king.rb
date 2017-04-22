@@ -12,8 +12,9 @@ class King < Piece
   def can_castle?(rook_x, rook_y)
     rook = game.find_piece(rook_x, rook_y)
     return false if moved? || rook.moved?
-    return false if game.check != color
-    return false if obstructed?(rook_x, y_position)
+    return false if game.check == color
+    return false if obstructed?(rook_x, rook_y)
+    true
     # account for 'through check'
   end
 end

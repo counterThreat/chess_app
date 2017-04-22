@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe King, type: :model do
+  describe 'can_castle?' do
+    it 'returns true if kingside castling is possible' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
+      king_black = create(:king_black_40, game_id: game.id, user_id: user.id)
+      expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(true)
+    end
+  end
+  
   describe "valid_move? method" do
     mygame = FactoryGirl.create(:game)
     anna = FactoryGirl.create(:user)
