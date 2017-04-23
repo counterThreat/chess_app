@@ -61,4 +61,8 @@ class Game < ApplicationRecord
     end
     nil
   end
+
+  def pieces_no_kings
+    pieces.where.not(type: 'King')
+  end
 end

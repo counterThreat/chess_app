@@ -16,7 +16,7 @@ class King < Piece
     return false if rook.type != 'Rook'
     return false if rook.color != color
     return false if moved? || rook.moved?
-    return false if game.check == color
+    return false if will_king_be_safe?(rook_x) == false
     return false if obstructed?(rook_x, rook_y)
     true
     # account for 'through check'
@@ -36,6 +36,24 @@ class King < Piece
       rook.toggle_move!
     else
       puts 'castling not allowed'
+    end
+  end
+
+  def will_king_be_safe?(rook_x)
+    if rook_x < x_position
+      (2..4).each do |x_pos|
+        game.pieces_no_kings.each do |piece|
+          return false if piece.valid_move?(x_pos, y_position) && piece.color != color
+        end
+      end
+      true
+    elsif rook_x > x_position
+      (4..6).each do |x_pos|
+        game.pieces_no_kings.each do |piece|
+          return false if piece.valid_move?(x_pos, y_position) && piece.color != color
+        end
+      end
+      true
     end
   end
 end
