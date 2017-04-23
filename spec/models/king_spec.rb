@@ -7,7 +7,7 @@ RSpec.describe King, type: :model do
       game = create(:game)
       king = create(:king_white_47, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
-      black_king = create(:king_black_40, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(true)
     end
 
@@ -16,7 +16,7 @@ RSpec.describe King, type: :model do
       game = create(:game)
       king = create(:king_white_47, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
-      black_king = create(:king_black_40, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(true)
     end
 
@@ -25,7 +25,7 @@ RSpec.describe King, type: :model do
       game = create(:game)
       king = create(:king_white_47, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
-      black_king = create(:king_black_40, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
       rook.move(0, 6)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
@@ -35,19 +35,19 @@ RSpec.describe King, type: :model do
       game = create(:game)
       king = create(:king_white_47, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
-      black_king = create(:king_black_40, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
       king.move(4, 6)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
 
     it 'returns false if king is in check' do
-      user = FactoryGirl.create(:user)
-      user2 = FactoryGirl.create(:user)
-      game = FactoryGirl.create(:game)
-      king = FactoryGirl.create(:king_white_47, game_id: game.id, user_id: user.id)
-      black_king = create(:king_black_40, game_id: game.id, user_id: user2.id)
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user2.id)
       rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
-      bishop = FactoryGirl.create(:bishop, color: 'black', game_id: game.id, x_position: 5, y_position: 0, user_id: user2.id)
+      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 5, y_position: 0, user_id: user2.id)
       bishop.move(1, 4)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
@@ -60,7 +60,15 @@ RSpec.describe King, type: :model do
       expect(king.can_castle?(bishop.x_position, bishop.y_position)).to eq(false)
     end
 
-    it 'returns false if there are pieces between the rook and king ' do
+    it 'returns false if there is an obsruction between the rook and king' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user2.id)
+      rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
+      create(:bishop, color: 'black', game_id: game.id, x_position: 1, y_position: 7, user_id: user2.id)
+      expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
   end
 
