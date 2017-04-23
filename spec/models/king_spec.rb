@@ -52,6 +52,30 @@ RSpec.describe King, type: :model do
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
 
+    it 'returns false if the king will be in check after castling' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user2.id)
+      rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
+      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 5, y_position: 0, user_id: user2.id)
+      bishop.move(2, 3)
+      expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
+    end
+
+    it 'returns false if the king will be in check during castling' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user2.id)
+      rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
+      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 4, y_position: 0, user_id: user2.id)
+      bishop.move(1, 3)
+      expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
+    end
+
     it 'returns false if king attempts castle with non rook' do
       user = create(:user)
       game = create(:game)
@@ -77,6 +101,29 @@ RSpec.describe King, type: :model do
       rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
       create(:bishop, color: 'black', game_id: game.id, x_position: 1, y_position: 7, user_id: user2.id)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
+    end
+  end
+
+  describe "caslte!" do
+    it 'updates the kings position two spaces queenside' do
+    end
+
+    it 'updates the kings position two spaces kingside' do
+    end
+
+    it 'kingside rook has hopped over king' do
+    end
+
+    it 'queenside rook has hopped over king' do
+    end
+
+    it 'king has been marked as moved after castling' do
+    end
+
+    it 'rook has been marked as moved after castling' do
+    end
+
+    it 'castling fails if can_castle is false' do
     end
   end
 
