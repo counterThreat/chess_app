@@ -104,26 +104,82 @@ RSpec.describe King, type: :model do
     end
   end
 
-  describe "caslte!" do
+  describe "castle!" do
     it 'updates the kings position two spaces queenside' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
+      king.castle!(rook.x_position, rook.y_position)
+      expect(king.x_position).to eq(2)
     end
 
     it 'updates the kings position two spaces kingside' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
+      king.castle!(rook.x_position, rook.y_position)
+      expect(king.x_position).to eq(6)
     end
 
     it 'kingside rook has hopped over king' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
+      king.castle!(rook.x_position, rook.y_position)
+      rook.reload
+      expect(rook.x_position).to eq(5)
     end
 
     it 'queenside rook has hopped over king' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
+      king.castle!(rook.x_position, rook.y_position)
+      rook.reload
+      expect(rook.x_position).to eq(3)
     end
 
     it 'king has been marked as moved after castling' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_77, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
+      king.castle!(rook.x_position, rook.y_position)
+      expect(king.moved).to eq(true)
     end
 
     it 'rook has been marked as moved after castling' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user.id)
+      king.castle!(rook.x_position, rook.y_position)
+      rook.reload
+      expect(rook.moved).to eq(true)
     end
 
     it 'castling fails if can_castle is false' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      create(:king_black_40, game_id: game.id, user_id: user2.id)
+      rook = create(:rook_white_07, game_id: game.id, user_id: user.id)
+      create(:bishop, color: 'black', game_id: game.id, x_position: 1, y_position: 7, user_id: user2.id)
+      king.castle!(rook.x_position, rook.y_position)
+      expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
+      expect(king.x_position).to eq(4)
+      expect(rook.x_position).to eq(0)
     end
   end
 
