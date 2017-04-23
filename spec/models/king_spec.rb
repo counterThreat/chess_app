@@ -52,12 +52,20 @@ RSpec.describe King, type: :model do
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
 
-    it 'returns false if king attemps castle with non rook' do
+    it 'returns false if king attempts castle with non rook' do
       user = create(:user)
       game = create(:game)
       king = create(:king_white_47, game_id: game.id, user_id: user.id)
       bishop = create(:bishop, color: 'white', x_position: 0, y_position: 7, game_id: game.id, user_id: user.id)
       expect(king.can_castle?(bishop.x_position, bishop.y_position)).to eq(false)
+    end
+
+    it 'returns false if king attempts castle with rook of an opposite color' do
+      user = create(:user)
+      game = create(:game)
+      king = create(:king_white_47, game_id: game.id, user_id: user.id)
+      rook = create(:rook, color: 'black', x_position: 0, y_position: 7, game_id: game.id, user_id: user.id)
+      expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
 
     it 'returns false if there is an obsruction between the rook and king' do
