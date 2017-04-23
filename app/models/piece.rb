@@ -32,7 +32,7 @@ class Piece < ApplicationRecord
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         else
-          update(moved: true) if moved?
+          toggle_move!
         end
       end
     else
@@ -61,6 +61,10 @@ class Piece < ApplicationRecord
 
   def moved?
     updated_at != created_at
+  end
+
+  def toggle_move!
+    update(moved: true) if moved?
   end
 
   def vertical_move?(x_new, y_new)
