@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe Piece, type: :model do
-  # Validations
+  # VALIDATIONS
   it "has a valid factory" do
     game1 = FactoryGirl.create(:game)
     elvis = FactoryGirl.create(:user)
@@ -33,7 +33,7 @@ RSpec.describe Piece, type: :model do
     expect(piece).not_to be_valid
   end
 
-  # Associations
+  # ASSOCIATIONS
   describe "ActiveRecord Associations" do
     it { is_expected.to belong_to(:game) }
     it { is_expected.to belong_to(:user) }
@@ -98,6 +98,7 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+  # MOVE METHOD
   describe "move method" do
     it "records if move has taken place" do
       user = FactoryGirl.create(:user)
@@ -143,6 +144,7 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+  # MOVE METHOD WHEN IN CHECK
   describe "move method in relation to check" do
     it "does not allow a king to move itself into check" do
       game1 = FactoryGirl.create(:game)
@@ -170,9 +172,100 @@ RSpec.describe Piece, type: :model do
       expect(white_rook.x_position).to eq 5
       expect(white_rook.y_position).to eq 0
     end
+
+    it "allows a capture that resolves check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 4, y_position: 3)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 4, y_position: 6)
+      white_rook.move(4, 3)
+      white_rook.reload
+      expect(white_rook.x_position).to eq 4
+      expect(white_rook.y_position).to eq 3
+      expect(game1.check).to eq nil
+    end
+
+    it "allows a move that resolves check by blocking the king" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 4, y_position: 3)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 3, y_position: 1)
+      white_rook.move(4, 1)
+      white_rook.reload
+      expect(white_rook.x_position).to eq 4
+      expect(white_rook.y_position).to eq 1
+      expect(game1.check).to eq nil
+    end
+
+    it "allows a king to move out of check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 4, y_position: 3)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 3, y_position: 1)
+      white_king.move(3, 0)
+      white_king.reload
+      expect(white_king.x_position).to eq 3
+      expect(white_king.y_position).to eq 0
+      expect(game1.check).to eq nil
+    end
+
+    it "does not allow a move that doesn't resolve check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 4, y_position: 3)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 0)
+      white_rook.move(5, 2)
+      white_rook.reload
+      expect(white_rook.x_position).to eq 5
+      expect(white_rook.y_position).to eq 0
+    end
+
+    it "does not allow a king move that doesn't resolve check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 4, y_position: 3)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 0)
+      white_king.move(4, 1)
+      white_king.reload
+      expect(white_king.x_position).to eq 4
+      expect(white_king.y_position).to eq 0
+      expect(game1.check).to eq 'white'
+    end
+
+    # In this test, the king is in check by two pieces. Capturing one doesn't
+    # resolve check and therefore isn't allowed.
+    it "does not allow a capture move that doesn't resolve check" do
+      game1 = FactoryGirl.create(:game)
+      elvis = FactoryGirl.create(:user)
+      michael = FactoryGirl.create(:user)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 4, y_position: 3)
+      black_bishop = FactoryGirl.create(:bishop, color: 'black', game: game1, user: michael, x_position: 2, y_position: 2)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 4, y_position: 6)
+      white_rook.move(4, 3)
+      white_rook.reload
+      expect(white_rook.x_position).to eq 4
+      expect(white_rook.y_position).to eq 6
+    end
   end
 
-
+  # OBSTRUCTED METHOD
   describe "obstructed method" do
     game2 = FactoryGirl.create(:game)
     bobby = FactoryGirl.create(:user)
