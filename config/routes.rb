@@ -3,6 +3,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#index'
   resources :games, only: [:index, :new, :create, :show, :edit, :update] do
-    resources :pieces
+    resources :pieces, only: [:create, :show, :update]
   end
 end
