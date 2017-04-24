@@ -4,11 +4,9 @@ class PiecesController < ApplicationController
     render json: @game.pieces
   end
 
-  # def update
-  # #   piece = Piece.find(params[:id])
-  # #   piece.update_attributes(piece_params)
-  # #   render json: piece
-  # # end
+  def update
+    @game = Game.find(params[:game_id])
+  end
 end
 
 private
