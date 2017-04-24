@@ -53,4 +53,48 @@ FactoryGirl.define do
     moved false
     captured false
   end
+
+  factory :rook_white_77, class: Rook do
+    type "Rook"
+    color "white"
+    x_position 7
+    y_position 7
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :rook_white_07, class: Rook do
+    type "Rook"
+    color "white"
+    x_position 0
+    y_position 7
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :king_white_47, class: King do
+    type "King"
+    color "white"
+    x_position 4
+    y_position 7
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :king_black_40, class: King do
+    type "King"
+    color "black"
+    x_position 4
+    y_position 0
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
 end
