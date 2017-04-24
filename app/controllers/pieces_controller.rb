@@ -1,6 +1,7 @@
 class PiecesController < ApplicationController
   def create
     @pieces = current_game.pieces.create(piece_params)
+    render json: @game.pieces
   end
 
   def show
