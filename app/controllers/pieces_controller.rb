@@ -3,7 +3,7 @@ class PiecesController < ApplicationController
     @game = Game.find(params[:game_id])
     render json: @game.pieces
   end
-
+  
   def create
     @pieces = current_game.pieces.create(piece_params)
   end
@@ -21,7 +21,7 @@ class PiecesController < ApplicationController
     if @piece && x.present? && y.present?
       @piece.update_attributes(x_position: x, y_position: y)
     end
-
+    
     render json: {
       update_url: game_path(@game)
     }
