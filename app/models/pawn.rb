@@ -6,6 +6,7 @@ class Pawn < Piece
     return false unless forward_move?(y_new)
     return false if vertical_move?(x_new, y_new) && !valid_vertical_move?(x_new, y_new)
     pawn_possible?(x_new, y_new)
+    super
   end
 
   def pawn_possible?(x_new, y_new)
@@ -13,7 +14,13 @@ class Pawn < Piece
   end
 
   def move(x_new, y_new)
-    super
+     update(type: 'Queen') if promote?(y_new)
+     super
+  end
+
+  def promote?(y_new)
+    return true if y_new == 7 || y_new == 0
+    false
   end
 
   def valid_vertical_move?(x_new, y_new)
@@ -41,7 +48,7 @@ class Pawn < Piece
 
   def forward_move?(y_new)
     y_distance = y_new - y_position
-    if color == 'white'
+    if color == 'black'
       y_distance > 0
     else
       y_distance < 0
@@ -49,7 +56,7 @@ class Pawn < Piece
   end
 
   def forward_direction
-    if color == 'white'
+    if color == 'black'
       1
     else
       -1

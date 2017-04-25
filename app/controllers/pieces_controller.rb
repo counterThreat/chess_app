@@ -13,21 +13,26 @@ class PiecesController < ApplicationController
   end
 
   def update
-    @piece = Piece.find(params[:id])
-    @game = @piece.game
-    x = params[:x_position]
-    y = params[:y_position]
+    x = params[:x_new].to_i
+    y = params[:y_new].to_i
 
-    if @piece && x.present? && y.present?
-      @piece.update_attributes(x_position: x, y_position: y)
+    if current_piece.move(x, y)
+      render json: { success: true }
+      current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
+    else
+      render json: { success: false, message: 'Illegal Move' }
     end
 
-    render json: {
-      update_url: game_path(@game)
-    }
+    # render json: {
+    #   update_url: game_path(@game)
+    # }
   end
 
   private
+
+  def current_piece
+    @piece ||= Piece.find(params[:id])
+  end
 
   def piece_params
     params.require(:piece).permit(:x_position, :y_position, :type, :color, :game_id, :user_id, :captured)
