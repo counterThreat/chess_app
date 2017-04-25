@@ -29,6 +29,13 @@ class Pawn < Piece
     !obstructed?(x_new, y_new)
   end
 
+  ## def capture_enpassant(x_new, y_new)
+  ##  game.pieces.find_by(
+  ##    x_position: x_new,
+  ##    y_position: backward(y_new)
+  ##  ).destroy
+  ## end
+
   def y_out_of_bounds?(y_new)
     y_diff(y_new) > y_move
   end

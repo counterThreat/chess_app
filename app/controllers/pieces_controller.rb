@@ -13,20 +13,30 @@ class PiecesController < ApplicationController
   end
 
   def update
-    x = params[:x_new].to_i
-    y = params[:y_new].to_i
+    x_param = params[:x_new].to_i
+    y_param = params[:y_new].to_i
 
-    if current_piece.move(x, y)
+    if current_piece.color != current_game.turn
+      render json: { success: false, message: 'Not your turn.' }
+    elsif current_piece.move(x_param, y_param)
       render json: { success: true }
-      current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
+      current_piece.update(x_position: x_param, y_position: y_param, updated_at: Time.now )
     else
-      render json: { success: false, message: 'Illegal Move' }
+      render json: { success: false, message: 'Illegal move.' }
     end
-
-    # render json: {
-    #   update_url: game_path(@game)
-    # }
   end
+    ## @piece = Piece.find(params[:id])
+    ## @game = @piece.game
+    ## x = params[:x_position]
+    ## y = params[:y_position]
+
+    ## if @piece && x.present? && y.present?
+    ##   @piece.update_attributes(x_position: x, y_position: y)
+    ## end
+
+    ## render json: {
+    ##   update_url: game_path(@game)
+    ## }
 
   private
 
@@ -39,6 +49,12 @@ class PiecesController < ApplicationController
   end
 
   def current_game
-    @current_game ||= Game.find(params[:id])
+    @game ||= current_piece.game
   end
+
+  def url_status
+    return :ok if try_success?
+    :forbidden
+  end
+
 end
