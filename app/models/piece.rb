@@ -17,11 +17,7 @@ class Piece < ApplicationRecord
   end
 
   def on_board?
-    if x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
-      true
-    else
-      false
-    end
+    return false unless x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
   end
 
   def move(x_new, y_new)
