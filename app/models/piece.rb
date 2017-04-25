@@ -17,14 +17,18 @@ class Piece < ApplicationRecord
   end
 
   def on_board?
-    return false unless x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
+    if x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
+      true
+    else
+      false
+    end
   end
 
   def move(x_new, y_new)
     if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
-        update!(x_position: x_new, y_position: y_new, updated_at: Time.now)
+        update!(x_position: x_new, y_position: y_new)
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'

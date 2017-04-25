@@ -7,7 +7,7 @@ RSpec.describe PiecesController, type: :controller do
     let(:piece) { FactoryGirl.create(:piece, game: game, user: user) }
 
     it "check if move is valid" do
-      put :update, params: { id: piece.id, user_id: user.id, game_id: game.id, x_position: 4, y_position: 7 }
+      patch :update, params: { id: piece.id, user_id: user.id, game_id: game.id, x_position: 4, y_position: 7 }
       piece.reload
       expect(piece.x_position).to eq 4
       expect(piece.y_position).to eq 7
