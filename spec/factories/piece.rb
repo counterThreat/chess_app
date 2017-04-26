@@ -108,4 +108,15 @@ FactoryGirl.define do
     moved false
     captured false
   end
+
+  factory :piece do
+    type "Knight"
+    color "white"
+    x_position 1
+    y_position 0
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
 end
