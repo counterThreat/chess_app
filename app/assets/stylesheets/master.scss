@@ -181,7 +181,9 @@ tr:nth-child(even) td:nth-child(odd) {
 }
 
 .piece:hover {
-  // add emphasis 
+  cursor: pointer;
+  opacity: 0.3;
+  // add emphasis
 }
 
 
@@ -217,8 +219,4 @@ a {
   border: solid 4px #10f419;
   color: #0a0ba1;
   text-shadow: 3px 3px 5px #23adf1;
-}
-
-.square {
-  cursor: pointer;
 }
