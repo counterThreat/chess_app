@@ -6,7 +6,6 @@ function setBoard(){
   for(var x = 0; x < 8; x++) {
     for (var y = 0; y < 8; y++) {
       var square = $('#' + x + y);
-      console.log(square);
       square.html('');
       console.log('refreshes board');
     }
@@ -17,7 +16,6 @@ function setBoard(){
     data.forEach(function(piece){
       var cssSelector = "#" + piece.x_position + piece.y_position;
       var square = $(cssSelector);
-      console.log(square);
 
       var chess_piece = $('<div></div>');
       chess_piece.html(piece.unicode);
@@ -28,7 +26,6 @@ function setBoard(){
 
       square.html('');
       square.html(chess_piece);
-      console.log("appends piece" + chess_piece);
     });
 
     dragDropPiece();
@@ -45,18 +42,19 @@ function handleDrag(element){
   var destination_y = square.attr('data-y');
 
   var url = window.location.href + '/pieces/' + piece_id;
-  $.post(url, {
-    // data: body: { wrap method, x, y, maybe }
-    _method: 'PATCH',
-    x_position: destination_x,
-    y_position: destination_y
-  }).success(function(data){
-    setBoard();
-  })
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: { _method: 'PATCH', x_position: destination_x, y_position: destination_y },
+    success: function(msg){
+      console.log('success!');
+      setBoard();
+    }
+  });
 }
 
 function dragDropPiece(){
-  $('.piece').draggable();
+  $('.piece').draggable({ snap: ".square"});
   $('.square').droppable({
     onDrop: handleDrag
   });
