@@ -4,7 +4,7 @@ class Knight < Piece
        (x_new - x_position).abs == 1 && (y_new - y_position).abs == 2
       true
     else
-      super
+      false
     end
   end
 end
