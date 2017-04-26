@@ -109,7 +109,7 @@ FactoryGirl.define do
     captured false
   end
 
-  factory :piece do
+  factory :knight do
     type "Knight"
     color "white"
     x_position 1
