@@ -53,6 +53,7 @@ class Game < ApplicationRecord
   # on the black player since the game is created with the white player
 
   def check
+    # needs to incorporate color of player whose turn it is
     pieces.reload
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
@@ -64,6 +65,7 @@ class Game < ApplicationRecord
   end
 
   def checkmate
+    # needs to incorporate color of player whose turn it is
     friendly_pieces = pieces.where(color: check)
     if !check.nil?
       friendly_pieces.each do |piece|

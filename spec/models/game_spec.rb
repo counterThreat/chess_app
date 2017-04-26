@@ -68,6 +68,18 @@ RSpec.describe Game, type: :model do
       expect(check_game.checkmate).to eq true
     end
 
+    it 'returns checkmate when a king is in check and cannot escape check TWO' do
+      user3 = FactoryGirl.create(:user)
+      user4 = FactoryGirl.create(:user)
+      check_game = FactoryGirl.create(:game)
+      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id, x_position: 4, y_position: 0)
+      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 4, y_position: 7)
+      rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 7, y_position: 0, user_id: user4.id)
+      rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 6, y_position: 1, user_id: user4.id)
+      rook = FactoryGirl.create(:rook, color: 'white', game: check_game, user_id: user3.id, x_position: 0, y_position: 0)
+      expect(check_game.checkmate).to eq true
+    end
+
     it 'does not return checkmate when the attacker can be blocked' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)

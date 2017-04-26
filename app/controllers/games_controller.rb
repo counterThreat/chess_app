@@ -23,6 +23,7 @@ class GamesController < ApplicationController
   def show
     @game = current_game
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
+    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
 
     respond_to do |format|
       format.json { render json: @game.pieces }
