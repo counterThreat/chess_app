@@ -21,7 +21,7 @@ RSpec.describe Pawn, type: :model do
     mygame = FactoryGirl.create(:game)
     doug = FactoryGirl.create(:user)
     pawn = FactoryGirl.create(:pawn, game: mygame, user: doug)
-    enemy = FactoryGirl.create(:opponent_pawn, game: mygame, user: doug)
+    FactoryGirl.create(:opponent_pawn, game: mygame, user: doug)
 
     it 'returns true if valid_vertical_move? is correct' do
       newmove = pawn.valid_vertical_move?(1, 4)
