@@ -7,10 +7,7 @@ class Piece < ApplicationRecord
   validates :x_position, presence: true
   validates :y_position, presence: true
   validates :game_id, presence: true
-
-  # def valid_move?(x_new, y_new)
-  #   return false if exposes_king_to_attack?(x, y)
-  # end
+  validates :move_num, presence: true
 
   def valid_move?(x_new, y_new)
     false
@@ -28,7 +25,7 @@ class Piece < ApplicationRecord
     if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
-        update!(x_position: x_new, y_position: y_new)
+        update!(x_position: x_new, y_position: y_new, move_num: self.move_num += 1)
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
