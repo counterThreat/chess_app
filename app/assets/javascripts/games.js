@@ -7,16 +7,13 @@ var url = $(location).attr('href');
     });
   });
 
-
-
-
-
-});
-$(function() {
-  var classHighlight = 'highlight';
-  var pieces = $('.square');
-  $('.square').click(function(item) {
-    $('.square').removeClass(classHighlight);
-    $( this ).addClass(classHighlight);
+  $(function() {
+    var classHighlight = 'highlight';
+    var pieces = $('.square');
+    $('.square').click(function(item) {
+      $('.square').removeClass(classHighlight);
+      $( this ).addClass(classHighlight);
+    });
   });
+
 });
