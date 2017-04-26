@@ -21,6 +21,17 @@ FactoryGirl.define do
     captured false
   end
 
+  factory :black_rook, class: Rook do
+    type "Rook"
+    color "black"
+    x_position 4
+    y_position 6
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
   factory :bishop do
     type "Bishop"
     color "black"
@@ -35,6 +46,28 @@ FactoryGirl.define do
   factory :pawn do
     type "Pawn"
     color "white"
+    x_position 1
+    y_position 6
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :opponent_pawn, class: Pawn do
+    type "Pawn"
+    color "black"
+    x_position 2
+    y_position 5
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :black_pawn, class: Pawn do
+    type "Pawn"
+    color "black"
     x_position 1
     y_position 1
     sequence(:game_id) { |a| a }
