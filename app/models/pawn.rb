@@ -52,13 +52,8 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-<<<<<<< HEAD
     return false unless diagonal_move?(x_new, y_new) &&
     (opponent_at?(x_new, y_new) || valid_en_passant?(x_new, y_new))
-=======
-    return false unless pawn_diagonal_move?(x_new, y_new)
-    true
->>>>>>> 0adfe06fb288d055b554579245101194f8b40050
   end
 
   def moved?
@@ -89,16 +84,3 @@ class Pawn < Piece
   def y_move
     moved? ? SECOND_MOVE : FIRST_MOVE
   end
-
-  def last_piece_moved
-    game.pieces.order(:updated_at).last
-  end
-
-  def valid_en_passant?(x_new, y_new)
-    last_piece_moved.piece_type == 'Pawn' &&
-    last_piece_moved.move_num == 1 &&
-    last_piece_moved.y_position == y_position &&
-    last_piece.x_position == (color == 'white' ? 4 : 5) &&
-    (last_piece.x_position - x_position).abs == 1
-  end
-end
