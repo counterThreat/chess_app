@@ -21,8 +21,8 @@ class Pawn < Piece
   end
 
   def move(x_new, y_new)
-     update(type: 'Queen') if promote?(y_new)
-     super
+    update(type: 'Queen') if promote?(y_new)
+    super
   end
 
   def promote?(y_new)
@@ -84,5 +84,4 @@ class Pawn < Piece
   def y_move
     moved? ? SECOND_MOVE : FIRST_MOVE
   end
-
 end

@@ -24,8 +24,8 @@ FactoryGirl.define do
   factory :black_rook, class: Rook do
     type "Rook"
     color "black"
-    x_position 3
-    y_position 5
+    x_position 4
+    y_position 6
     sequence(:game_id) { |a| a }
     sequence(:user_id) { |b| b }
     moved false

@@ -20,8 +20,6 @@ class PiecesController < ApplicationController
 
     if current_piece && x.present? && y.present?
       current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
-    else
-      render json: { success: false, message: 'Illegal move.' }
     end
 
     render json: {
@@ -47,5 +45,4 @@ class PiecesController < ApplicationController
     return :ok if try_success?
     :forbidden
   end
-
 end

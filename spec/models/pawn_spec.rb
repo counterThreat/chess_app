@@ -37,7 +37,6 @@ RSpec.describe Pawn, type: :model do
       newmove = pawn.y_out_of_bounds?(3)
       expect(newmove).to eq true
     end
-
   end
 
   describe 'y_move' do
