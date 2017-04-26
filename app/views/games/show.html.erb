@@ -8,7 +8,7 @@
   <h3> Black Player: <%= get_username(@game.black_player_id) %> </h3>
 <% end %>
 
-<table>
+<table class="chessboard">
   <% (0..7).each do |row| %>
     <tr class="row">
       <% (0..7).each do |column| %>

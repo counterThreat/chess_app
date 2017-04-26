@@ -54,7 +54,7 @@ function handleDrag(element){
 }
 
 function dragDropPiece(){
-  $('.piece').draggable({ snap: ".square"});
+  $('.piece').draggable({ containment: ".chessboard", snap: ".square"});
   $('.square').droppable({
     onDrop: handleDrag
   });
