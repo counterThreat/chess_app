@@ -3,10 +3,17 @@ class Pawn < Piece
   SECOND_MOVE = 1
 
   def valid_move?(x_new, y_new)
-    return false unless forward_move?(y_new)
-    return false if vertical_move?(x_new, y_new) && !valid_vertical_move?(x_new, y_new)
-    pawn_possible?(x_new, y_new)
-    super
+    if obstructed?(x_new, y_new)
+      false
+    elsif !forward_move?(y_new)
+      false
+    elsif vertical_move?(x_new, y_new) && !valid_vertical_move?(x_new, y_new)
+      false
+    elsif pawn_possible?(x_new, y_new)
+      true
+    else
+      super
+    end
   end
 
   def pawn_possible?(x_new, y_new)
@@ -45,8 +52,8 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    return false unless diagonal_move?(x_new, y_new)
-    opponent_at?(x_new, y_new)
+    return false unless pawn_diagonal_move?(x_new, y_new)
+    true
   end
 
   def moved?
@@ -74,16 +81,8 @@ class Pawn < Piece
     y_new + -forward_direction
   end
 
-  def opponent_at?(x_new, y_new)
-    target_piece = game.pieces.find_by(x_position: x_new, y_position: y_new)
-    opponent?(target_piece)
-  end
-
-  def opponent?(piece)
-    !piece.nil? && piece.color != color
-  end
-
   def y_move
     moved? ? SECOND_MOVE : FIRST_MOVE
   end
+
 end

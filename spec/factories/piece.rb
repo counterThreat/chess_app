@@ -36,6 +36,28 @@ FactoryGirl.define do
     type "Pawn"
     color "white"
     x_position 1
+    y_position 6
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :opponent_pawn, class: Pawn do
+    type "Pawn"
+    color "black"
+    x_position 2
+    y_position 5
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :black_pawn, class: Pawn do
+    type "Pawn"
+    color "black"
+    x_position 1
     y_position 1
     sequence(:game_id) { |a| a }
     sequence(:user_id) { |b| b }

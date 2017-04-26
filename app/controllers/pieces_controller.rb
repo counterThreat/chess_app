@@ -13,14 +13,13 @@ class PiecesController < ApplicationController
   end
 
   def update
+    current_piece
     x_param = params[:x_new].to_i
     y_param = params[:y_new].to_i
 
-    if current_piece.color != current_game.turn
-      render json: { success: false, message: 'Not your turn.' }
-    elsif current_piece.move(x_param, y_param)
+    if current_piece.move(x_param, y_param)
       render json: { success: true }
-      current_piece.update(x_position: x_param, y_position: y_param, updated_at: Time.now )
+      current_piece.update_attributes(x_position: x_param, y_position: y_param, updated_at: Time.now )
     else
       render json: { success: false, message: 'Illegal move.' }
     end

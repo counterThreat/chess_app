@@ -98,6 +98,8 @@ class Piece < ApplicationRecord
   end
 
   def attack!(x_new, y_new)
+    return false if occupied?(x_new, y_new)
+
     if occupied?(x_new, y_new) && opponent(x_new, y_new).color != color
       opponent(x_new, y_new).update(captured: true, x_position: -1, y_position: -1)
     elsif !occupied?(x_new, y_new)
