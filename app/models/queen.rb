@@ -5,7 +5,7 @@ class Queen < Piece
     elsif diagonal_move?(x_new, y_new) || horizontal_move?(x_new, y_new) || vertical_move?(x_new, y_new)
       true
     else
-      super
+      false
     end
   end
 end

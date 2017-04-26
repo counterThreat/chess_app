@@ -182,14 +182,14 @@ tr:nth-child(even) td:nth-child(odd) {
 
 
 
-td:active{
-  background-color:lightblue;
-}
+//td:active{
+//  background-color:lightblue;
+//}
 
-tr:nth-child(odd) td:nth-child(even):active,
-tr:nth-child(even) td:nth-child(odd):active {
-  background: lightblue;
-}
+//tr:nth-child(odd) td:nth-child(even):active,
+//tr:nth-child(even) td:nth-child(odd):active {
+//  background: lightblue;
+//}
 
 
 
@@ -206,4 +206,11 @@ a {
   color: #31708f;
   border-radius: .25rem;
   text-align: center;
+}
+
+// Highlight pieces on click
+.highlight {
+  border: solid 4px #10f419;
+  color: #0a0ba1;
+  text-shadow: 3px 3px 5px #23adf1;
 }
