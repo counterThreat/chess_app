@@ -21,6 +21,17 @@ FactoryGirl.define do
     captured false
   end
 
+  factory :black_rook, class: Rook do
+    type "Rook"
+    color "black"
+    x_position 3
+    y_position 5
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
   factory :bishop do
     type "Bishop"
     color "black"

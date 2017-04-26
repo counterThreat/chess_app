@@ -43,9 +43,6 @@ class Piece < ApplicationRecord
   end
 
   def obstructed?(x_new, y_new) # Integrate with color
-    # The following two lines determine if the differences between x to x_new
-    # and y to y_new are positive, negative, or zero. This is used to iterate in
-    # the correct direction below when looking at each square in the piece's path.
     xdir = x_position < x_new ? 1 : ((x_position == x_new ? 0 : -1))
     ydir = y_position < y_new ? 1 : ((y_position == y_new ? 0 : -1))
     i = 1
@@ -101,7 +98,7 @@ class Piece < ApplicationRecord
     return false if occupied?(x_new, y_new)
 
     if occupied?(x_new, y_new) && opponent(x_new, y_new).color != color
-      opponent(x_new, y_new).update(captured: true, x_position: -1, y_position: -1)
+      opponent(x_new, y_new).update(captured: true, x_position: nil, y_position: nil)
     elsif !occupied?(x_new, y_new)
       true
     else
