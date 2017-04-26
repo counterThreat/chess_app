@@ -34,10 +34,6 @@ class PiecesController < ApplicationController
   end
 
   def current_game
-    @game ||= current_piece.game
-  end
-
-  def current_piece
-    @current_piece ||= Piece.find(params[:id])
+    @current_game ||= Game.find(params[:id])
   end
 end

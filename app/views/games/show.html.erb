@@ -12,7 +12,7 @@
   <% (0..7).each do |row| %>
     <tr class="row">
       <% (0..7).each do |column| %>
-        <td class="square" id="<%=column%><%=row%>">
+        <td class="square" id="<%=column%><%=row%>" data-x="<%=row%>" data-y="<%= column %>">
 
         </td>
 
