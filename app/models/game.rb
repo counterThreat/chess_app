@@ -74,16 +74,12 @@ class Game < ApplicationRecord
               original_y = piece.y_position
               captured_piece = pieces.find_by(x_position: x, y_position: y)
               begin
-                if captured_piece
-                  captured_x = captured_piece.x_position
-                  captured_y = captured_piece.y_position
-                  captured_piece.update(x_position: -1, y_position: -1)
-                end
+                captured_piece.update(x_position: -1, y_position: -1) if captured_piece
                 piece.update(x_position: x, y_position: y)
                 check_state = check
               ensure
                 piece.update(x_position: original_x, y_position: original_y)
-                captured_piece.update(x_position: captured_x, y_position: captured_y) if captured_piece
+                captured_piece.update(x_position: x, y_position: y) if captured_piece
               end
               return false if check_state.nil?
             end
