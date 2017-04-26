@@ -84,3 +84,5 @@ class Pawn < Piece
   def y_move
     moved? ? SECOND_MOVE : FIRST_MOVE
   end
+end
+
