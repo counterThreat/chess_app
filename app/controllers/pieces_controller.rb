@@ -13,27 +13,36 @@ class PiecesController < ApplicationController
   end
 
   def update
-    @piece = Piece.find(params[:id])
-    @game = @piece.game
+    current_piece
+
     x = params[:x_position]
     y = params[:y_position]
 
-    if @piece && x.present? && y.present?
-      @piece.update_attributes(x_position: x, y_position: y)
+    if current_piece && x.present? && y.present?
+      current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
     end
 
     render json: {
-      update_url: game_path(@game)
+      update_url: game_path(current_game)
     }
   end
 
   private
+
+  def current_piece
+    @piece ||= Piece.find(params[:id])
+  end
 
   def piece_params
     params.require(:piece).permit(:x_position, :y_position, :type, :color, :game_id, :user_id, :captured)
   end
 
   def current_game
-    @current_game ||= Game.find(params[:id])
+    @game ||= current_piece.game
+  end
+
+  def url_status
+    return :ok if try_success?
+    :forbidden
   end
 end
