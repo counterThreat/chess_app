@@ -23,7 +23,10 @@
             </div>
             <div class="col-sm-3">
               <span class="badge badge-default badge-pill pull-right">
-                  <% if game.white_player_id && game.black_player_id %>
+                  <% if current_user && (current_user == game.white_player ||
+                    current_user == game.black_player) %>
+                    <%= link_to 'Continue', game_path(game.id) %>
+                  <% elsif game.white_player_id && game.black_player_id %>
                     Game is full
                   <% else %>
                     <%= link_to 'Join', edit_game_path(game.id) %>
