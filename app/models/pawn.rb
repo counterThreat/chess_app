@@ -52,7 +52,11 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    return false unless pawn_diagonal_move?(x_new, y_new)
+    if pawn_diagonal_move?(x_new, y_new)
+      true
+    else
+      false
+    end
   end
 
   def moved?
