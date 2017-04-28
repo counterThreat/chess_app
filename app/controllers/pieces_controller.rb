@@ -18,19 +18,17 @@ class PiecesController < ApplicationController
 
   def update
     current_piece
-    render json: { status: :ok } && return if request.xhr? 
+    render json: { status: :ok } && return if request.xhr?
 
     x = params[:x_position]
     y = params[:y_position]
 
-    if current_piece && x.present? && y.present?
-      current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
-      redirect_to current_piece.game
-    end
+    current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
+    redirect_to current_piece.game
 
-    # render json: 
+    # render json:
     #  update_url: game_path(current_game)
-    # 
+    #
   end
 
   def current_game

@@ -39,11 +39,9 @@ function handleDrag(element){
   var square = $(this);
 
   var piece_id = chess_piece.attr('data-id');
-  console.log(piece_id);
+  console.log(piece_id); // keeps coming back undefined << here's where problem is
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
-  var user = chess_piece.attr('piece-user-id');
-  var type = chess_piece.attr('piece-type');
 
   var url = window.location.href + '/pieces/' + piece_id;
 
