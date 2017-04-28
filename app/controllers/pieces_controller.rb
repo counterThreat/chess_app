@@ -30,12 +30,12 @@ class PiecesController < ApplicationController
       update_url: game_path(current_game)
     }
   end
-  
+
   def current_game
     @game ||= current_piece.game
   end
-  
-    def current_piece
+
+  def current_piece
     @piece ||= Piece.find(params[:id])
   end
 
