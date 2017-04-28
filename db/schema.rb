@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20170426202259) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "name"
+    t.string   "turn"
+    t.integer  "move_number"
+    t.integer  "current_player"
+    t.index ["black_player_id"], name: "index_games_on_black_player_id", using: :btree
+    t.index ["white_player_id"], name: "index_games_on_white_player_id", using: :btree
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -31,11 +36,13 @@ ActiveRecord::Schema.define(version: 20170426202259) do
     t.integer  "x_position"
     t.integer  "y_position"
     t.integer  "game_id"
-    t.integer  "user_id"
     t.boolean  "moved",      default: false
     t.boolean  "captured",   default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "last_move"
+    t.integer  "player_id"
+    t.integer  "user_id"
     t.string   "unicode"
     t.integer  "move_num",   default: 0
   end
@@ -56,6 +63,7 @@ ActiveRecord::Schema.define(version: 20170426202259) do
     t.string   "username"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "games_played"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree

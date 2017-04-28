@@ -1,10 +1,9 @@
 class PiecesController < ApplicationController
   def index
     @game = Game.find(params[:game_id])
-    @pieces = Piece.where(:game_id => @game.id)
+    @pieces = Piece.where(game_id: @game.id)
     # @game = Game.find(params[:game_id])
     render json: @pieces
-
   end
 
   def create
@@ -14,7 +13,7 @@ class PiecesController < ApplicationController
   def show
     # @piece = Piece.find(params[:id])
     @piece = @pieces.find { |p| p.id == current_piece.id }
-   #  render json: @pieces
+    #  render json: @pieces
   end
 
   def update
@@ -31,25 +30,21 @@ class PiecesController < ApplicationController
       update_url: game_path(current_game)
     }
   end
-
-  private
-
-  def current_piece
+  
+  def current_game
+    @game ||= current_piece.game
+  end
+  
+    def current_piece
     @piece ||= Piece.find(params[:id])
   end
+
+  private
 
   def piece_params
     params.require(:piece).permit(:x_position, :y_position, :type, :color, :game_id, :user_id, :captured)
   end
 
-  def current_game
-    @game ||= current_piece.game
-  end
-  
-  def current_piece 
-    @current_piece ||= Piece.find(params[:id])
-  end
-  
   def url_status
     return :ok if try_success?
     :forbidden

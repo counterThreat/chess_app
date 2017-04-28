@@ -44,7 +44,7 @@ gem 'sprockets', '~> 3.7', '>= 3.7.1'
 gem 'devise'
 gem 'simple_form'
 
-# jquery 
+# jquery
 gem 'gon'
 
 # omniauth
