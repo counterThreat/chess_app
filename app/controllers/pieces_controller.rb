@@ -11,24 +11,26 @@ class PiecesController < ApplicationController
   end
 
   def show
-    # @piece = Piece.find(params[:id])
-    @piece = @pieces.find { |p| p.id == current_piece.id }
+    @piece = Piece.find(params[:id])
+    # @piece = @pieces.find { |p| p.id == current_piece.id }
     #  render json: @pieces
   end
 
   def update
     current_piece
+    render json: { status: :ok } && return if request.xhr? 
 
     x = params[:x_position]
     y = params[:y_position]
 
     if current_piece && x.present? && y.present?
       current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
+      redirect_to current_piece.game
     end
 
-    render json: {
-      update_url: game_path(current_game)
-    }
+    # render json: 
+    #  update_url: game_path(current_game)
+    # 
   end
 
   def current_game

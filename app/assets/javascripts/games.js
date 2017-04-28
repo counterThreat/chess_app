@@ -33,12 +33,13 @@ function setBoard(){
   });
 }
 
-function handleDrag(element, data){
+function handleDrag(element){
   // element that's being dropped
   var chess_piece = $(element);
   var square = $(this);
 
   var piece_id = chess_piece.attr('data-id');
+  console.log(piece_id);
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
   var user = chess_piece.attr('piece-user-id');
@@ -46,9 +47,10 @@ function handleDrag(element, data){
 
   var url = window.location.href + '/pieces/' + piece_id;
 
-  $.ajax(url, {
+  $.ajax({
+    url: url,
     type: 'PUT',
-    data: { piece: { x_position: dx, y_position: dy }, _method: 'patch' },
+    data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
     //x_position: destination_x,
     //y_position: destination_y,
     success: function(data){
