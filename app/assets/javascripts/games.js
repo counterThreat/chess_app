@@ -5,10 +5,10 @@ function setBoard(){
 // refreshes the board
   $.get(url + "/pieces").success(function(data){
   for(var x = 0; x <= 7; x++) {
-    for (var y = 0; y <= 87; y++) {
+    for (var y = 0; y <= 7; y++) {
       var square = $('#' + x + y);
-      square.html('');
-      console.log('refreshes board');
+      //square.html('');
+      //console.log('refreshes board');
     }
   }
 
