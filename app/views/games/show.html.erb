@@ -8,15 +8,14 @@
   <h3> Black Player: <%= get_username(@game.black_player_id) %> </h3>
 <% end %>
 
-<table class="chessboard">
-  <% (0..7).each do |row| %>
-    <tr class="row">
-      <% (0..7).each do |column| %>
-        <td class="square" id="<%=column%><%=row%>" data-x="<%=column%>" data-y="<%=row%>">
-
-        </td>
-
+<div class="chessboard" id="<%@game.id%>">
+  <% 0.upto(7) do |y_axis| %>
+    <div class="row">
+      <% 0.upto(7) do |x_axis| %>
+        <div class="square" id="<%=x_axis%><%=y_axis%>" data-x="<%=x_axis%>" data-y="<%=y_axis%>">
+          <% draw_square(x_axis, y_axis) %>
+        </div>
       <% end %>
-    </tr>
+    </div>
   <% end %>
-</table>
+</div>

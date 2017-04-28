@@ -180,13 +180,66 @@ tr:nth-child(even) td:nth-child(odd) {
   background: rgba(0,0,0, 0.5);
 }
 
-.piece:hover {
-  cursor: pointer;
-  opacity: 0.3;
-  // add emphasis
+// chessboard created not via table >>
+
+$chessboard-square-size: 80px;
+
+$square-grey: rgba(0,0,0,0.5);
+$square-white: #ffffff;
+$chessboard-border: 2px solid black;
+
+@function total-chessboard-width($chessboard-square-width){
+  @return ($chessboard-square-width + 2) * 8
+};
+
+.chessboard {
+  width: total-chessboard-width($chessboard-square-size);
+  margin: auto;
+
+  a {
+    display: block;
+  }
 }
 
+.row {
+  clear: both;
+  display: table;
+  content: "";
+}
 
+.square {
+  border: 1px solid $chessboard-border;
+  height: $chessboard-square-size;
+  width: $chessboard-square-size;
+  padding: 1px;
+  text-align: center;
+  font-size: 50px;
+
+  a {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .piece:hover{
+    cursor: pointer;
+    opacity: 0.3;
+  }
+}
+
+.selected .square {
+  border: 0.5px solid black;
+}
+
+.square-grey {
+  background-color: $square-grey;
+}
+
+.square-white {
+  background-color: $square-white;
+}
+//
 
 //td:active{
 //  background-color:lightblue;
@@ -203,8 +256,6 @@ a {
   text-decoration: none !important;
   color: inherit !important;
 }
-
-
 
 .alert-notice{
   background-color: #d9edf7;

@@ -2,7 +2,7 @@ class Piece < ApplicationRecord
   belongs_to :game
   belongs_to :user
 
-  validates :color, :type, :x_position, :y_position, :game_id, presence: true
+  validates :color, :type, :x_position, :y_position, :game_id, :id, presence: true
 
   # def valid_move?(x_new, y_new)
   #   return false if exposes_king_to_attack?(x, y)
