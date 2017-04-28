@@ -65,9 +65,13 @@ function handleDrag(element){
 }
 
 function dragDropPiece(){
-  $('.piece').draggable({ containment: ".chessboard", snap: ".square"});
+  $('.piece').draggable({ containment: ".chessboard", 
+                          snap: ".square",
+                          snapMode: 'inner',
+                          revert: true });
   $('.square').droppable({
     drop: handleDrag
+    // add revert false for when the drop is valid
   });
 }
 
