@@ -9,10 +9,10 @@
 <% end %>
 
 <table class="chessboard">
-  <% (0..7).each do |row| %>
+  <% (0..7).each do |column| %>
     <tr class="row">
-      <% (0..7).each do |column| %>
-        <td class="square" id="<%=column%><%=row%>">
+      <% (0..7).each do |row| %>
+        <td class="square" id="<%=row%><%=column%>" data-x="<%=row%>" data-y="<%= column %>">
 
         </td>
 
