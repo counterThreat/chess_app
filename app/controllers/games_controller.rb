@@ -23,12 +23,10 @@ class GamesController < ApplicationController
   def show
     @game = current_game
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
-
     respond_to do |format|
       format.json { render json: @game.pieces }
       format.html
     end
-    # render the pieces on the board
   end
 
   def edit

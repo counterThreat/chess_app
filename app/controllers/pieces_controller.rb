@@ -1,7 +1,8 @@
 class PiecesController < ApplicationController
   def index
     @game = Game.find(params[:game_id])
-    render json: @game.pieces
+    @pieces = @game.pieces
+    render json: @pieces
   end
 
   def create
@@ -13,27 +14,27 @@ class PiecesController < ApplicationController
   end
 
   def update
-    @piece = Piece.find(params[:id])
-    @game = @piece.game
+    current_game
+    current_piece
     x = params[:x_position]
     y = params[:y_position]
 
-    if @piece && x.present? && y.present?
-      @piece.update_attributes(x_position: x, y_position: y)
+    if current_piece && x.present? && y.present?
+      current_piece.update_attributes(x_position: x, y_position: y)
     end
 
     render json: {
-      update_url: game_path(@game)
+      update_url: game_path(current_game)
     }
   end
 
   private
 
-  def piece_params
-    params.require(:piece).permit(:x_position, :y_position, :type, :color, :game_id, :user_id, :captured)
+  def current_piece
+    @current_piece ||= Piece.find(params[:id])
   end
 
   def current_game
-    @current_game ||= Game.find(params[:id])
+    @game ||= current_piece.game
   end
 end

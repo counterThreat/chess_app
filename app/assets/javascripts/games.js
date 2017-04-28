@@ -8,12 +8,10 @@ function setBoard(){
     for (var y = 0; y <= 7; y++) {
       var square = $('#' + x + y);
       //square.html('');
-      //console.log('refreshes board');
     }
   }
 
     // data creates an array of pieces
-    console.log("puts pieces on the board");
     data.forEach(function(piece){
       var cssSelector = "#" + piece.x_position + piece.y_position;
       var square = $(cssSelector);
@@ -43,20 +41,21 @@ function allowDrop(event){
 
 function handleDrag(element){
   // element that's being dropped
-  var piece = $(element);
+  var chess_piece = $(element);
   var square = $(this);
 
-  var piece_id = piece.attr('data-id');
+  var chess_piece_id = chess_piece.attr('data-id');
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
-  var user = piece.attr('piece-user-id');
-  var type = piece.attr('piece-type');
+  var piece_x = chess_piece.attr('data-x-position');
+  var piece_y = chess_piece.attr('data-y-position');
 
-  var url = window.location.href + '/pieces/' + piece_id;
+  var url = window.location.href + '/pieces/' + chess_piece_id;
 
   $.ajax(url, {
-    type: 'POST',
-    data: { _method: 'PATCH', x_position: dx, y_position: dy },
+    type: 'PATCH',
+    //_method: 'PATCH',
+    data: { piece: { x_position: dx, y_position: dy } },
     //x_position: destination_x,
     //y_position: destination_y,
     success: function(data){
@@ -66,7 +65,7 @@ function handleDrag(element){
 }
 
 function dragDropPiece(){
-  $('.piece').draggable({ containment: ".chessboard", snap: ".square"});
+  $('.piece').draggable({ containment: ".chessboard", snap: ".square", snapMode: 'inner', revert: true });
   $('.square').droppable({
     drop: handleDrag
   });
@@ -75,3 +74,41 @@ function dragDropPiece(){
 $( document ).ready(function(){
   setBoard();
 });
+
+///
+///
+///
+
+/*
+function dragDrop(){
+  $(".piece").draggable({
+    containment: '.chessboard',
+    snap: '.square',
+    snapMode: 'inner',
+    revert: true,
+  });
+
+  $('.square').droppable({
+    drop: handleDrag,
+    hoverClass: 'hoveredSquare'
+  });
+}
+
+function handleDrag(event, ui){
+  ui.draggable.draggable('option', 'revert', false);
+  ui.draggable.position({
+    of: $(this)
+    my: 'left top',
+    at: 'left top'
+  });
+  var dx = $(this).data("x");
+  var dy = $(this).data("y");
+
+  $.ajax({
+    type: 'PATCH',
+    url: ui.draggable.data('url'),
+    dataType: 'script',
+    data: { piece: { x_position: dx, y_position: dy ) }
+  });
+}
+*/
