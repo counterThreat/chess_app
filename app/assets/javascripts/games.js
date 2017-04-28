@@ -19,17 +19,21 @@ function pieceClass(){
   };
 };
 
+
 */
-function dragDropPiece(){
-  var url = window.location.href;
-  $.get(url).success(function(data){
-    for(var x = 0; x <= 7; x++) {
-      for (var y = 0; y <= 7; y++) {
-        var square = $('#' + x + y);
-      }
+
+function dragDropPiece() {
+    'use strict';
+    var x, y, url, square;
+    url = window.location.href;
+    $.get(url).success(function(data) {
+        for(x = 0; x <= 7; x++) {
+        for (y = 0; y <= 7; y++) {
+            square = $('#' + x + y);
+        }
     }
 
-  data.forEach(function(piece){
+  data.forEach(function(piece) {
     var cssSelector = "#" + piece.x_position + piece.y_position;
     var square = $(cssSelector);
     var chess_piece = $('<a></a>');
@@ -43,9 +47,9 @@ function dragDropPiece(){
     containment: ".chessboard",
     snap: ".square",
     snapMode: 'inner',
-    revert: 'invalid'
-    start: function(event, ui){
-      var url = ui.attr('href') + '/pieces';
+    revert: 'invalid',
+    start: function draggable(event, ui){
+      url = url + '/pieces';
       $.get(url).success(function(response){
         response.forEach(position){
           $("[data-x={position.x}][data-y=#{position.y}]").data('valid-move');
@@ -61,7 +65,7 @@ function dragDropPiece(){
     //drop: handleDrag
     drop: function(event,ui){
       var $target = $(event.target);
-      var piece = ui.draggable.attr('data-id') ;
+      var piece = ui.draggable.draggable('data-id') ;
       var piece_url = piece.attr('href');
 
       $.ajax({

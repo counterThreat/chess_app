@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :games
   # resources :pieces, only: [:show, :update]
   # resources :games, only: [:index, :new, :create, :show, :edit, :update] # do
-     # resources :pieces, only: [:show, :update]
-   # end
-    # resources :pieces, only: [:show, :update] #:create, :index
+  # resources :pieces, only: [:show, :update]
+  # end
+  # resources :pieces, only: [:show, :update] #:create, :index
 end

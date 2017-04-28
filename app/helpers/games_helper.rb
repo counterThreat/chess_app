@@ -14,7 +14,7 @@ module GamesHelper
   def draw_piece(x_axis, y_axis)
     selected_piece = square_piece(x_axis, y_axis)
     return unless selected_piece
-    link_to   "#{selected_piece.unicode.encode('utf-8')}",
+    link_to   selected_piece.unicode.encode('utf-8').to_s,
               piece_path(selected_piece), data: { id: selected_piece.id }
   end
 end

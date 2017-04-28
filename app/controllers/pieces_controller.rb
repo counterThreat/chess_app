@@ -16,7 +16,7 @@ class PiecesController < ApplicationController
 
   def update
     current_piece.move(x_new, y_new)
-    render(json: { message: 'success' }, status: :ok ) && return if request.xhr?
+    render(json: { message: 'success' }, status: :ok) && return if request.xhr?
 
     redirect_to current_piece.game
     # @piece = current_game.where(params[:piece_id])
@@ -24,21 +24,19 @@ class PiecesController < ApplicationController
     # x = params[:x_position]
     # y = params[:y_position]
 
-
     #  render text: 'nope', status: :forbidden
 
-
     # @pieces.first
-  #   relationship = @game.relationships.where(:piece_id => @piece.id)
+    #   relationship = @game.relationships.where(:piece_id => @piece.id)
     # relationship.update(attributes(:x_position => x, :y_position => y, :updated_at => Time.now))
 
     # redirect_to current_piece.game
-  ##   if @piece && x.present? && y.present?
-  ##    @piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
-  ##  end
+    ##   if @piece && x.present? && y.present?
+    ##    @piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
+    ##  end
 
-   # render json: {
-  #     update_url: game_path(@game)
+    # render json: {
+    #     update_url: game_path(@game)
     # }
   end
 
