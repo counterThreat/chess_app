@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-
+  before_action :authorize_user, only: :forfeit
 
   def new
     @game = Game.new
@@ -48,6 +48,11 @@ class GamesController < ApplicationController
       render 'index', status: :unprocessable_entity
     end
   end
+  
+  def forfeit
+    current_game.forfeiting_player!(current_user)
+    redirect_to games_path, alert: 'You forfeited the game.'
+  end
 
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
 
@@ -59,5 +64,9 @@ class GamesController < ApplicationController
 
   def current_game
     @game ||= Game.find(params[:id])
+  end
+  
+  def authorize_user
+    render text: "You can't perform that action.", status: :unauthorized unless current_game.black_player == current_user || current_game.white_player == current_user
   end
 end

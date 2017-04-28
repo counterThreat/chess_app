@@ -19,4 +19,10 @@ FactoryGirl.define do
     white_player_id 0
     black_player_id 1
   end
+  
+  factory :game_player_associations, class: Game do
+    name 'test game'
+    association :white_player, factory: :user
+    association :black_player, factory: :user
+  end
 end
