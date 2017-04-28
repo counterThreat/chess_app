@@ -24,10 +24,6 @@ class GamesController < ApplicationController
     @game = current_game
     @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
     flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
-    respond_to do |format|
-      format.json { render json: @game.pieces }
-      format.html
-    end
   end
 
   def edit

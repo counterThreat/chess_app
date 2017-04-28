@@ -11,19 +11,22 @@ class PiecesController < ApplicationController
 
   def show
     @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
+    render json: @pieces
   end
 
   def update
+    current_piece.move(x_new, y_new)
+    render(json: { message: 'success' }, status: :ok ) && return if request.xhr?
+
+    redirect_to current_piece.game
     # @piece = current_game.where(params[:piece_id])
     # current_piece
     # x = params[:x_position]
     # y = params[:y_position]
 
-    if true
-      redirect_to current_piece.game
-    else
-      render text: 'nope', status: :forbidden
-    end
+
+    #  render text: 'nope', status: :forbidden
+
 
     # @pieces.first
   #   relationship = @game.relationships.where(:piece_id => @piece.id)

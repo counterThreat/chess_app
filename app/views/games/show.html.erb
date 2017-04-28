@@ -10,12 +10,10 @@
 
 <div class="chessboard" id="<%@game.id%>">
   <% 0.upto(7) do |y_axis| %>
-    <div class="row">
       <% 0.upto(7) do |x_axis| %>
         <div class="square" id="<%=x_axis%><%=y_axis%>" data-x="<%=x_axis%>" data-y="<%=y_axis%>">
           <% draw_square(x_axis, y_axis) %>
         </div>
       <% end %>
-    </div>
   <% end %>
 </div>

@@ -1,6 +1,8 @@
-
-function pieceClass(data){
+/*
+function pieceClass(){
   var url = window.location.href;
+
+  $.get(url + "/pieces").success(function(data){
 
   data.forEach(function(piece){
     var cssSelector = "#" + piece.x_position + piece.y_position;
@@ -14,20 +16,43 @@ function pieceClass(data){
   });
 
   dragDropPiece();
+  };
 };
 
+*/
 function dragDropPiece(){
+  var url = window.location.href;
+  $.get(url).success(function(data){
+    for(var x = 0; x <= 7; x++) {
+      for (var y = 0; y <= 7; y++) {
+        var square = $('#' + x + y);
+      }
+    }
+
+  data.forEach(function(piece){
+    var cssSelector = "#" + piece.x_position + piece.y_position;
+    var square = $(cssSelector);
+    var chess_piece = $('<a></a>');
+    chess_piece.html(piece.unicode);
+    chess_piece.addClass('piece');
+    chess_piece.attr('data-id', piece.id);
+    //square.html('');
+    square.html(chess_piece);
+
   $('.piece a').draggable({
     containment: ".chessboard",
     snap: ".square",
     snapMode: 'inner',
     revert: 'invalid'
     start: function(event, ui){
-      url = ui.helper.attr('href' + '/valid_moves' ),
+      var url = ui.attr('href') + '/pieces';
       $.get(url).success(function(response){
         response.forEach(position){
-          $("[data-x={position.x}][data-y=#{position.y}]").addClass('valid-move');
+          $("[data-x={position.x}][data-y=#{position.y}]").data('valid-move');
         };
+        response.forEach(piece){
+          $("[data-id={piece.id}]").data('data-id');
+        }
       });
     },
     stop: $('.valid-move').removeClass('valid-move')
@@ -58,6 +83,11 @@ function dragDropPiece(){
     }
   });
 };
+};
+
+$( document ).ready(function(){
+  dragDropPiece();
+});
 
 /*
 
