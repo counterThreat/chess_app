@@ -47,17 +47,20 @@ function handleDrag(element){
   var chess_piece_id = chess_piece.attr('data-id');
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
-  var piece_x = chess_piece.attr('data-x-position');
-  var piece_y = chess_piece.attr('data-y-position');
 
   var url = window.location.href + '/pieces/' + chess_piece_id;
 
-  $.ajax(url, {
-    type: 'PATCH',
+  $.ajax({
+    type: "PATCH",
+    url: ui.draggable.data('url'),
     //_method: 'PATCH',
-    data: { piece: { x_position: dx, y_position: dy } },
-    //x_position: destination_x,
-    //y_position: destination_y,
+    dataType: 'script',
+    data: {
+      piece: {
+        x_position: dx,
+        y_position: dy
+      }
+    },
     success: function(data){
       setBoard();
     }
