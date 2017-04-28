@@ -55,6 +55,8 @@ class Game < ApplicationRecord
   # on the black player since the game is created with the white player
 
   def check
+    # needs to incorporate color of player whose turn it is
+    pieces.reload
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
     pieces.each do |piece|
@@ -62,6 +64,34 @@ class Game < ApplicationRecord
       return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black'
     end
     nil
+  end
+
+  def checkmate
+    # needs to incorporate color of player whose turn it is
+    friendly_pieces = pieces.where(color: check)
+    if !check.nil?
+      friendly_pieces.each do |piece|
+        (0..7).each do |x|
+          (0..7).each do |y|
+            if piece.valid_move?(x, y)
+              original_x = piece.x_position
+              original_y = piece.y_position
+              captured_piece = pieces.find_by(x_position: x, y_position: y)
+              begin
+                captured_piece.update(x_position: -1, y_position: -1) if captured_piece
+                piece.update(x_position: x, y_position: y)
+                check_state = check
+              ensure
+                piece.update(x_position: original_x, y_position: original_y)
+                captured_piece.update(x_position: x, y_position: y) if captured_piece
+              end
+              return false if check_state.nil?
+            end
+          end
+        end
+      end
+    end
+    true
   end
 
   def pieces_no_king(color)

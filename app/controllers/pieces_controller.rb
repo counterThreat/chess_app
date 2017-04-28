@@ -14,13 +14,12 @@ class PiecesController < ApplicationController
   end
 
   def update
-    current_game
     current_piece
     x = params[:x_position]
     y = params[:y_position]
 
     if current_piece && x.present? && y.present?
-      current_piece.update_attributes(x_position: x, y_position: y)
+      current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now)
     end
 
     render json: {
@@ -31,10 +30,19 @@ class PiecesController < ApplicationController
   private
 
   def current_piece
-    @current_piece ||= Piece.find(params[:id])
+    @piece ||= Piece.find(params[:id])
+  end
+
+  def piece_params
+    params.require(:piece).permit(:x_position, :y_position, :type, :color, :game_id, :user_id, :captured)
   end
 
   def current_game
     @game ||= current_piece.game
+  end
+
+  def url_status
+    return :ok if try_success?
+    :forbidden
   end
 end

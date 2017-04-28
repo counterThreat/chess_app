@@ -75,7 +75,7 @@ RSpec.describe Piece, type: :model do
       user2 = create(:user)
       game = create(:game_with_white_and_black_players)
       piece1 = create(:piece, game: game, user_id: user1.id)
-      piece2 = create(:bishop, game: game, user_id: user2.id)
+      piece2 = create(:black_rook, game: game, user_id: user2.id)
       piece1.attack!(piece2.x_position, piece2.y_position)
       piece2.reload
       expect(piece2.captured).to eq(true)

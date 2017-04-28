@@ -3,7 +3,7 @@ class Piece < ApplicationRecord
   belongs_to :user
 
   validates :color, :type, :x_position, :y_position, :game_id, presence: true
-  
+
   # def valid_move?(x_new, y_new)
   #   return false if exposes_king_to_attack?(x, y)
   # end
@@ -24,7 +24,7 @@ class Piece < ApplicationRecord
     if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
-        update!(x_position: x_new, y_position: y_new)
+        update!(x_position: x_new, y_position: y_new, move_num: self.move_num += 1)
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
@@ -39,9 +39,6 @@ class Piece < ApplicationRecord
   end
 
   def obstructed?(x_new, y_new) # Integrate with color
-    # The following two lines determine if the differences between x to x_new
-    # and y to y_new are positive, negative, or zero. This is used to iterate in
-    # the correct direction below when looking at each square in the piece's path.
     xdir = x_position < x_new ? 1 : ((x_position == x_new ? 0 : -1))
     ydir = y_position < y_new ? 1 : ((y_position == y_new ? 0 : -1))
     i = 1
