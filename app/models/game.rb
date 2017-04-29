@@ -2,26 +2,26 @@ class Game < ApplicationRecord
   has_many :pieces
   belongs_to :white_player, class_name: 'User', required: false
   belongs_to :black_player, class_name: 'User', required: false
-  belongs_to :winning_player, class_name: 'User', required: false
-  
+  belongs_to :winner, class_name: 'User', required: false
+
   after_create :make_newboard
   validates :name, presence: true
-  
+
   enum current_player: [:current_user_is_black_player, :current_user_is_white_player]
 
   def players
     [white_player, black_player].compact
   end
-  
+
   def forfeiting_player!(player)
-    if player == white_player
-      game_winner = black_player
-    else
-      game_winner = white_player
-    end
-    udpate!(winner: game_winner)
+    winner = if player == white_player
+               black_player
+             else
+               white_player
+             end
+    update(winner: winner)
   end
-  
+
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
   end

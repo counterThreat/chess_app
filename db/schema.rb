@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20170428221741) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "last_move"
+    t.integer  "player_id"
     t.integer  "user_id"
     t.string   "unicode"
     t.integer  "move_num",   default: 0
