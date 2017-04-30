@@ -11,9 +11,9 @@ class Game < ApplicationRecord
   end
 
   def make_newboard
-     # create and place white pieces
-    (1..8).each do |i|
-      Pawn.create(game_id: id, x_position: i, y_position: 7, color: 'black', user_id: white_player_id, unicode: '&#9823;')
+  # create and place white pieces
+  (1..8).each do |i|
+    Pawn.create(game_id: id, x_position: i, y_position: 7, color: 'black', user_id: white_player_id, unicode: '&#9823;')
     end
 
     Rook.create(game_id: id, x_position: 1, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
