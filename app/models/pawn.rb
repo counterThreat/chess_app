@@ -66,17 +66,17 @@ class Pawn < Piece
   def forward_move?(y_new)
     y_distance = y_new - y_position
     if color == 'black'
-      y_distance > 0
-    else
       y_distance < 0
+    else
+      y_distance > 0
     end
   end
 
   def forward_direction
     if color == 'black'
-      1
-    else
       -1
+    else
+      1
     end
   end
 

@@ -7,12 +7,12 @@ RSpec.describe Pawn, type: :model do
     pawn = FactoryGirl.create(:black_pawn, game: mygame, user: madonna)
 
     it 'returns true if valid_move? is true' do
-      newmove = pawn.valid_move?(1, 2)
+      newmove = pawn.valid_move?(2, 3)
       expect(newmove).to eq true
     end
 
     it 'returns false if valid_move? is false' do
-      newmove = pawn.valid_move?(4, 2)
+      newmove = pawn.valid_move?(5, 3)
       expect(newmove).to eq false
     end
   end
@@ -24,12 +24,12 @@ RSpec.describe Pawn, type: :model do
     FactoryGirl.create(:opponent_pawn, game: mygame, user: doug)
 
     it 'returns true if valid_vertical_move? is correct' do
-      newmove = pawn.valid_vertical_move?(1, 4)
+      newmove = pawn.valid_vertical_move?(2, 4)
       expect(newmove).to eq true
     end
 
     it 'returns true if valid_capture? is true' do
-      newmove = pawn.valid_capture?(2, 5)
+      newmove = pawn.valid_capture?(2, 3)
       expect(newmove).to eq true
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Pawn, type: :model do
     pawn = FactoryGirl.create(:pawn, game: mygame, user: doug)
 
     it 'tells whether the accurate forward for each piece is correct' do
-      newmove = pawn.forward_move?(5)
+      newmove = pawn.forward_move?(4)
       expect(newmove).to eq true
     end
   end
