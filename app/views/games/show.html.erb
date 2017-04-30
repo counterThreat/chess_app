@@ -9,9 +9,9 @@
 <% end %>
 
 <table>
-  <% (0..7).each do |row| %>
+  <% (1..8).reverse_each do |row| %>
     <tr class="row">
-      <% (0..7).each do |column| %>
+      <% (1..8).each do |column| %>
         <td class="square" id="<%=column%><%=row%>">
 
         </td>
