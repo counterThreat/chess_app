@@ -76,7 +76,6 @@ RSpec.describe Game, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 5, y_position: 8)
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 8, y_position: 1, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 7, y_position: 2, user_id: user4.id)
-      rook = FactoryGirl.create(:rook, color: 'white', game: check_game, user_id: user3.id, x_position: 1, y_position: 1)
       expect(check_game.checkmate('white')).to eq true
     end
 

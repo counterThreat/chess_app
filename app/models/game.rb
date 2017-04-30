@@ -68,8 +68,8 @@ class Game < ApplicationRecord
     # needs to incorporate color of player whose turn it is in friendly_pieces
     friendly_pieces = pieces.where(color: color)
     friendly_pieces.each do |piece|
-      (0..7).each do |x|
-        (0..7).each do |y|
+      (1..8).each do |x|
+        (1..8).each do |y|
           if piece.valid_move?(x, y)
             original_x = piece.x_position
             original_y = piece.y_position
