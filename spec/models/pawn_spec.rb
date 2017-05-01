@@ -60,4 +60,16 @@ RSpec.describe Pawn, type: :model do
       expect(newmove).to eq true
     end
   end
+
+  describe 'en passant moves' do
+    myepgame = FactoryGirl.create(:game)
+    pawngrabber = FactoryGirl.create(:user)
+    FactoryGirl.create(:pawn_white_55, game: myepgame, user_id: pawngrabber)
+    FactoryGirl.create(:pawn_black_47, game: myepgame, user_id: pawngrabber) 
+
+    it 'returns true for en passant passant capture' do
+        pawn_black_47.move(4, 5)
+        expect(valid_en_passant?(pawn_white_55.x_position, pawn_white_55.y_position)).to eq(true)
+      end
+  end
 end
