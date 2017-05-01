@@ -152,7 +152,7 @@ RSpec.describe Piece, type: :model do
       michael = FactoryGirl.create(:user)
       white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
-      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 6, y_position: 1)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 6, y_position: 2)
       white_king.move(5, 2)
       white_king.reload
       expect(white_king.y_position).to eq 1

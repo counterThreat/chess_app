@@ -14,7 +14,7 @@ class Piece < ApplicationRecord
   end
 
   def on_board?
-    if x_position >= 0 && x_position <= 7 && y_position >= 0 && y_position <= 7
+    if x_position >= 1 && x_position <= 8 && y_position >= 1 && y_position <= 8
       true
     else
       false

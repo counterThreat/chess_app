@@ -7,7 +7,7 @@ RSpec.describe King, type: :model do
       game = create(:game)
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
-      create(:king_black_51, game_id: game.id, user_id: user.id)
+      create(:king_black_58, game_id: game.id, user_id: user.id)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(true)
     end
 
@@ -46,7 +46,7 @@ RSpec.describe King, type: :model do
       game = create(:game)
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user2.id)
-      rook = create(:rook_white_18, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
       bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 6, y_position: 1, user_id: user2.id)
       bishop.move(2, 5)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
@@ -59,8 +59,8 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user2.id)
       rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
-      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 6, y_position: 1, user_id: user2.id)
-      bishop.move(3, 4)
+      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 4, y_position: 8, user_id: user2.id)
+      bishop.move(7, 5)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
 
@@ -71,8 +71,8 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user2.id)
       rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
-      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 5, y_position: 1, user_id: user2.id)
-      bishop.move(2, 4)
+      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 5, y_position: 8, user_id: user2.id)
+      bishop.move(8, 5)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
 
@@ -99,7 +99,7 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user2.id)
       rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
-      create(:bishop, color: 'black', game_id: game.id, x_position: 2, y_position: 1, user_id: user2.id)
+      create(:bishop, color: 'black', game_id: game.id, x_position: 7, y_position: 1, user_id: user2.id)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
     end
   end
@@ -109,20 +109,20 @@ RSpec.describe King, type: :model do
       user = create(:user)
       game = create(:game)
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
-      rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user.id)
       king.castle!(rook.x_position, rook.y_position)
-      expect(king.x_position).to eq(2)
+      expect(king.x_position).to eq(3)
     end
 
     it 'updates the kings position two spaces kingside' do
       user = create(:user)
       game = create(:game)
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
-      rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
+      rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user.id)
       king.castle!(rook.x_position, rook.y_position)
-      expect(king.x_position).to eq(6)
+      expect(king.x_position).to eq(7)
     end
 
     it 'kingside rook has hopped over king' do
@@ -133,7 +133,7 @@ RSpec.describe King, type: :model do
       create(:king_black_58, game_id: game.id, user_id: user.id)
       king.castle!(rook.x_position, rook.y_position)
       rook.reload
-      expect(rook.x_position).to eq(5)
+      expect(rook.x_position).to eq(4)
     end
 
     it 'queenside rook has hopped over king' do
@@ -144,7 +144,7 @@ RSpec.describe King, type: :model do
       create(:king_black_58, game_id: game.id, user_id: user.id)
       king.castle!(rook.x_position, rook.y_position)
       rook.reload
-      expect(rook.x_position).to eq(3)
+      expect(rook.x_position).to eq(6)
     end
 
     it 'king has been marked as moved after castling' do
@@ -175,7 +175,7 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user2.id)
       rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
-      create(:bishop, color: 'black', game_id: game.id, x_position: 2, y_position: 8, user_id: user2.id)
+      create(:bishop, color: 'black', game_id: game.id, x_position: 3, y_position: 5, user_id: user2.id)
       king.castle!(rook.x_position, rook.y_position)
       expect(king.can_castle?(rook.x_position, rook.y_position)).to eq(false)
       expect(king.x_position).to eq(5)
