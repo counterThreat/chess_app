@@ -22,18 +22,23 @@ class Pawn < Piece
 
   def move(x_new, y_new)
     update(type: 'Queen') if promote?(y_new)
-    super
+    # super
   end
 
   def promote?(y_new)
-    return true if y_new == 8 || y_new.zero?
+    return true if y_new == 8 || y_new == 1
     false
   end
 
   def valid_vertical_move?(x_new, y_new)
-    return false if y_out_of_bounds?(y_new)
-    return false if occupied?(x_new, y_new)
-    !obstructed?(x_new, y_new)
+    if y_out_of_bounds?(y_new) || occupied?(x_new, y_new)
+      false
+      else
+        true
+    #return false if y_out_of_bounds?(y_new)
+    #return false if occupied?(x_new, y_new)
+    #!obstructed?(x_new, y_new)
+    end
   end
 
   ## def capture_enpassant(x_new, y_new)
@@ -52,7 +57,7 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    if pawn_diagonal_move?(x_new, y_new)
+    if pawn_diagonal_move?(x_new, y_new) && attack!(x_new, y_new) || valid_en_passant?(x_new, y_new)
       true
     else
       false
@@ -87,5 +92,17 @@ class Pawn < Piece
   def y_move
     moved? ? SECOND_MOVE : FIRST_MOVE
   end
-end
 
+  def last_piece_moved
+    game.pieces.order(:updated_at).last 
+  end 
+
+  def valid_en_passant?(x_new, y_new)
+    #last_piece_moved == 'Pawn' && 
+    #last_piece_moved.move_num == 1 &&
+    #last_piece_moved.y_position == y_position &&
+    #last_piece.y_position == (color == 'white' ? 4 : 5) &&
+    #(last_piece.x_position - x_position).abs == 1
+    true
+  end   
+end
