@@ -94,9 +94,8 @@ FactoryGirl.define do
     y_position 7
     sequence(:game_id) { |a| a }
     sequence(:user_id) { |b| b }
-    moved true
+    moved false
     captured false
-    move_num 1
    end
 
   factory :king do
