@@ -71,12 +71,14 @@ RSpec.describe Pawn, type: :model do
       blackpawn.move(3, 5)
       newmove = whitepawn.valid_capture?(2, 6)
       expect(newmove).to eq true
+    end
+  end
 
   describe 'en passant moves' do
     #puts "here comes the problem"
     #puts pawn_black_47.persisted?
     #puts pawn_black_47.errors.inspect
-    #puts "see above" 
+    #puts "see above"
 
     it 'returns true for en passant passant capture' do
       myepgame = FactoryGirl.create(:game)
