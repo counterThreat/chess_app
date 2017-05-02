@@ -94,15 +94,15 @@ class Pawn < Piece
   end
 
   def last_piece_moved
-    game.pieces.order(:updated_at).last 
-  end 
+    game.pieces.order(:updated_at).last
+  end
 
   def valid_en_passant?(x_new, y_new)
-    #last_piece_moved == 'Pawn' && 
-    #last_piece_moved.move_num == 1 &&
-    #last_piece_moved.y_position == y_position &&
-    #last_piece.y_position == (color == 'white' ? 4 : 5) &&
-    #(last_piece.x_position - x_position).abs == 1
-    true
-  end   
+    last_piece = last_piece_moved
+    last_piece.type == "Pawn" &&
+    last_piece.move_num == 1 &&
+    last_piece.y_position == y_position &&
+    last_piece.y_position == (last_piece.color == 'white' ? 4 : 5) &&
+    (last_piece.x_position - x_position).abs == 1
+  end
 end

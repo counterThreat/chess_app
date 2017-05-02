@@ -71,6 +71,22 @@ RSpec.describe Pawn, type: :model do
       blackpawn.move(3, 5)
       newmove = whitepawn.valid_capture?(2, 6)
       expect(newmove).to eq true
+
+  describe 'en passant moves' do
+    #puts "here comes the problem"
+    #puts pawn_black_47.persisted?
+    #puts pawn_black_47.errors.inspect
+    #puts "see above" 
+
+    it 'returns true for en passant passant capture' do
+      myepgame = FactoryGirl.create(:game)
+      pawngrabber = FactoryGirl.create(:user)
+      FactoryGirl.create(:king_white_51, game: myepgame, user: pawngrabber)
+      FactoryGirl.create(:king_black_58, game: myepgame, user: pawngrabber)
+      pawn_white_55 = FactoryGirl.create(:pawn_white_55, game: myepgame, user: pawngrabber)
+      pawn_black_47 = FactoryGirl.create(:pawn_black_47, game: myepgame, user: pawngrabber)
+      pawn_black_47.move(4, 5)
+      expect(pawn_white_55.valid_en_passant?(4, 6)).to eq(true)
     end
   end
 end
