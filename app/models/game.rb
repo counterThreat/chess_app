@@ -30,7 +30,7 @@ class Game < ApplicationRecord
   # create and place white pieces
   (1..8).each do |i|
     Pawn.create(game_id: id, x_position: i, y_position: 7, color: 'black', user_id: white_player_id, unicode: '&#9823;')
-    end
+  end
 
     Rook.create(game_id: id, x_position: 1, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
     Rook.create(game_id: id, x_position: 8, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
