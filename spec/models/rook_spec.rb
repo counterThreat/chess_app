@@ -7,15 +7,15 @@ RSpec.describe Rook, type: :model do
     rook = FactoryGirl.create(:rook, game: mygame, user: beyonce)
 
     it "returns true when moving vertically" do
-      newmove = rook.valid_move?(3, 5)
+      newmove = rook.valid_move?(4, 6)
       expect(newmove).to eq true
     end
     it "returns true when moving horizontally" do
-      newmove = rook.valid_move?(5, 3)
+      newmove = rook.valid_move?(6, 4)
       expect(newmove).to eq true
     end
     it "returns false when moving diagonally" do
-      newmove = rook.valid_move?(5, 5)
+      newmove = rook.valid_move?(6, 6)
       expect(newmove).to eq false
     end
   end

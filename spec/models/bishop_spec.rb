@@ -7,15 +7,15 @@ RSpec.describe Bishop, type: :model do
 
   describe "valid_move? method" do
     it "returns false for a horizontal move" do
-      newmove = bishop.valid_move?(5, 2)
+      newmove = bishop.valid_move?(6, 3)
       expect(newmove).to eq false
     end
     it "returns false for a vertical move" do
-      newmove = bishop.valid_move?(2, 5)
+      newmove = bishop.valid_move?(3, 6)
       expect(newmove).to eq false
     end
     it "returns true for a diagonal move" do
-      newmove = bishop.valid_move?(5, 5)
+      newmove = bishop.valid_move?(6, 6)
       expect(newmove).to eq true
     end
   end
