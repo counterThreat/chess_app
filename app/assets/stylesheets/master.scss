@@ -163,6 +163,32 @@ hr {
     opacity: 0.7;
 }
 
+// game#show page
+
+.page-header {
+  text-align: center;
+}
+
+.game-status {
+  h4 {
+    text-align: center;
+  }
+}
+
+.players {
+  width: auto;
+}
+
+.alignleft {
+  float: left;
+}
+
+.alignright {
+  float: right;
+}
+
+// Game board
+
 table {
   margin: 0 auto;
   border-collapse: collapse;
