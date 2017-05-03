@@ -53,7 +53,7 @@ class Piece < ApplicationRecord
     end
     false
   end
-  
+
   def permitted
     permitted = []
     0.upto(7) do |x|
@@ -63,14 +63,13 @@ class Piece < ApplicationRecord
     end
     permitted
   end
-  
+
   def move_puts_king_in_check?
     check_status = false
-    
     Piece.transaction do
       move(x_new, y_new)
       check_status == false unless game.check
-      fail ActiveRecord::Rollback
+      raise ActiveRecord::Rollback
     end
     reload
     check_status

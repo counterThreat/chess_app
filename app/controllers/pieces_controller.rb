@@ -26,7 +26,7 @@ class PiecesController < ApplicationController
       update_url: game_path(current_game)
     }
   end
-  
+
   def permitted
     render json: current_piece.valid_moves
   end
