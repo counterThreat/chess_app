@@ -23,6 +23,8 @@
   <% end %>
 </table>
 
+
+<%= button_to "Forfeit", forfeit_game_path(@game), class: "btn forfeit", method: 'PUT', action: :forfeit if can_forfeit?(@game) %>
 <hr/>
 
 <div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
