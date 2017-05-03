@@ -53,6 +53,28 @@ class Piece < ApplicationRecord
     end
     false
   end
+  
+  def permitted
+    permitted = []
+    0.upto(7) do |x|
+      0.upto(7) do |y|
+        permitted << { x: x, y: y } if valid_move?(x_new, y_new) && !game.check?(x_new, y_new)
+      end
+    end
+    permitted
+  end
+  
+  def move_puts_king_in_check?
+    check_status = false
+    
+    Piece.transaction do
+      move(x_new, y_new)
+      check_status == true unless !game.check
+      fail ActiveRecord::Rollback
+    end
+    reload
+    check_status
+  end
 
   def moved?
     updated_at != created_at

@@ -26,6 +26,10 @@ class PiecesController < ApplicationController
       update_url: game_path(current_game)
     }
   end
+  
+  def valid_moves
+    render json: current_piece.valid_moves
+  end
 
   private
 
