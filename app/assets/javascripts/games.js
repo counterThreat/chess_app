@@ -7,12 +7,10 @@ function setBoard(){
     for (var y = 0; y <= 87; y++) {
       var square = $('#' + x + y);
       square.html('');
-      console.log('refreshes board');
     }
   }
 
-    // data creates an array of pieces
-    console.log("puts pieces on the board");
+    // puts pieces on the board
     data.forEach(function(piece){
       var cssSelector = "#" + piece.x_position + piece.y_position;
       var square = $(cssSelector);
@@ -33,13 +31,11 @@ function setBoard(){
   });
 }
 
-function handleDrag(element){
-  // element that's being dropped
-  var chess_piece = $(element);
+function handleDrag(event, ui){
+  var chess_piece = $(ui.draggable); 
   var square = $(this);
 
   var piece_id = chess_piece.attr('data-id');
-  console.log(piece_id); // keeps coming back undefined << here's where problem is
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
 
@@ -49,19 +45,19 @@ function handleDrag(element){
     url: url,
     type: 'PUT',
     data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
-    //x_position: destination_x,
-    //y_position: destination_y,
     success: function(data){
-      setBoard();
+      //setBoard(); // could be causing lag in piece move
     }
   });
 }
 
 function dragDropPiece(){
-  $('.piece').draggable({ containment: ".chessboard", 
-                          snap: ".square",
-                          snapMode: 'inner',
-                          revert: true });
+  $('.piece').draggable({
+    containment: ".chessboard",
+    snap: ".square",
+    snapMode: 'inner',
+    //revert: true 
+  });
   $('.square').droppable({
     drop: handleDrag
     // add revert false for when the drop is valid
