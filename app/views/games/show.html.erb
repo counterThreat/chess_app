@@ -29,7 +29,7 @@
   <% if @game.black_player && @game.current_user_is_black_player? %>
   <h4> It is <% get_username(@game.black_player_id)%>'s turn as BLACK</p>
   <% elsif @game.white_player && @game.current_user_is_white_player? %>
-  <h4> It is <% get_username(@game.white_player_id)%>'s truen as WHITE </p>
+  <h4> It is <% get_username(@game.white_player_id)%>'s turn as WHITE </p>
   <% else %>
   <h4> "Waiting for another player to join the game!" </p>
   <% end %>
