@@ -6,9 +6,9 @@ class PiecesController < ApplicationController
     render json: @pieces
   end
 
-  def create
-    @pieces = current_game.pieces.create(piece_params)
-  end
+  #def create
+  #  @pieces = current_game.pieces.create(piece_params)
+  # end
 
   def show
     @piece = Piece.find(params[:id])
