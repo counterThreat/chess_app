@@ -58,7 +58,7 @@ class Piece < ApplicationRecord
     permitted = []
     0.upto(7) do |x|
       0.upto(7) do |y|
-        permitted << { x: x, y: y } if valid_move?(x_new, y_new) && !game.check?(x_new, y_new)
+        permitted << { x: x, y: y } if valid_move?(x_new, y_new) && !move_puts_king_in_check?(x_new, y_new)
       end
     end
     permitted
@@ -69,7 +69,7 @@ class Piece < ApplicationRecord
     
     Piece.transaction do
       move(x_new, y_new)
-      check_status == true unless !game.check
+      check_status == false unless game.check
       fail ActiveRecord::Rollback
     end
     reload

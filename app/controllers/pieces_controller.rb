@@ -27,7 +27,7 @@ class PiecesController < ApplicationController
     }
   end
   
-  def valid_moves
+  def permitted
     render json: current_piece.valid_moves
   end
 
