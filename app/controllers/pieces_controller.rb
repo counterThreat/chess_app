@@ -11,8 +11,9 @@ class PiecesController < ApplicationController
   # end
 
   def show
-    @piece = Piece.find(params[:id])
+    # @piece = Piece.find(params[:id])
     # @piece = @pieces.find { |p| p.id == current_piece.id }
+    @pieces = current_game.chess_pieces.order(:position_y).order(:position_x).to_a
     #  render json: @pieces
   end
 

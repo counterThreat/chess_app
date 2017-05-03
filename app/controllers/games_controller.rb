@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
-
   def new
     @game = Game.new
   end
@@ -22,7 +21,7 @@ class GamesController < ApplicationController
 
   def show
     @game = current_game
-    # @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
+    @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
 
     # if in check/checkmate
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
