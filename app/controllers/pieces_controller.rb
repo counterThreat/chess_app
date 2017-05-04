@@ -17,6 +17,11 @@ class PiecesController < ApplicationController
   def update
     x = piece_params[:x_position]
     y = piece_params[:y_position]
+
+    if !your_turn
+      render text: 'It is your turn',
+             status: :unauthorized
+    else
     current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
     render json: { status: :ok } && return if request.xhr?
     redirect_to current_piece.game
@@ -39,5 +44,9 @@ class PiecesController < ApplicationController
   def url_status
     return :ok if try_success?
     :forbidden
+  end
+
+  def your_turn
+    current_game.turn == current_user
   end
 end

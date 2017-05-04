@@ -134,4 +134,8 @@ class Game < ApplicationRecord
   def pieces_no_king(color)
     pieces.where.not(type: 'King', color: color)
   end
+
+  def default_turn
+    update_attributes(turn: white_player_id)
+  end
 end
