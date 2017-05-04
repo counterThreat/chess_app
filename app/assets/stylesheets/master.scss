@@ -207,6 +207,10 @@ tr:nth-child(even) td:nth-child(odd) {
   background: rgba(0,0,0, 0.5);
 }
 
+.piece:hover{
+		cursor: pointer;
+		opacity: 0.3;
+}
 
 //td:active{
 //  background-color:lightblue;
@@ -235,11 +239,4 @@ a {
   color: #31708f;
   border-radius: .25rem;
   text-align: center;
-}
-
-// Highlight pieces on click
-.highlight {
-  border: solid 4px #10f419;
-  color: #0a0ba1;
-  text-shadow: 3px 3px 5px #23adf1;
 }

@@ -1,22 +1,70 @@
-$( document ).ready(function(){
-var url = $(location).attr('href');
-  $.get(url+"/pieces").success(function(data){
-    $.each(data, function(index, piece){
-      $("#" + piece.x_position + piece.y_position).html(piece.unicode);
-      $("#" + piece.x_position + piece.y_position).attr('data-id', piece.id);
+function setBoard(){
+  var url = window.location.href;
+
+// refreshes the board
+  $.get(url + "/pieces").success(function(data){
+  for(var x = 0; x <= 7; x++) {
+    for (var y = 0; y <= 87; y++) {
+      var square = $('#' + x + y);
+      square.html('');
+    }
+  }
+
+    // puts pieces on the board
+    data.forEach(function(piece){
+      var cssSelector = "#" + piece.x_position + piece.y_position;
+      var square = $(cssSelector);
+      console.log(square);
+
+      var chess_piece = $('<div></div>');
+      chess_piece.html(piece.unicode);
+      chess_piece.addClass('piece');
+      chess_piece.attr('data-id', piece.id);
+      chess_piece.attr('data-x-position', piece.x_position);
+      chess_piece.attr('data-y-position', piece.y_position);
+
+      square.html('');
+      square.html(chess_piece);
     });
+
+    dragDropPiece();
   });
+}
 
+function handleDrag(event, ui){
+  var chess_piece = $(ui.draggable);
+  var square = $(this);
 
+  var piece_id = chess_piece.attr('data-id');
+  var dx = square.attr('data-x');
+  var dy = square.attr('data-y');
 
+  var url = window.location.href + '/pieces/' + piece_id;
 
-
-});
-$(function() {
-  var classHighlight = 'highlight';
-  var pieces = $('.square');
-  $('.square').click(function(item) {
-    $('.square').removeClass(classHighlight);
-    $( this ).addClass(classHighlight);
+  $.ajax({
+    url: url,
+    type: 'PUT',
+    data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
+    success: function(data){
+      //setBoard(); // could be causing lag in piece move
+    }
   });
+}
+
+function dragDropPiece(){
+  $('.piece').draggable({
+    containment: ".chessboard",
+    snap: ".square",
+    snapMode: 'inner',
+    snapTolerance: 40
+    //revert: true
+  });
+  $('.square').droppable({
+    drop: handleDrag
+    // add revert false for when the drop is valid
+  });
+}
+
+$( document ).ready(function(){
+  setBoard();
 });

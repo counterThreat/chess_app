@@ -22,6 +22,9 @@ class GamesController < ApplicationController
 
   def show
     @game = current_game
+    @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
+
+    # if in check/checkmate
     color = if current_game.white_player == current_user # fix when turns are added
               'white'
             else
@@ -30,11 +33,11 @@ class GamesController < ApplicationController
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
     flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
 
+    # html/json
     respond_to do |format|
-      format.json { render json: @game.pieces }
+      format.json { render json: @game.pieces } # render json: @pieces
       format.html
     end
-    # render the pieces on the board
   end
 
   def edit
