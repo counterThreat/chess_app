@@ -78,4 +78,8 @@ class GamesController < ApplicationController
   def authorize_user
     render text: text, status: :unauthorized unless current_game.black_player == current_user || current_game.white_player == current_user
   end
+
+  def default_turn
+    update_attributes(turn: white_player_id)
+  end
 end
