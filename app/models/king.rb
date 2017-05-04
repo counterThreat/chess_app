@@ -12,14 +12,15 @@ class King < Piece
 
   def can_castle?(rook_x, rook_y)
     rook = game.find_piece(rook_x, rook_y)
-    return false if rook.nil?
-    return false if rook.type != 'Rook'
-    return false if rook.color != color
-    return false if moved? || rook.moved?
-    return false if will_king_be_safe?(rook_x) == false
-    return false if obstructed?(rook_x, rook_y)
-    true
-    # account for 'through check'
+    !(
+      rook.nil? ||
+      rook.type != 'Rook' ||
+      rook.color != color ||
+      moved? ||
+      rook.moved? ||
+      !will_king_be_safe?(rook_x) ||
+      obstructed?(rook_x, rook_y)
+    )
   end
 
   def castle!(rook_x, rook_y)
@@ -41,14 +42,14 @@ class King < Piece
 
   def will_king_be_safe?(rook_x)
     if rook_x < x_position
-      (2..4).each do |x_pos|
+      (3..5).each do |x_pos|
         game.pieces_no_king(color).each do |piece|
           return false if piece.valid_move?(x_pos, y_position) && piece.color != color
         end
       end
       true
     elsif rook_x > x_position
-      (4..6).each do |x_pos|
+      (5..7).each do |x_pos|
         game.pieces_no_king(color).each do |piece|
           return false if piece.valid_move?(x_pos, y_position) && piece.color != color
         end

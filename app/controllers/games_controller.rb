@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :authorize_user, only: :forfeit
 
   def new
     @game = Game.new
@@ -24,8 +25,13 @@ class GamesController < ApplicationController
     @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
 
     # if in check/checkmate
+    color = if current_game.white_player == current_user # fix when turns are added
+              'white'
+            else
+              'black'
+            end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
-    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
+    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
 
     # html/json
     respond_to do |format|
@@ -51,7 +57,16 @@ class GamesController < ApplicationController
     end
   end
 
+  def forfeit
+    current_game.forfeiting_player!(current_user)
+    redirect_to games_path, alert: 'You forfeited the game.'
+  end
+
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
+
+  def text
+    "You can't perform that action."
+  end
 
   private
 
@@ -61,5 +76,9 @@ class GamesController < ApplicationController
 
   def current_game
     @game ||= Game.find(params[:id])
+  end
+
+  def authorize_user
+    render text: text, status: :unauthorized unless current_game.black_player == current_user || current_game.white_player == current_user
   end
 end

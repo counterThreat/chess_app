@@ -2,17 +2,20 @@
   <h1> <%= @game.name %> </h1>
 </div>
 
-<h3> White Player: <%= get_username(@game.white_player_id) %> </h3>
+<div class="col-xs-12 col-md-8 col-md-offset-2 players">
+<% if @game.black_player_id == nil %>
+<h3>WHITE: <%= get_username(@game.white_player_id)%></h3>
+<% else %>
+  <h4 class="alignleft">WHITE: <%= get_username(@game.white_player_id)%></h4><h4 class="alignright">BLACK: <%= get_username(@game.black_player_id)%></h4>
+</div>
 
-<% if @game.black_player_id != nil %>
-  <h3> Black Player: <%= get_username(@game.black_player_id) %> </h3>
 <% end %>
 
 <table class="chessboard">
-  <% (0..7).each do |column| %>
+  <% (1..8).reverse_each do |column| %>
     <tr class="row">
-      <% (0..7).each do |row| %>
-        <td class="square" id="<%=row%><%=column%>" data-x="<%=row%>" data-y="<%= column %>">
+      <% (1..8).each do |row| %>
+        <td class="square" id="<%=column%><%=row%>" data-x="<%=row%>" data-y="<%= column %>>
 
         </td>
 
@@ -20,3 +23,18 @@
     </tr>
   <% end %>
 </table>
+
+
+<%= button_to "Forfeit", forfeit_game_path(@game), class: "btn forfeit", method: 'PUT', action: :forfeit if can_forfeit?(@game) %>
+<hr/>
+
+<div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
+  <% if @game.black_player && @game.current_user_is_black_player? %>
+  <h4> It is <% get_username(@game.black_player_id)%>'s turn as BLACK</p>
+  <% elsif @game.white_player && @game.current_user_is_white_player? %>
+  <h4> It is <% get_username(@game.white_player_id)%>'s turn as WHITE </p>
+  <% else %>
+  <h4> "Waiting for another player to join the game!" </p>
+  <% end %>
+  <br/>
+</div>

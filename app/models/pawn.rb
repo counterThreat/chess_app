@@ -26,7 +26,7 @@ class Pawn < Piece
   end
 
   def promote?(y_new)
-    return true if y_new == 7 || y_new.zero?
+    return true if y_new == 8 || y_new.zero?
     false
   end
 
@@ -66,17 +66,17 @@ class Pawn < Piece
   def forward_move?(y_new)
     y_distance = y_new - y_position
     if color == 'black'
-      y_distance > 0
-    else
       y_distance < 0
+    else
+      y_distance > 0
     end
   end
 
   def forward_direction
     if color == 'black'
-      1
-    else
       -1
+    else
+      1
     end
   end
 
@@ -87,5 +87,17 @@ class Pawn < Piece
   def y_move
     moved? ? SECOND_MOVE : FIRST_MOVE
   end
-end
 
+  def last_piece_moved
+    game.pieces.order(:updated_at).last
+  end
+
+  def valid_en_passant?(x_new, y_new)
+    last_piece = last_piece_moved
+    last_piece.type == "Pawn" &&
+    last_piece.move_num == 1 &&
+    last_piece.y_position == y_position &&
+    last_piece.y_position == (last_piece.color == 'white' ? 4 : 5) &&
+    (last_piece.x_position - x_position).abs == 1
+  end
+end
