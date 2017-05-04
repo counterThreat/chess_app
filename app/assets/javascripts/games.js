@@ -32,7 +32,7 @@ function setBoard(){
 }
 
 function handleDrag(event, ui){
-  var chess_piece = $(ui.draggable); 
+  var chess_piece = $(ui.draggable);
   var square = $(this);
 
   var piece_id = chess_piece.attr('data-id');
@@ -56,7 +56,8 @@ function dragDropPiece(){
     containment: ".chessboard",
     snap: ".square",
     snapMode: 'inner',
-    //revert: true 
+    snapTolerance: 40
+    //revert: true
   });
   $('.square').droppable({
     drop: handleDrag

@@ -15,8 +15,8 @@ class PiecesController < ApplicationController
   end
 
   def update
-    x = params[:x_position]
-    y = params[:y_position]
+    x = piece_params[:x_position]
+    y = piece_params[:y_position]
     current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
     render json: { status: :ok } && return if request.xhr?
     redirect_to current_piece.game
@@ -32,9 +32,9 @@ class PiecesController < ApplicationController
 
   private
 
-  # def piece_params
-  # params.require(:piece).permit(:x_position, :y_position, :color, :game_id, :user_id, :captured, :move_num)
-  # end
+  def piece_params
+    params.require(:piece).permit(:x_position, :y_position, :color, :game_id, :user_id, :captured, :move_num)
+  end
 
   def url_status
     return :ok if try_success?
