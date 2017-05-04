@@ -76,6 +76,29 @@ FactoryGirl.define do
     captured false
   end
 
+
+  factory :capturing_ep_pawn, class: Pawn do
+    type "Pawn"
+    color "white"
+    x_position 2
+    y_position 5
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
+  factory :capturable_ep_pawn, class: Pawn do
+    type "Pawn"
+    color "black"
+    x_position 3
+    y_position 7
+    sequence(:game_id) { |a| a }
+    sequence(:user_id) { |b| b }
+    moved false
+    captured false
+  end
+
   factory :pawn_white_55, class: Pawn do
     type "Pawn"
     color "white"

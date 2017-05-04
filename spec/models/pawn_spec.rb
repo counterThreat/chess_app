@@ -12,7 +12,7 @@ RSpec.describe Pawn, type: :model do
     end
 
     it 'returns false if valid_move? is false' do
-      newmove = pawn.valid_move?(5, 3)
+      newmove = pawn.valid_move?(5, 8)
       expect(newmove).to eq false
     end
   end
@@ -61,11 +61,24 @@ RSpec.describe Pawn, type: :model do
     end
   end
 
+  describe 'is en passant capture possible?' do
+      mygame = FactoryGirl.create(:game)
+      soren = FactoryGirl.create(:user)
+      whitepawn = FactoryGirl.create(:capturing_ep_pawn, game: mygame, user: soren)
+      blackpawn = FactoryGirl.create(:capturable_ep_pawn, game: mygame, user: soren)
+
+      it 'returns true if valid_en_passant? is true' do
+      blackpawn.move(3, 5)
+      newmove = whitepawn.valid_capture?(2, 6)
+      expect(newmove).to eq true
+    end
+  end
+
   describe 'en passant moves' do
     #puts "here comes the problem"
     #puts pawn_black_47.persisted?
     #puts pawn_black_47.errors.inspect
-    #puts "see above" 
+    #puts "see above"
 
     it 'returns true for en passant passant capture' do
       myepgame = FactoryGirl.create(:game)
