@@ -22,9 +22,10 @@ class PiecesController < ApplicationController
       render text: 'It is your turn',
              status: :unauthorized
     else
-    current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
-    render json: { status: :ok } && return if request.xhr?
-    redirect_to current_piece.game
+      current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
+      render json: { status: :ok } && return if request.xhr?
+      redirect_to current_piece.game
+    end
   end
 
   def current_game
