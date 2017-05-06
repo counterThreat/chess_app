@@ -3,12 +3,12 @@ function setBoard(){
 
 // refreshes the board
   $.get(url + "/pieces").success(function(data){
-  for(var x = 0; x <= 7; x++) {
-    for (var y = 0; y <= 87; y++) {
-      var square = $('#' + x + y);
-      square.html('');
+    for(var x = 1; x <= 8; x++) {
+      for (var y = 1; y <= 8; y++) {
+        var square = $('#' + x + y);
+        square.html('');
+      }
     }
-  }
 
     // puts pieces on the board
     data.forEach(function(piece){
