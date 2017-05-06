@@ -38,15 +38,15 @@ class King < Piece
   end
 
   def will_king_be_safe?(rook_x)
-    if rook_x < x_position
-      (3..5).each do |x_pos|
+    if rook_x > x_position
+      (5..8).each do |x_pos|
         game.pieces_no_king(color).each do |piece|
           return false if piece.valid_move?(x_pos, y_position) && piece.color != color
         end
       end
       true
-    elsif rook_x > x_position
-      (5..7).each do |x_pos|
+    elsif rook_x < x_position
+      (1..5).each do |x_pos|
         game.pieces_no_king(color).each do |piece|
           return false if piece.valid_move?(x_pos, y_position) && piece.color != color
         end
