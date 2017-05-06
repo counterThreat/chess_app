@@ -5,8 +5,7 @@ class King < Piece
     elsif (x_new - x_position).abs <= 1 && (y_new - y_position).abs <= 1
       true
     else
-      return super unless can_castle?(x_new, y_new)
-      castle!(x_new, y_new)
+      return super unless castle!(x_new, y_new)
     end
   end
 
@@ -35,8 +34,6 @@ class King < Piece
       end
       toggle_move!
       rook.toggle_move!
-    else
-      puts 'castling not allowed'
     end
   end
 
