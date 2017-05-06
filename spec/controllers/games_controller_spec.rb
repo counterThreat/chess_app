@@ -33,7 +33,7 @@ RSpec.describe GamesController, type: :controller do
       user = create(:user)
       sign_in user
       game = create(:game)
-      get :show, params: { id: game.id }
+      get :show, params: { id: game }
       expect(response).to be_success
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe GamesController, type: :controller do
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
       sign_in black_player
 
-      put :forfeit, id: game
+      put :forfeit, params: { id: game }
       expect(response).to redirect_to games_path
       expect(game.reload.winner).to eq white_player
     end
@@ -75,14 +75,14 @@ RSpec.describe GamesController, type: :controller do
     it 'returns an error if you try to forfeit and its not your turn' do
       game = create(:game_player_associations)
       sign_in create(:user)
-      put :forfeit, id: game
+      put :forfeit, params: { id: game }
       expect(response).to have_http_status(:unauthorized)
       expect(game.reload.winner).to be_nil
     end
 
     it 'requires that user be signed in' do
       game = create(:game_player_associations)
-      put :forfeit, id: game
+      put :forfeit, params: { id: game }
       expect(response).to redirect_to new_user_session_path
       expect(game.reload.winner).to be_nil
     end

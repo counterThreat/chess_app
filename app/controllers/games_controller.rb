@@ -79,6 +79,6 @@ class GamesController < ApplicationController
   end
 
   def authorize_user
-    render text: text, status: :unauthorized unless current_game.black_player == current_user || current_game.white_player == current_user
+    render html: text, status: :unauthorized unless current_game.black_player == current_user || current_game.white_player == current_user
   end
 end
