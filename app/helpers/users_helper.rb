@@ -1,6 +1,7 @@
 # users helper
 module UsersHelper
   def get_username(id)
-    User.find(id).username
+    return User.find(id).username if User.exists?(id)
+    render html: "Player No Longer Active"
   end
 end
