@@ -12,5 +12,18 @@ RSpec.describe PiecesController, type: :controller do
       expect(rook.x_position).to eq 4
       expect(rook.y_position).to eq 6
     end
+
+    it "validates correct player's turn" do
+      mygame = FactoryGirl.create(:game)
+      anna = FactoryGirl.create(:user)
+      pawn = FactoryGirl.create(:pawn, game: mygame, user: anna)
+      sign_in anna
+      # pawn = create(:pawn, game: game, user_id: game.white_player_id)
+      #pawn.move(1, 3)
+      put :update, params: { id: pawn.id, piece: { user_id: white_player.id, game_id: game.id, x_position: 1, y_position: 3 } }
+
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to eql "It is your turn"
+    end
   end
 end
