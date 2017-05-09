@@ -48,6 +48,7 @@ function handleDrag(event, ui){
     type: 'PUT',
     data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
     success: function(data){
+      showMove();
       //setBoard(); // could be causing lag in piece move
     }
   });
@@ -77,10 +78,12 @@ function showMove() {
 
   var channel = pusher.subscribe('my-channel');
   channel.bind('piece-moved', function(data) {
-    console.log(data.message);
+  //  document.getElementById('booyah').innerText = "Piece MOVED";
+  setBoard();
   });
 }
 
 $( document ).ready(function(){
   setBoard();
+  showMove();
 });
