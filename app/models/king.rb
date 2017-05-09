@@ -16,17 +16,18 @@ class King < Piece
       rook.type != 'Rook' ||
       rook.color != color ||
       moved? ||
-      rook.moved?) #||
-      #!will_king_be_safe?(x_new) ||
-      #obstructed?(x_new, y_new) ||
-      #occupied?(x_new, y_new))
+      rook.moved? ||
+      !will_king_be_safe?(x_new) ||
+      obstructed?(x_new, y_new) ||
+      occupied?(x_new, y_new))
   end
 
   def castle!(x_new, y_new)
     return false unless can_castle?(x_new, y_new) 
     rook = game.find_piece((x_new < x_position ? 1 : 8), y_new)
+    rook.update!(x_position: x_new < x_position ? 4 : 6, moved: true)
     update!(x_position: x_new, moved: true)
-    rook.update!(x_position: (x_new < x_position ? 4 : 6), moved: true)
+    
   end
 
   def will_king_be_safe?(x_new)

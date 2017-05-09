@@ -3,25 +3,30 @@ class Pawn < Piece
   SECOND_MOVE = 1
 
   def valid_move?(x_new, y_new)
-    y_new == y_move && pawn_possible?(x_new, y_new)
+    if obstructed?(x_new, y_new)
+      false
+    elsif !forward_move?(y_new)
+      false
+    elsif vertical_move?(x_new, y_new) && !valid_vertical_move?(x_new, y_new)
+      false
+    elsif pawn_possible?(x_new, y_new)
+      true
+    else
+      super
+    end
   end
 
   def pawn_possible?(x_new, y_new)
-    (forward_move?(y_new) && vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) || 
-    valid_capture?(x_new, y_new)
+    (vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) || valid_capture?(x_new, y_new)
   end
 
-  #def move(x_new, y_new)
-    #if update(type: 'Queen') 
-      #promote?(y_new)
-      #reload
-    #else 
-    #  super
-    #end
-  #end
+  def move(x_new, y_new)
+    update(type: 'Queen') if promote?(y_new)
+    super
+  end
 
   def promote?(y_new)
-    return true if y_new == 8 || y_new ==1 
+    return true if y_new == 8 || y_new.zero?
     false
   end
 
@@ -47,7 +52,11 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    pawn_diagonal_move?(x_new, y_new) && forward_move?(y_new) && occupied?(x_new, y_new)
+    if pawn_diagonal_move?(x_new, y_new)
+      true
+    else
+      false
+    end
   end
 
   def moved?
@@ -55,8 +64,12 @@ class Pawn < Piece
   end
 
   def forward_move?(y_new)
-    y_diff(y_new) > 0 && color == 'black' || 
-    y_diff(y_new) < 0 && color == 'white'
+    y_distance = y_new - y_position
+    if color == 'black'
+      y_distance < 0
+    else
+      y_distance > 0
+    end
   end
 
   def forward_direction
