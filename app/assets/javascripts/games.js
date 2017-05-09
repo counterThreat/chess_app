@@ -1,3 +1,5 @@
+
+
 function setBoard(){
   var url = window.location.href;
 
@@ -62,6 +64,20 @@ function dragDropPiece(){
   $('.square').droppable({
     drop: handleDrag
     // add revert false for when the drop is valid
+  });
+}
+
+function showMove() {
+  // Enable pusher logging - don't include this in production
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('piece-moved', function(data) {
+    console.log(data.message);
   });
 }
 

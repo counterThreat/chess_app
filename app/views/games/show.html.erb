@@ -1,3 +1,18 @@
+<script src="//js.pusher.com/4.0/pusher.min.js"></script>
+<script>
+  // Enable pusher logging - don't include this in production
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('piece-moved', function(data) {
+    console.log(data.message);
+  });
+</script>
+
 <div class="page-header">
   <h1> <%= @game.name %> </h1>
 </div>
