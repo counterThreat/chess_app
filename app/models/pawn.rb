@@ -26,7 +26,7 @@ class Pawn < Piece
   end
 
   def promote?(y_new)
-    return true if y_new == 8 || y_new.zero?
+    return true if y_new == 8 || y_new == 1
     false
   end
 
