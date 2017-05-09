@@ -59,7 +59,7 @@ class Piece < ApplicationRecord
   end
 
   def toggle_move!
-    update(moved: true) if moved?
+    update(moved: true) #if moved?
   end
 
   def vertical_move?(x_new, y_new)
