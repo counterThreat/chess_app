@@ -107,6 +107,13 @@ Style/BlockComments:
   Exclude:
     - 'spec/spec_helper.rb'
 
+# Offense count: 1
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/controllers/users/registrations_controller.rb'
+
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/CommentIndentation:
@@ -168,7 +175,7 @@ Style/IndentationWidth:
   Exclude:
     - 'app/models/game.rb'
     - 'spec/factories/piece.rb'
-
+    
 # Offense count: 8
 # Cop supports --auto-correct.
 Style/LeadingCommentSpace:
