@@ -31,9 +31,6 @@ class Piece < ApplicationRecord
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
-        #else
-         # toggle_move!
-        #end
     else
       puts 'Move is not allowed!' # can change this to be a flash method
       return
