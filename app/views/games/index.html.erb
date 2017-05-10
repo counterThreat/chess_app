@@ -14,7 +14,7 @@
               <br/>
               <small><%= display_date(game.created_at)%></small>
             </div>
-            <div class="col-sm-3" style=text-align:center><em>
+            <div class="col-sm-3" style=text-align:center>
                 <% if game.white_player_id && game.black_player_id %>
                   <b>Black Player:</b> <%=get_username(game.black_player_id) %>
                 <% else %>
