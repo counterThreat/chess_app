@@ -22,18 +22,18 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new)
+    if valid_move?(x_new, y_new) && on_board? #&& attack!(x_new, y_new)
       Piece.transaction do
         attack!(x_new, y_new)
-        update!(x_position: x_new, y_position: y_new, moved: true, move_num: move_num + 1)
-        reload
+        update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
+        #reload
         if game.check == color
+          reload
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
+        else
+          toggle_move!
         end
       end
-        #else
-         # toggle_move!
-        #end
     else
       puts 'Move is not allowed!' # can change this to be a flash method
       return
@@ -60,7 +60,7 @@ class Piece < ApplicationRecord
   end
 
   def toggle_move!
-    update!(moved: true) if moved?
+    update(moved: true) if moved?
   end
 
   def vertical_move?(x_new, y_new)
