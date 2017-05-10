@@ -257,11 +257,11 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       black_bishop = FactoryGirl.create(:bishop, color: 'black', game: game1, user: michael, x_position: 3, y_position: 3)
-      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 7)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 8)
       white_rook.move(5, 4)
       white_rook.reload
       expect(white_rook.x_position).to eq 5
-      expect(white_rook.y_position).to eq 7
+      expect(white_rook.y_position).to eq 8
     end
   end
 

@@ -61,11 +61,7 @@ RSpec.describe Pawn, type: :model do
     end
   end
 
-  describe 'en passant moves' do
-    #puts "here comes the problem"
-    #puts pawn_black_47.persisted?
-    #puts pawn_black_47.errors.inspect
-    #puts "see above" 
+  describe 'en passant moves' do 
 
     it 'returns true for en passant passant capture' do
       myepgame = FactoryGirl.create(:game)

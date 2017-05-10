@@ -16,9 +16,9 @@ class PiecesController < ApplicationController
 
   def update
     game = current_piece.game
-    x = piece_params[:x_position]
-    y = piece_params[:y_position]
-    current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
+    x = params[:piece][:x_position].to_i
+    y = params[:piece][:y_position].to_i
+    current_piece.move(x, y)
     Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
       message: 'A piece has been moved'
     })
@@ -36,9 +36,9 @@ class PiecesController < ApplicationController
 
   private
 
-  def piece_params
-    params.require(:piece).permit(:x_position, :y_position, :color, :game_id, :user_id, :captured, :move_num)
-  end
+  # def piece_params
+  # params.require(:piece).permit(:x_position, :y_position, :color, :game_id, :user_id, :captured, :move_num)
+  # end
 
   def url_status
     return :ok if try_success?

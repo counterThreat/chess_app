@@ -1,14 +1,17 @@
-function setBoard(){
+function fetchBoard(){
   var url = window.location.href;
 
 // refreshes the board
-  $.get(url + "/pieces").success(function(data){
-    for(var x = 1; x <= 8; x++) {
-      for (var y = 1; y <= 8; y++) {
-        var square = $('#' + x + y);
-        square.html('');
-      }
+  $.get(url + "/pieces").success(setBoard)
+}
+
+function setBoard(data){
+for(var x = 1; x <= 8; x++) {
+    for (var y = 1; y <= 8; y++) {
+      var square = $('#' + x + y);
+      square.html('');
     }
+  }
 
     // puts pieces on the board
     data.forEach(function(piece){
@@ -28,11 +31,10 @@ function setBoard(){
     });
 
     dragDropPiece();
-  });
-}
+  }
 
 function handleDrag(event, ui){
-  var chess_piece = $(ui.draggable);
+  var chess_piece = $(ui.draggable); 
   var square = $(this);
 
   var piece_id = chess_piece.attr('data-id');
@@ -43,22 +45,22 @@ function handleDrag(event, ui){
 
   $.ajax({
     url: url,
-    type: 'PUT',
+    type: 'PUT', 
     data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
     success: function(data){
       showMove();
       //setBoard(); // could be causing lag in piece move
+      setBoard(data); // could be causing lag in piece move
     }
   });
 }
 
 function dragDropPiece(){
   $('.piece').draggable({
-    containment: ".chessboard",
-    snap: ".square",
-    snapMode: 'inner',
-    snapTolerance: 40
-    //revert: true
+    containment: '.chessboard',
+    snap: '.square',
+    snapMode: 'inner'
+    //revert: true 
   });
   $('.square').droppable({
     drop: handleDrag
@@ -95,3 +97,7 @@ $( document ).ready(function(){
   setBoard();
   showMove();
 });
+};
+$( document ).ready(function(){
+  fetchBoard();
+})
