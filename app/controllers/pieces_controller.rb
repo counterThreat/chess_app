@@ -18,7 +18,7 @@ class PiecesController < ApplicationController
     game = current_piece.game
     x = params[:piece][:x_position].to_i
     y = params[:piece][:y_position].to_i
-    current_piece.move(x, y) && y.present?
+    current_piece.move(x, y)
     Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
       message: 'A piece has been moved'
     })
