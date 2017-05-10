@@ -1,5 +1,3 @@
-
-
 function setBoard(){
   var url = window.location.href;
 
@@ -76,7 +74,10 @@ function getPath() {
 
 function showMove() {
   // Enable pusher logging - don't include this in production
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
   Pusher.logToConsole = true;
+  }
 
   var pusher = new Pusher('85619837e880f6d5568c', {
     encrypted: true
