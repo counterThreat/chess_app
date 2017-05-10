@@ -1,35 +1,53 @@
 class Pawn < Piece
-  FIRST_MOVE = 2
+  FIRST_MOVE = 2 
   SECOND_MOVE = 1
 
   def valid_move?(x_new, y_new)
-    if obstructed?(x_new, y_new)
-      false
-    elsif !forward_move?(y_new)
-      false
-    elsif vertical_move?(x_new, y_new) && !valid_vertical_move?(x_new, y_new)
-      false
-    elsif pawn_possible?(x_new, y_new)
-      true
-    else
-      super
-    end
-  end
-
-  def pawn_possible?(x_new, y_new)
-    (vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) || valid_capture?(x_new, y_new)
+    pawn_possible?(x_new, y_new)
   end
 
   def move(x_new, y_new)
-    update(type: 'Queen') if promote?(y_new)
-    super
+    if valid_en_passant?(x_new, y_new)
+      Piece.transaction do
+        last_piece_moved.update!(captured: true, x_position: -1, y_position: -1)
+        update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
+        if game.check == color
+          reload
+          raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
+        else
+          toggle_move!
+        end
+      end
+    end
+    if promote?(y_new)
+      Piece.transaction do
+        attack!(x_new, y_new)
+        update!(
+          x_position: x_new, y_position: y_new, 
+          type: "Queen", unicode: color == "white" ? '&#9813' : '&#9819', 
+          move_num: move_num + 1)
+        if game.check == color
+          reload
+            raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
+        else
+          toggle_move!
+        end
+      end
+    end
+      super
+  end
+      
+  def pawn_possible?(x_new, y_new)
+    (forward_move?(y_new) && vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) || 
+    valid_capture?(x_new, y_new)
+    #is_king_safe?
   end
 
   def promote?(y_new)
-    return true if y_new == 8 || y_new == 1
-    false
+    y_new == 8 ||
+    y_new == 1
   end
-
+  
   def valid_vertical_move?(x_new, y_new)
     return false if y_out_of_bounds?(y_new)
     return false if occupied?(x_new, y_new)
@@ -52,11 +70,7 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    if pawn_diagonal_move?(x_new, y_new)
-      true
-    else
-      false
-    end
+    pawn_diagonal_move?(x_new, y_new) && forward_move?(y_new) && occupied?(x_new, y_new)
   end
 
   def moved?
@@ -64,12 +78,8 @@ class Pawn < Piece
   end
 
   def forward_move?(y_new)
-    y_distance = y_new - y_position
-    if color == 'black'
-      y_distance < 0
-    else
-      y_distance > 0
-    end
+    (y_new - y_position) < 0 && color == 'black' || 
+    (y_new - y_position) > 0 && color == 'white'
   end
 
   def forward_direction
