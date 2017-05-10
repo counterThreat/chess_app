@@ -48,6 +48,8 @@ function handleDrag(event, ui){
     type: 'PUT', 
     data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
     success: function(data){
+      showMove();
+      //setBoard(); // could be causing lag in piece move
       setBoard(data); // could be causing lag in piece move
     }
   });
@@ -64,6 +66,37 @@ function dragDropPiece(){
     drop: handleDrag
     // add revert false for when the drop is valid
   });
+}
+
+function getPath() {
+  var pathArray = window.location.pathname.split( '/' );
+  var gameId = pathArray[pathArray.length -1]
+  return gameId;
+}
+
+function showMove() {
+  // Enable pusher logging - don't include this in production
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+  Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("game-channel-" + number);
+  channel.bind('piece-moved', function(data) {
+  setBoard();
+  });
+}
+
+$( document ).ready(function(){
+  setBoard();
+  showMove();
+});
 };
 $( document ).ready(function(){
   fetchBoard();
