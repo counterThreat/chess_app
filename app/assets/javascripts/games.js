@@ -68,6 +68,12 @@ function dragDropPiece(){
   });
 }
 
+function getPath() {
+  var pathArray = window.location.pathname.split( '/' );
+  var gameId = pathArray[pathArray.length -1]
+  return gameId;
+}
+
 function showMove() {
   // Enable pusher logging - don't include this in production
   Pusher.logToConsole = true;
@@ -76,9 +82,10 @@ function showMove() {
     encrypted: true
   });
 
-  var channel = pusher.subscribe('my-channel');
+  var number = getPath();
+
+  var channel = pusher.subscribe("game-channel-" + number);
   channel.bind('piece-moved', function(data) {
-  //  document.getElementById('booyah').innerText = "Piece MOVED";
   setBoard();
   });
 }

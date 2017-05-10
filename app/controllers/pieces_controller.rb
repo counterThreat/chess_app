@@ -15,10 +15,11 @@ class PiecesController < ApplicationController
   end
 
   def update
+    game = current_piece.game
     x = piece_params[:x_position]
     y = piece_params[:y_position]
     current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
-    Pusher.trigger('my-channel', 'piece-moved', {
+    Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
       message: 'A piece has been moved'
     })
     render json: { status: :ok } && return if request.xhr?
