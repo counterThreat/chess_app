@@ -65,6 +65,8 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem "factory_girl_rails", "~> 4.0"
   gem 'capybara'
+  gem "chromedriver-helper"
+  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'faker'
   gem 'rails-controller-testing'
