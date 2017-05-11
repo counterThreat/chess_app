@@ -87,4 +87,55 @@ RSpec.describe GamesController, type: :controller do
       expect(game.reload.winner).to be_nil
     end
   end
+
+  describe 'game#finish' do
+    it 'updates winning_player_id, outcome, and finished for a checkmate' do
+      white_player = create(:user)
+      black_player = create(:user)
+      check_game = create(:game_player_associations, white_player: white_player, white_player_id: white_player.id, black_player: black_player, black_player_id: black_player.id)
+      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user: white_player, x_position: 1, y_position: 1)
+      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user: black_player, x_position: 8, y_position: 7)
+      rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user: black_player)
+      rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user: black_player)
+      puts check_game.reload.checkmate('white')
+      winning_player_color = 'black' if check_game.checkmate('white')
+      winning_player_color = 'white' if check_game.checkmate('black')
+      winning_player = winning_player_color == 'white' ? white_player : black_player
+      puts winning_player.id
+      puts white_player.id
+      puts black_player.id
+      put :finish, params: { id: check_game.id }
+
+      expect(check_game.reload.outcome).to eq 'checkmate'
+      expect(check_game.finished.utc).to be_within(1.second).of Time.now
+      expect(check_game.reload.winning_player_id).to eq black_player.id
+    end
+=begin
+    it 'updates outcome and finished for a stalemate' do
+      user3 = FactoryGirl.create(:user)
+      user4 = FactoryGirl.create(:user)
+      game1 = FactoryGirl.create(:game)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: user3.id, x_position: 6, y_position: 7)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: user4.id, x_position: 8, y_position: 8)
+      white_queen = FactoryGirl.create(:queen, color: 'white', game: game1, user_id: user4.id, x_position: 7, y_position: 6)
+
+      expect(game1.winning_player_id).to eq nil
+      expect(game1.outcome).to eq 'stalemate'
+      expect(game1.finished.utc).to to be_within(1.second).of Time.now
+    end
+
+    it 'updates winning_player_id, outcome, and finished for a forfeit' do
+      white_player = create(:user)
+      black_player = create(:user)
+      game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.forfeiting_player!(white_player)
+
+      expect(game.winning_player_id).to eq black_player.id
+      expect(game.outcome).to eq 'forfeit'
+      expect(game.finished.utc).to to be_within(1.second).of Time.now
+    end
+
+    it 'renders the game unalterable after an outcome is determined'
+=end
+  end
 end

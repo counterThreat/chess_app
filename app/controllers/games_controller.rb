@@ -68,6 +68,11 @@ class GamesController < ApplicationController
     "You can't perform that action."
   end
 
+  def finish(color)
+    current_game.end_game(color)
+    flash[:notice] = "#{color} lost the game!"
+  end
+
   private
 
   def game_params

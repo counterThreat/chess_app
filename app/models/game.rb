@@ -134,4 +134,16 @@ class Game < ApplicationRecord
   def pieces_no_king(color)
     pieces.where.not(type: 'King', color: color)
   end
+
+  def end_game(color)
+    if checkmate(color) # implement turn code - winning_player_id = player whose turn it isn't
+      winning_player_color = 'black' if checkmate('white')
+      winning_player_color = 'white' if checkmate('black')
+      winning_player = winning_player_color == 'white' ? white_player : black_player
+      reload
+      update(winning_player_id: winning_player.id)
+      update(outcome: 'checkmate')
+      update(finished: Time.now)
+    end
+  end
 end

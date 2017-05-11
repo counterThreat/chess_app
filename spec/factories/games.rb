@@ -24,5 +24,7 @@ FactoryGirl.define do
     name 'test game'
     association :white_player, factory: :user
     association :black_player, factory: :user
+    white_player_id 88
+    black_player_id 99
   end
 end
