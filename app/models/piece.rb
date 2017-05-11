@@ -84,8 +84,7 @@ class Piece < ApplicationRecord
   end
 
   def occupied?(x_new, y_new)
-    return false if opponent(x_new, y_new).nil?
-    true
+    opponent(x_new, y_new).nil? ? false : true 
   end
 
   def opponent(x_new, y_new)

@@ -17,19 +17,19 @@ RSpec.describe Pawn, type: :model do
     end
   end
 
-  describe 'pawn_possible?' do
+  describe 'valid_capture?' do
     mygame = FactoryGirl.create(:game)
     doug = FactoryGirl.create(:user)
     pawn = FactoryGirl.create(:pawn, game: mygame, user: doug)
     FactoryGirl.create(:opponent_pawn, game: mygame, user: doug)
 
     it 'returns true if valid_vertical_move? is correct' do
-      newmove = pawn.valid_vertical_move?(2, 4)
+      newmove = pawn.valid_vertical_move?(4, 4)
       expect(newmove).to eq true
     end
 
-    it 'returns true if valid_capture? is true' do
-      newmove = pawn.valid_capture?(3, 3)
+    it 'returns true if pawn_capture? is true' do
+      newmove = pawn.valid_capture?(2, 3)
       expect(newmove).to eq true
     end
 

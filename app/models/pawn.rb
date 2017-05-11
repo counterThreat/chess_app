@@ -70,7 +70,7 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    pawn_diagonal_move?(x_new, y_new) && forward_move?(y_new) && occupied?(x_new, y_new)
+    pawn_diagonal_move?(x_new, y_new) && forward_move?(y_new) #&& opponent(x_new, y_new).color != color
   end
 
   def moved?
