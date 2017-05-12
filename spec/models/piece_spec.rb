@@ -48,25 +48,25 @@ RSpec.describe Piece, type: :model do
 
   describe 'your_turn? method' do
     it 'returns false if black_player tries to move during white_player turn' do
-        user = create(:user)
-        user2 = create(:user)
-        game = create(:game)
-        create(:king_white_51, game_id: game.id, user_id: user.id)
-        king_black = create(:king_black_58, game_id: game.id, user_id: user2.id)
-        king_black.move(5,7)
-        game.reload
-        expect(king_black.your_turn?).to eq(false)
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      create(:king_white_51, game_id: game.id, user_id: user.id)
+      king_black = create(:king_black_58, game_id: game.id, user_id: user2.id)
+      king_black.move(5, 7)
+      game.reload
+      expect(king_black.your_turn?).to eq(false)
     end
 
     it 'returns true if black_player tries to move during black_player turn' do
-        user3 = create(:user)
-        user4 = create(:user)
-        game2 = create(:game)
-        king_white2 = create(:king_white_51, game_id: game2.id, user_id: user3.id)
-        king_black2 = create(:king_black_58, game_id: game2.id, user_id: user4.id)
-        king_white2.move(5,2)
-        king_black2.reload
-        expect(king_black2.your_turn?).to eq(true)
+      user3 = create(:user)
+      user4 = create(:user)
+      game2 = create(:game)
+      king_white2 = create(:king_white_51, game_id: game2.id, user_id: user3.id)
+      king_black2 = create(:king_black_58, game_id: game2.id, user_id: user4.id)
+      king_white2.move(5, 2)
+      king_black2.reload
+      expect(king_black2.your_turn?).to eq(true)
     end
   end
 
