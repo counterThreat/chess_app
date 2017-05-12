@@ -1,6 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+  describe 'next_turn' do
+    it 'after white_player moves it is black_players turn' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king_white = create(:king_white_51, game_id: game.id, user_id: user.id)
+      create(:king_black_58, game_id: game.id, user_id: user2.id)
+      king_white.move(5,2)
+      game.reload
+      expect(game.player_turn).to eq('black')
+    end
+
+    it 'after black_player moves it is white_players turn' do
+      user3 = create(:user)
+      user4 = create(:user)
+      game2 = create(:game)
+      king_white2 = create(:king_white_51, game_id: game2.id, user_id: user3.id)
+      king_black2 = create(:king_black_58, game_id: game2.id, user_id: user4.id)
+      king_white2.move(5,2)
+      king_white2.reload
+      king_black2.move(5,7)
+      king_black2.reload
+      expect(game2.player_turn).to eq('white')
+    end
+  end
+
   describe 'associate_pieces!' do
     it 'assigns black to the  black_player pieces' do
       user1 = create(:user)
