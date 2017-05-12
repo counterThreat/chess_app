@@ -30,7 +30,7 @@
 <%= button_to "Forfeit", forfeit_game_path(@game), class: "btn forfeit", method: 'PUT', action: :forfeit if can_forfeit?(@game) %>
 <hr/>
 
-<div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
+<!-- <div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
   <% if @game.black_player && @game.current_user_is_black_player? %>
   <h4> It is <% get_username(@game.black_player_id)%>'s turn as BLACK</p>
   <% elsif @game.white_player && @game.current_user_is_white_player? %>
@@ -39,4 +39,10 @@
   <h4> "Waiting for another player to join the game!" </p>
   <% end %>
   <br/>
+</div> -->
+
+<div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
+  <h4 class="turn-notice">
+    Next Turn: <span class="turn"><%= @game.player_turn%></span>
+  </h4>
 </div>
