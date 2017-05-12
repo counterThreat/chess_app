@@ -17,11 +17,21 @@ class PiecesController < ApplicationController
   def update
     x = piece_params[:x_position]
     y = piece_params[:y_position]
-    if !your_turn
-      render text: 'It is your turn',
-             status: :unauthorized
+    if your_turn
+      render text: 'It is your turn'
+            #  status: :unauthorized
     else
       current_piece.update_attributes(x_position: x, y_position: y, updated_at: Time.now) if current_piece && x.present? && y.present?
+      self.game.turn = (self.game.turn == self.game.white_player_id) ? self.game.black_player_id : self.game.white_player_id
+      self.game.save!
+
+      if (self.game.turn == self.game.white_player_id)
+        self.game.turn = self.game.black_player_id
+      else
+        self.game.turn = self.game.white_player_id
+      end
+
+      self.game.save!
       render json: { status: :ok } && return if request.xhr?
       redirect_to current_piece.game
     end
