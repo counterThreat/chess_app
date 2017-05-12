@@ -40,6 +40,11 @@ class GamesController < ApplicationController
     end
   end
 
+  def data_view
+    @game = current_game
+    render json: @game
+  end
+
   def edit
     @game = current_game
   end

@@ -22,10 +22,11 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new)
+    if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new) && your_turn? 
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, moved: true, move_num: move_num + 1)
+        game.next_turn
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
@@ -97,5 +98,10 @@ class Piece < ApplicationRecord
     else
       false
     end
+  end
+
+  def your_turn?
+    return false if game.player_turn != color
+    true
   end
 end
