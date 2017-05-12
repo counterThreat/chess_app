@@ -22,14 +22,17 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && attack!(x_new, y_new) && your_turn? 
+    if valid_move?(x_new, y_new) && on_board? && your_turn?
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, moved: true, move_num: move_num + 1)
         game.next_turn
-        reload
+        # reload
         if game.check == color
+          reload
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
+        else
+          toggle_move!
         end
       end
     else
@@ -58,7 +61,7 @@ class Piece < ApplicationRecord
   end
 
   def toggle_move!
-    update!(moved: true) if moved?
+    update(moved: true) if moved?
   end
 
   def vertical_move?(x_new, y_new)
@@ -82,8 +85,7 @@ class Piece < ApplicationRecord
   end
 
   def occupied?(x_new, y_new)
-    return false if opponent(x_new, y_new).nil?
-    true
+    opponent(x_new, y_new).nil? ? false : true 
   end
 
   def opponent(x_new, y_new)
