@@ -62,13 +62,14 @@ RSpec.describe Pawn, type: :model do
     end
   end
 
-  describe 'en passant moves' do 
+  describe 'en passant moves' do
 
     it 'returns true for en passant passant capture' do
       myepgame = FactoryGirl.create(:game)
       pawngrabber = FactoryGirl.create(:user)
-      FactoryGirl.create(:king_white_51, game: myepgame, user: pawngrabber)
+      king = FactoryGirl.create(:king_white_51, game: myepgame, user: pawngrabber)
       FactoryGirl.create(:king_black_58, game: myepgame, user: pawngrabber)
+      king.move(5, 2) # this allows it to be blacks turn
       pawn_white_55 = FactoryGirl.create(:pawn_white_55, game: myepgame, user: pawngrabber)
       pawn_black_47 = FactoryGirl.create(:pawn_black_47, game: myepgame, user: pawngrabber)
       pawn_black_47.move(4, 5)

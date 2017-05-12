@@ -46,6 +46,30 @@ RSpec.describe Piece, type: :model do
 
   # Instance Methods
 
+  describe 'your_turn? method' do
+    it 'returns false if black_player tries to move during white_player turn' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      create(:king_white_51, game_id: game.id, user_id: user.id)
+      king_black = create(:king_black_58, game_id: game.id, user_id: user2.id)
+      king_black.move(5, 7)
+      game.reload
+      expect(king_black.your_turn?).to eq(false)
+    end
+
+    it 'returns true if black_player tries to move during black_player turn' do
+      user3 = create(:user)
+      user4 = create(:user)
+      game2 = create(:game)
+      king_white2 = create(:king_white_51, game_id: game2.id, user_id: user3.id)
+      king_black2 = create(:king_black_58, game_id: game2.id, user_id: user4.id)
+      king_white2.move(5, 2)
+      king_black2.reload
+      expect(king_black2.your_turn?).to eq(true)
+    end
+  end
+
   describe 'on_board? method' do
     it 'returns false if a piece moves out of bound' do
       piece = FactoryGirl.build(:piece, x_position: 10, y_position: 7)
@@ -136,8 +160,7 @@ RSpec.describe Piece, type: :model do
       michael = FactoryGirl.create(:user)
       white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
-      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece = FactoryGirl.create(:bishop, game: game1, user: elvis)
+      piece = FactoryGirl.create(:bishop_white, game: game1, user: elvis)
       piece.move(2, 2)
       expect(piece.x_position).to eq 2
       expect(piece.y_position).to eq 2
@@ -162,15 +185,14 @@ RSpec.describe Piece, type: :model do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
       michael = FactoryGirl.create(:user)
-      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
-      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
-      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 7, y_position: 2)
-      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 6, y_position: 1)
-      black_rook.move(7, 1)
+      white_king = FactoryGirl.create(:king_white_51, game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king_black_58, game: game1, user: michael)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 2)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 7)
       white_rook.move(6, 2)
       white_rook.reload
-      expect(white_rook.x_position).to eq 6
-      expect(white_rook.y_position).to eq 1
+      expect(white_rook.x_position).to eq 5
+      expect(white_rook.y_position).to eq 2
     end
 
     it "allows a capture that resolves check" do

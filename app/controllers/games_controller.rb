@@ -32,12 +32,20 @@ class GamesController < ApplicationController
             end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
     flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
+    Pusher.trigger("turn-channel-#{@game.id}", 'next-turn', {
+      message: 'Next users turn'
+    })
 
     # html/json
     respond_to do |format|
       format.json { render json: @game.pieces } # render json: @pieces
       format.html
     end
+  end
+
+  def data_view
+    @game = current_game
+    render json: @game
   end
 
   def edit
