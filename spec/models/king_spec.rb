@@ -111,7 +111,7 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user.id)
-      king.move(3, 1)
+      king.castle!(3, 1)
       expect(king.x_position).to eq(3)
     end
 
@@ -142,7 +142,7 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user.id)
-      king.move(7, 1)
+      king.castle!(7, 1)
       rook.reload
       expect(rook.x_position).to eq(6)
     end
@@ -164,7 +164,7 @@ RSpec.describe King, type: :model do
       king = create(:king_white_51, game_id: game.id, user_id: user.id)
       rook = create(:rook_white_81, game_id: game.id, user_id: user.id)
       create(:king_black_58, game_id: game.id, user_id: user.id)
-      king.move(7, 1)
+      king.castle!(7, 1)
       rook.reload
       expect(rook.moved).to eq(true)
     end

@@ -2,15 +2,18 @@ class User < ApplicationRecord
   # has_many
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
-         :registerable,
-         :recoverable,
-         :rememberable,
-         :trackable,
-         :validatable,
-         # :omniauthable,
-         # omniauth_providers: [:google_oauth2],
-         authentication_keys: [:login]
+  # devise :database_authenticatable,
+  #        :registerable,
+  #        :recoverable,
+  #        :rememberable,
+  #        :trackable,
+  #        :validatable,
+  #        # :omniauthable,
+  #        # omniauth_providers: [:google_oauth2],
+  #        authentication_keys: [:login]
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
   # has_and_belongs_to_many :oauth_credentials
 
@@ -18,14 +21,17 @@ class User < ApplicationRecord
   has_many :games_as_black, class_name: 'Game', foreign_key: 'black_player_id'
   has_many :pieces
 
-  validates :username,
-            presence: true,
-            uniqueness: {
-              case_sensitive: false
-            }
+  validates_uniqueness_of :username
+  validates_uniqueness_of :email
 
-  validate :validate_username
-  attr_accessor :login
+  # validates :username,
+  #           presence: true,
+  #           uniqueness: {
+  #             case_sensitive: false
+  #           }
+
+  # validate :validate_username
+  # attr_accessor :login
   # has_and_belongs_to_many :oauth_providers
 
   # def self.new_with_session(params, session)

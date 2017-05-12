@@ -65,6 +65,8 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem "factory_girl_rails", "~> 4.0"
   gem 'capybara'
+  gem "chromedriver-helper"
+  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'faker'
   gem 'rails-controller-testing'
@@ -88,5 +90,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'pusher'
 
 gem 'rubocop', '~> 0.48.0', require: false

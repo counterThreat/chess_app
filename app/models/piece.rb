@@ -35,7 +35,7 @@ class Piece < ApplicationRecord
         end
       end
     else
-      puts 'Move is not allowed!' # can change this to be a flash method
+      # puts 'Move is not allowed!' # can change this to be a flash method
       return
     end
   end
