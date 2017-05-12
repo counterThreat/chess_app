@@ -52,28 +52,28 @@ RSpec.describe King, type: :model do
       expect(king.can_castle?(7, 1)).to eq(false)
     end
 
-    it 'returns false if the king will be in check after castling' do
-      user = create(:user)
-      user2 = create(:user)
-      game = create(:game)
-      king = create(:king_white_51, game_id: game.id, user_id: user.id)
-      create(:king_black_58, game_id: game.id, user_id: user2.id)
-      rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
-      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 4, y_position: 8, user_id: user2.id)
-      bishop.move(7, 5)
-      expect(king.can_castle?(3, 1)).to eq(false)
-    end
-
     it 'returns false if the king will be in check during castling' do
       user = create(:user)
       user2 = create(:user)
       game = create(:game)
-      king = create(:king_white_51, game_id: game.id, user_id: user.id)
-      create(:king_black_58, game_id: game.id, user_id: user2.id)
-      rook = create(:rook_white_11, game_id: game.id, user_id: user.id)
-      bishop = create(:bishop, color: 'black', game_id: game.id, x_position: 5, y_position: 8, user_id: user2.id)
-      bishop.move(8, 5)
-      expect(king.can_castle?(3, 1)).to eq(false)
+      king = create(:king_black_58, game_id: game.id, user_id: user.id)
+      create(:king_white_51, game_id: game.id, user_id: user2.id)
+      create(:rook_black_18, game_id: game.id, user_id: user.id)
+      bishop = create(:bishop, color: 'white', game_id: game.id, x_position: 2, y_position: 4, user_id: user2.id)
+      bishop.move(1, 5)
+      expect(king.can_castle?(3, 8)).to eq(false)
+    end
+
+    it 'returns false if the king will be in check after castling' do
+      user = create(:user)
+      user2 = create(:user)
+      game = create(:game)
+      king = create(:king_black_58, game_id: game.id, user_id: user.id)
+      create(:king_white_51, game_id: game.id, user_id: user2.id)
+      create(:rook_black_18, game_id: game.id, user_id: user.id)
+      bishop = create(:bishop, color: 'white', game_id: game.id, x_position: 6, y_position: 1, user_id: user2.id)
+      bishop.move(1, 6)
+      expect(king.can_castle?(3, 8)).to eq(false)
     end
 
     it 'returns false if king attempts castle with non rook' do

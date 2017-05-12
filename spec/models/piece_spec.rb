@@ -136,8 +136,7 @@ RSpec.describe Piece, type: :model do
       michael = FactoryGirl.create(:user)
       white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
-      piece = FactoryGirl.create(:rook, game: game1, user: elvis)
-      piece = FactoryGirl.create(:bishop, game: game1, user: elvis)
+      piece = FactoryGirl.create(:bishop_white, game: game1, user: elvis)
       piece.move(2, 2)
       expect(piece.x_position).to eq 2
       expect(piece.y_position).to eq 2
@@ -162,15 +161,14 @@ RSpec.describe Piece, type: :model do
       game1 = FactoryGirl.create(:game)
       elvis = FactoryGirl.create(:user)
       michael = FactoryGirl.create(:user)
-      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
-      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
-      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 7, y_position: 2)
-      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 6, y_position: 1)
-      black_rook.move(7, 1)
+      white_king = FactoryGirl.create(:king_white_51, game: game1, user: elvis)
+      black_king = FactoryGirl.create(:king_black_58, game: game1, user: michael)
+      white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 2)
+      black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 7)
       white_rook.move(6, 2)
       white_rook.reload
-      expect(white_rook.x_position).to eq 6
-      expect(white_rook.y_position).to eq 1
+      expect(white_rook.x_position).to eq 5
+      expect(white_rook.y_position).to eq 2
     end
 
     it "allows a capture that resolves check" do

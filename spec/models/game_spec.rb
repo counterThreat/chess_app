@@ -25,9 +25,11 @@ RSpec.describe Game, type: :model do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
       check_game = FactoryGirl.create(:game)
-      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id)
-      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 7)
+      FactoryGirl.create(:king_white_51, game: check_game, user_id: user3.id)
+      FactoryGirl.create(:king_black_58, game: check_game, user_id: user4.id)
+      rook = FactoryGirl.create(:rook_white_11, game: check_game, user_id: user3.id)
       bishop = FactoryGirl.create(:bishop, color: 'black', game: check_game, x_position: 2, y_position: 2, user_id: user4.id)
+      rook.move(1, 2) # allows black turn
       bishop.move(3, 3)
       expect(check_game.check).to eq 'white'
     end
