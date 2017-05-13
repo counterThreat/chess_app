@@ -140,13 +140,24 @@ function newPlayer(){
 
 function showNewPlayer(){
   var dataViewUrl = window.location.href + '/data_view/';
+  var userViewUrl = '/users';
   $.get(dataViewUrl).success(function(data){
     newPlayer();
-    if(data.black_player_id > 0){
-      $('#blackPlayer').html(data.black_player_id);
-    }else{
-      $('#blackPlayer').html('waiting for black player to join');
-    }
+    $.get(userViewUrl).success(function(user){
+     var userName = '';
+     user.forEach(
+           function(userID){
+            if(userID.id == data.black_player_id ){
+              console.log(userID.username);
+              userName = userID.username;
+            }
+          });
+      if(data.black_player_id > 0){
+        $('#blackPlayer').html(userName);
+      }else{
+        $('#blackPlayer').html('*waiting*');
+      }
+    });
   });
 }
 
