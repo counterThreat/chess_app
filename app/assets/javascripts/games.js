@@ -154,6 +154,7 @@ function showNewPlayer(){
           });
       if(data.black_player_id > 0){
         $('#blackPlayer').html(userName);
+        $('.alignright').addClass('player');
       }else{
         $('#blackPlayer').html('*waiting*');
       }
