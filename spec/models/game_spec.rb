@@ -195,7 +195,8 @@ RSpec.describe Game, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 7)
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user_id: user4.id)
-      check_game.end_game('white')
+      check_game.player_turn = 'white'
+      check_game.end_game
 
       expect(check_game.reload.outcome).to eq 'checkmate'
       expect(check_game.finished.utc).to be_within(1.second).of Time.now
@@ -209,7 +210,8 @@ RSpec.describe Game, type: :model do
       white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: user3.id, x_position: 6, y_position: 7)
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: user4.id, x_position: 8, y_position: 8)
       white_queen = FactoryGirl.create(:queen, color: 'white', game: game1, user_id: user4.id, x_position: 7, y_position: 6)
-      game1.end_game('black')
+      game1.player_turn = 'black'
+      game1.end_game
 
       expect(game1.winning_player_id).to eq nil
       expect(game1.outcome).to eq 'stalemate'
@@ -220,6 +222,7 @@ RSpec.describe Game, type: :model do
       white_player = create(:user)
       black_player = create(:user)
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.player_turn = 'white'
       game.forfeiting_player!(white_player) # calls end_game method directly
       expect(game.winning_player_id).to eq black_player.id
       expect(game.outcome).to eq 'forfeit'
