@@ -24,14 +24,8 @@ class GamesController < ApplicationController
     @game = current_game
     @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
 
-    # if in check/checkmate
-    color = if current_game.white_player == current_user # fix when turns are added
-              'white'
-            else
-              'black'
-            end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
-    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
+    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
     Pusher.trigger("turn-channel-#{@game.id}", 'next-turn', {
       message: 'Next users turn'
     })
@@ -74,11 +68,6 @@ class GamesController < ApplicationController
 
   def text
     "You can't perform that action."
-  end
-
-  def finish(color)
-    current_game.end_game(color) if checkmate(color) || stalemate(color)
-    flash[:notice] = "#{color} lost the game!"
   end
 
   private

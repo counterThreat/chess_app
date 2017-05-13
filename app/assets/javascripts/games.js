@@ -57,6 +57,7 @@ function handleDrag(event, ui){
       //setBoard(); // could be causing lag in piece move
         showTurn();
         $('.turn').html(data.player_turn);
+        showEnd();
       });
     }
   });
@@ -117,6 +118,24 @@ function showTurn(){
   channel.bind('next-turn', function(data) {
     // $('.turn').html(data.player_turn);
     setBoard();
+  });
+}
+
+function showEnd() {
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+  Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("end-channel-" + number);
+  channel.bind('game-finished', function(data) {
+    alert(data.message);
   });
 }
 

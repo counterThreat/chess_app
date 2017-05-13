@@ -35,8 +35,12 @@ class Piece < ApplicationRecord
         end
       end
       game.next_turn
-      # opponent_color = color == 'white' ? 'black' : 'white'
-      # game.end_game(opponent_color) if game.checkmate || game.stalemate
+      if game.checkmate || game.stalemate
+        game.end_game
+        Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+          message: "#{player_turn} has lost the game in a #{game.outcome}!"
+        })
+      end
     else
       # puts 'Move is not allowed!' # can change this to be a flash method
       return
