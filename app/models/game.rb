@@ -81,9 +81,9 @@ class Game < ApplicationRecord
     nil
   end
 
-  def no_legal_next_move?(color)
+  def no_legal_next_move?
     # needs to incorporate color of player whose turn it is in friendly_pieces
-    friendly_pieces = pieces.where(color: color)
+    friendly_pieces = pieces.where(color: player_turn)
     friendly_pieces.each do |piece|
       (1..8).each do |x|
         (1..8).each do |y|
@@ -107,16 +107,16 @@ class Game < ApplicationRecord
     true
   end
 
-  def checkmate(color)
+  def checkmate
     if !check.nil?
-      return true if no_legal_next_move?(color)
+      return true if no_legal_next_move?
     end
     false
   end
 
-  def stalemate(color)
+  def stalemate
     if check.nil?
-      return true if no_legal_next_move?(color)
+      return true if no_legal_next_move?
     end
     false
   end
