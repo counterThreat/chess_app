@@ -6,10 +6,10 @@
     <% @games.each do |game| %>
       <ul class="list-group">
         <li class="row list-group-item">
-            <div class="col-sm-3"><b>game:</b>
+            <div class="col-sm-3"><b>Game:</b>
               <%= game.name %>
             </div>
-            <div class="col-sm-3"><b>opponent:</b>
+            <div class="col-sm-3"><b>White Player:</b>
               <%= get_username(game.white_player_id) %>
               <br/>
               <small><%= display_date(game.created_at)%></small>
@@ -26,8 +26,11 @@
                   <% if current_user && (current_user == game.white_player ||
                     current_user == game.black_player) %>
                     <%= link_to 'Continue', game_path(game.id) %>
+                  <% elsif game.outcome != nil %>
+                    Completed
                   <% elsif game.white_player_id && game.black_player_id %>
                     Game is full
+                    <small><%= game.winning_player_id if game.winning_player_id %></small>
                   <% else %>
                     <%= link_to 'Join', edit_game_path(game.id) %>
                   <% end %>

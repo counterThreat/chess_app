@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorize_user, only: :forfeit
+  before_action :authorize_user, only: [:forfeit, :finish]
 
   def new
     @game = Game.new
@@ -74,6 +74,11 @@ class GamesController < ApplicationController
 
   def text
     "You can't perform that action."
+  end
+
+  def finish(color)
+    current_game.end_game(color) if checkmate(color) || stalemate(color)
+    flash[:notice] = "#{color} lost the game!"
   end
 
   private

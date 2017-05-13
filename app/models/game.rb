@@ -19,7 +19,9 @@ class Game < ApplicationRecord
              else
                white_player
              end
+    winner_color = winner == white_player ? 'white' : 'black'
     update(winner: winner)
+    end_game(winner_color)
   end
 
   def find_piece(x_position, y_position)
@@ -140,6 +142,26 @@ class Game < ApplicationRecord
       update(player_turn: 'black')
     else
       update(player_turn: 'white')
+    end
+  end
+
+  def end_game(color)
+    if checkmate(color) # implement turn code - winning_player_id = player whose turn it isn't
+      winning_player_color = 'black' if checkmate('white')
+      winning_player_color = 'white' if checkmate('black')
+      winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
+      reload
+      update(winning_player_id: winning_id)
+      update(outcome: 'checkmate')
+      update(finished: Time.now)
+    elsif stalemate(color)
+      update(outcome: 'stalemate')
+      update(finished: Time.now)
+    else
+      winning_player = color == 'white' ? white_player : black_player
+      update(winning_player_id: winning_player.id)
+      update(outcome: 'forfeit')
+      update(finished: Time.now)
     end
   end
 end
