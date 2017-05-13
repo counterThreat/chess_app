@@ -35,6 +35,9 @@ class GamesController < ApplicationController
     Pusher.trigger("turn-channel-#{@game.id}", 'next-turn', {
       message: 'Next users turn'
     })
+    Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
+      message: 'blay player has joined the game'
+    })
 
     # html/json
     respond_to do |format|

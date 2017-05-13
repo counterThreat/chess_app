@@ -6,7 +6,7 @@ $( document ).ready(function(){
 function setBoard(){
   var url = window.location.href;
 
-// refreshes the board
+  // refreshes the board
   $.get(url + "/pieces").success(function(data){
     for(var x = 1; x <= 8; x++) {
       for (var y = 1; y <= 8; y++) {
@@ -54,7 +54,6 @@ function handleDrag(event, ui){
     success: function(data){
       showMove();
       $.get(dataViewUrl).success(function(data){
-      //setBoard(); // could be causing lag in piece move
         showTurn();
         $('.turn').html(data.player_turn);
       });
@@ -120,10 +119,43 @@ function showTurn(){
   });
 }
 
+function newPlayer(){
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+    Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("player-channel-" + number);
+  channel.bind('new-player', function(data) {
+    // $('.turn').html(data.player_turn);
+    showNewPlayer();
+  });
+}
+
+function showNewPlayer(){
+  var dataViewUrl = window.location.href + '/data_view/';
+  $.get(dataViewUrl).success(function(data){
+    newPlayer();
+    if(data.black_player_id > 0){
+      $('#blackPlayer').html(data.black_player_id);
+    }else{
+      $('#blackPlayer').html('waiting for black player to join');
+    }
+  });
+}
+
 
 
 $( document ).ready(function(){
   setBoard();
   showMove();
   showTurn();
+  showNewPlayer();
+  newPlayer();
 });
