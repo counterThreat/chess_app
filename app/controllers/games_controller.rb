@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorize_user, only: :forfeit
+  before_action :authorize_user, only: [:forfeit, :finish]
 
   def new
     @game = Game.new
@@ -69,7 +69,7 @@ class GamesController < ApplicationController
   end
 
   def finish(color)
-    current_game.end_game(color)
+    current_game.end_game(color) if checkmate(color) || stalemate(color)
     flash[:notice] = "#{color} lost the game!"
   end
 

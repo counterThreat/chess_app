@@ -31,6 +31,8 @@ class Piece < ApplicationRecord
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
+      opponent_color = color == 'white' ? 'black' : 'white'
+      game.end_game(opponent_color) if game.checkmate(opponent_color) || game.stalemate(opponent_color)
     else
       puts 'Move is not allowed!' # can change this to be a flash method
       return
