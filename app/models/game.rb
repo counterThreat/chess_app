@@ -71,13 +71,12 @@ class Game < ApplicationRecord
   # on the black player since the game is created with the white player
 
   def check
-    # needs to incorporate color of player whose turn it is
     pieces.reload
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
     pieces.each do |piece|
-      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white'
-      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black'
+      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white' && player_turn == 'black'
+      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black' && player_turn == 'white'
     end
     nil
   end

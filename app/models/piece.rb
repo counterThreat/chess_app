@@ -26,7 +26,6 @@ class Piece < ApplicationRecord
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, moved: true, move_num: move_num + 1)
-        game.next_turn
         # reload
         if game.check == color
           reload
@@ -35,6 +34,7 @@ class Piece < ApplicationRecord
           toggle_move!
         end
       end
+      game.next_turn
       opponent_color = color == 'white' ? 'black' : 'white'
       game.end_game(opponent_color) if game.checkmate(opponent_color) || game.stalemate(opponent_color)
     else
@@ -87,7 +87,7 @@ class Piece < ApplicationRecord
   end
 
   def occupied?(x_new, y_new)
-    opponent(x_new, y_new).nil? ? false : true 
+    opponent(x_new, y_new).nil? ? false : true
   end
 
   def opponent(x_new, y_new)
