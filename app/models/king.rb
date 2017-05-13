@@ -11,7 +11,9 @@ class King < Piece
 
   def can_castle?(x_new, y_new)
     rook = game.find_piece((x_new < x_position ? 1 : 8), y_new)
-    !((x_new - x_position).abs != 2 ||
+    !(
+      your_turn?
+      (x_new - x_position).abs != 2 ||
       rook.nil? ||
       rook.type != 'Rook' ||
       rook.color != color ||
@@ -19,7 +21,8 @@ class King < Piece
       rook.move_num != 0 ||
       !will_king_be_safe?(x_new) ||
       obstructed?(x_new, y_new) ||
-      occupied?(x_new, y_new))
+      occupied?(x_new, y_new)
+    )
   end
 
   def castle!(x_new, y_new)
@@ -27,6 +30,7 @@ class King < Piece
     rook = game.find_piece((x_new < x_position ? 1 : 8), y_new)
     rook.update!(x_position: x_new < x_position ? 4 : 6, moved: true)
     update!(x_position: x_new, moved: true)
+    game.next_turn
   end
 
   def will_king_be_safe?(x_new)
