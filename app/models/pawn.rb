@@ -1,5 +1,5 @@
 class Pawn < Piece
-  FIRST_MOVE = 2 
+  FIRST_MOVE = 2
   SECOND_MOVE = 1
 
   def valid_move?(x_new, y_new)
@@ -23,8 +23,8 @@ class Pawn < Piece
       Piece.transaction do
         attack!(x_new, y_new)
         update!(
-          x_position: x_new, y_position: y_new, 
-          type: "Queen", unicode: color == "white" ? '&#9813' : '&#9819', 
+          x_position: x_new, y_position: y_new,
+          type: "Queen", unicode: color == "white" ? '&#9813' : '&#9819',
           move_num: move_num + 1)
         if game.check == color
           reload
@@ -36,9 +36,9 @@ class Pawn < Piece
     end
       super
   end
-      
+
   def pawn_possible?(x_new, y_new)
-    (forward_move?(y_new) && vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) || 
+    (forward_move?(y_new) && vertical_move?(x_new, y_new) && valid_vertical_move?(x_new, y_new)) ||
     valid_capture?(x_new, y_new)
     #is_king_safe?
   end
@@ -47,7 +47,7 @@ class Pawn < Piece
     y_new == 8 ||
     y_new == 1
   end
-  
+
   def valid_vertical_move?(x_new, y_new)
     return false if y_out_of_bounds?(y_new)
     return false if occupied?(x_new, y_new)
@@ -70,7 +70,7 @@ class Pawn < Piece
   end
 
   def valid_capture?(x_new, y_new)
-    pawn_diagonal_move?(x_new, y_new) && forward_move?(y_new) && 
+    pawn_diagonal_move?(x_new, y_new) && forward_move?(y_new) &&
     occupied?(x_new, y_new) && opponent(x_new, y_new).color != color
   end
 
@@ -79,7 +79,7 @@ class Pawn < Piece
   end
 
   def forward_move?(y_new)
-    (y_new - y_position) < 0 && color == 'black' || 
+    (y_new - y_position) < 0 && color == 'black' ||
     (y_new - y_position) > 0 && color == 'white'
   end
 
@@ -96,7 +96,7 @@ class Pawn < Piece
   end
 
   def y_move
-    moved? ? SECOND_MOVE : FIRST_MOVE
+    move_num != 0 ? SECOND_MOVE : FIRST_MOVE
   end
 
   def last_piece_moved
