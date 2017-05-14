@@ -28,20 +28,6 @@ class Game < ApplicationRecord
 
   def make_newboard
   # create and place white pieces
-  (1..8).each do |i|
-    Pawn.create(game_id: id, x_position: i, y_position: 7, color: 'black', user_id: white_player_id, unicode: '&#9823;')
-  end
-
-    Rook.create(game_id: id, x_position: 1, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
-    Rook.create(game_id: id, x_position: 8, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
-    Knight.create(game_id: id, x_position: 2, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9822;')
-    Knight.create(game_id: id, x_position: 7, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9822;')
-    Bishop.create(game_id: id, x_position: 3, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9821;')
-    Bishop.create(game_id: id, x_position: 6, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9821;')
-    Queen.create(game_id: id, x_position: 4, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9819')
-    King.create(game_id: id, x_position: 5, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9818;')
-
-    # create and place black pieces
     (1..8).each do |i|
       Pawn.create(game_id: id, x_position: i, y_position: 2, color: 'white', user_id: white_player_id, unicode: '&#9817;')
     end
@@ -54,6 +40,20 @@ class Game < ApplicationRecord
     Bishop.create(game_id: id, x_position: 6, y_position: 1, color: 'white', user_id: white_player_id, unicode: '&#9815;')
     Queen.create(game_id: id, x_position: 4, y_position: 1, color: 'white', user_id: white_player_id, unicode: '&#9813;')
     King.create(game_id: id, x_position: 5, y_position: 1, color: 'white', user_id: white_player_id, unicode: '&#9812;')
+  
+    # create and place black pieces
+    (1..8).each do |i|
+      Pawn.create(game_id: id, x_position: i, y_position: 7, color: 'black', user_id: white_player_id, unicode: '&#9823;')
+    end
+
+    Rook.create(game_id: id, x_position: 1, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
+    Rook.create(game_id: id, x_position: 8, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9820;')
+    Knight.create(game_id: id, x_position: 2, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9822;')
+    Knight.create(game_id: id, x_position: 7, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9822;')
+    Bishop.create(game_id: id, x_position: 3, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9821;')
+    Bishop.create(game_id: id, x_position: 6, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9821;')
+    Queen.create(game_id: id, x_position: 4, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9819')
+    King.create(game_id: id, x_position: 5, y_position: 8, color: 'black', user_id: white_player_id, unicode: '&#9818;')
   end
 
   def associate_pieces!
