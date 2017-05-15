@@ -22,7 +22,7 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && your_turn?
+    if valid_move?(x_new, y_new) && on_board? && your_turn? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, moved: true, move_num: move_num + 1)
@@ -35,6 +35,7 @@ class Piece < ApplicationRecord
         end
       end
       game.next_turn
+      reload
       if game.checkmate || game.stalemate
         game.end_game
         Pusher.trigger("end-channel-#{game.id}", 'game-finished', {

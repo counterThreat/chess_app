@@ -98,7 +98,9 @@ function showMove() {
 
   var channel = pusher.subscribe("game-channel-" + number);
   channel.bind('piece-moved', function(data) {
-  setBoard();
+    var checkStatus = $('.checkmate').data('checkmate');
+    $('.checkmate').innerText = checkStatus;
+    setBoard();
   });
 }
 
@@ -135,7 +137,8 @@ function showEnd() {
 
   var channel = pusher.subscribe("end-channel-" + number);
   channel.bind('game-finished', function(data) {
-    alert(data.message);
+    console.log('GAME IS FINISHED')
+    //$('.turn-notice').innerText(data.message);
   });
 }
 
