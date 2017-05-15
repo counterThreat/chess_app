@@ -81,9 +81,10 @@ class Game < ApplicationRecord
   end
 
   def no_legal_next_move?
-    #out_of_check = []
+    out_of_check = []
     friendly_pieces = pieces.where(color: player_turn)
     friendly_pieces.each do |piece|
+      out_of_check.push(piece)
       (1..8).each do |x|
         (1..8).each do |y|
           if piece.valid_move?(x, y)
@@ -97,10 +98,10 @@ class Game < ApplicationRecord
               check_state = check
               #out_of_check.push(piece.type, x, y) if check_state.nil?
             ensure
-              reload
               piece.update(x_position: original_x, y_position: original_y)
               captured_piece.update(x_position: x, y_position: y) if captured_piece
             end
+            reload
             #return out_of_check
             return false if check_state.nil?
           end
