@@ -130,7 +130,7 @@ RSpec.describe Piece, type: :model do
       game = FactoryGirl.create(:game, black_player_id: user2.id, white_player_id: user.id)
       rook = FactoryGirl.create(:rook, game: game, user_id: user.id)
       rook.move(4, 5)
-      expect(rook.moved).to eq(true)
+      expect(rook.move_num).to eq(1)
     end
     it "allows a piece to change x position" do
       game1 = FactoryGirl.create(:game)

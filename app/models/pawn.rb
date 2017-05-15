@@ -15,8 +15,6 @@ class Pawn < Piece
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
-        else
-          toggle_move!
         end
       end
     end

@@ -25,13 +25,11 @@ class Piece < ApplicationRecord
     if valid_move?(x_new, y_new) && on_board? && your_turn?
       Piece.transaction do
         attack!(x_new, y_new)
-        update!(x_position: x_new, y_position: y_new, moved: true, move_num: move_num + 1)
+        update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
         game.next_turn
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
-        else
-          toggle_move!
         end
       end
     else
@@ -60,7 +58,7 @@ class Piece < ApplicationRecord
   end
 
   def toggle_move!
-    update(moved: true) if moved?
+    update(moved: true) if moved_num > 0
   end
 
   def vertical_move?(x_new, y_new)

@@ -155,7 +155,7 @@ RSpec.describe King, type: :model do
       create(:king_black_58, game_id: game.id, user_id: user.id)
       king.castle!(3, 1)
       king.reload
-      expect(king.moved).to eq(true)
+      expect(king.move_num).to eq(1)
     end
 
     it 'rook has been marked as moved after castling' do
@@ -166,7 +166,7 @@ RSpec.describe King, type: :model do
       create(:king_black_58, game_id: game.id, user_id: user.id)
       king.castle!(7, 1)
       rook.reload
-      expect(rook.moved).to eq(true)
+      expect(rook.move_num).to eq(1)
     end
 
     it 'castling fails if can_castle is false' do
