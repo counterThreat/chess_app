@@ -11,8 +11,9 @@ class Pawn < Piece
       Piece.transaction do
         last_piece_moved.update!(captured: true, x_position: -1, y_position: -1)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
+        game.next_turn
+        reload
         if game.check == color
-          reload
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         else
           toggle_move!
