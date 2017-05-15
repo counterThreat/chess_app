@@ -18,7 +18,7 @@ class Pawn < Piece
         end
       end
     end
-    if promote?(y_new) && your_turn?
+    if promote?(y_new)
       Piece.transaction do
         attack!(x_new, y_new)
         update!(
@@ -26,13 +26,12 @@ class Pawn < Piece
           type: "Queen", unicode: color == "white" ? '&#9813' : '&#9819',
           move_num: move_num + 1)
           game.next_turn
-          reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
     end
-      super
+    super
   end
 
   def pawn_possible?(x_new, y_new)
