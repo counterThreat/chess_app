@@ -18,7 +18,7 @@ class Pawn < Piece
         end
       end
     end
-    if promote?(y_new)
+    if promote?(y_new) && your_turn?
       Piece.transaction do
         attack!(x_new, y_new)
         update!(
