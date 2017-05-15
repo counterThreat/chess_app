@@ -13,6 +13,10 @@ class Game < ApplicationRecord
     [white_player, black_player].compact
   end
 
+  def drawing_player!
+    update(outcome: "draw")
+  end
+
   def forfeiting_player!(player)
     winner = if player == white_player
                black_player
