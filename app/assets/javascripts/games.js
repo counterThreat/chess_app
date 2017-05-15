@@ -33,6 +33,15 @@ function setBoard(){
     });
 
     dragDropPiece();
+    gameTurn();
+
+  });
+}
+
+function gameTurn(){
+  var dataViewUrl = window.location.href + '/data_view/';
+  $.get(dataViewUrl).success(function(data){
+    $('.turn').html(data.player_turn);
   });
 }
 
@@ -45,18 +54,13 @@ function handleDrag(event, ui){
   var dy = square.attr('data-y');
 
   var url = window.location.href + '/pieces/' + piece_id;
-  var dataViewUrl = window.location.href + '/data_view/';
 
   $.ajax({
     url: url,
     type: 'PUT',
     data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
     success: function(data){
-      showMove();
-      $.get(dataViewUrl).success(function(data){
-        showTurn();
-        $('.turn').html(data.player_turn);
-      });
+        showMove();
     }
   });
 }
@@ -100,25 +104,6 @@ function showMove() {
   });
 }
 
-function showTurn(){
-  var environment = $('body').data('rails-env');
-  if (environment != 'production') {
-  Pusher.logToConsole = true;
-  }
-
-  var pusher = new Pusher('85619837e880f6d5568c', {
-    encrypted: true
-  });
-
-  var number = getPath();
-
-  var channel = pusher.subscribe("turn-channel-" + number);
-  channel.bind('next-turn', function(data) {
-    // $('.turn').html(data.player_turn);
-    setBoard();
-  });
-}
-
 function newPlayer(){
   var environment = $('body').data('rails-env');
   if (environment != 'production') {
@@ -133,7 +118,6 @@ function newPlayer(){
 
   var channel = pusher.subscribe("player-channel-" + number);
   channel.bind('new-player', function(data) {
-    // $('.turn').html(data.player_turn);
     showNewPlayer();
   });
 }
@@ -167,7 +151,6 @@ function showNewPlayer(){
 $( document ).ready(function(){
   setBoard();
   showMove();
-  showTurn();
   showNewPlayer();
   newPlayer();
 });
