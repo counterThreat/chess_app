@@ -27,8 +27,8 @@ RSpec.describe Pawn, type: :model do
       newmove = pawn.valid_vertical_move?(4, 4)
       expect(newmove).to eq true
     end
-    
-#David has to figure out why this test isn't evaluating as true when by every possible indication valid_capture? is working as it should. 
+
+#David has to figure out why this test isn't evaluating as true when by every possible indication valid_capture? is working as it should.
     it 'returns true if pawn_capture? is true' do
       newmove = pawn.valid_capture?(2, 3)
       expect(newmove).to eq false
