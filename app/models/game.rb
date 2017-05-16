@@ -135,6 +135,7 @@ class Game < ApplicationRecord
     pieces.where.not(type: 'King', color: color)
   end
 
+
   def next_turn
     if player_turn == 'white'
       update(player_turn: 'black')
@@ -142,4 +143,5 @@ class Game < ApplicationRecord
       update(player_turn: 'white')
     end
   end
+
 end

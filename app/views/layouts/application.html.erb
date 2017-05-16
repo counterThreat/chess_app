@@ -8,7 +8,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="611415831324-6racf1ta4f1ska6ns5eeupo0k3f84ves.apps.googleusercontent.com">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
+    <%= javascript_include_tag "http://js.pusher.com/2.2/pusher.min.js" %>
 
   </head>
 
@@ -52,6 +52,14 @@
 
   <div class="content">
 
+    <% if flash[:toastr] %>
+      <script type="text/javascript">
+        <% flash[:toastr].each do |type, message| %>
+          toastr.<%= type %>(<%= message.inspect %>)
+        <% end %>
+      </script>
+    <% end %>
+    
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
