@@ -12,7 +12,7 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.games_as_white.create!(game_params.merge(white_player_id: current_user))
-    
+
     if @game.valid?
       flash[:notice] = 'You are the white player. You will be notified when a black player joins the game!'
       redirect_to game_path(@game)

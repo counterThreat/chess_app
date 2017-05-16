@@ -11,6 +11,6 @@ Rails.application.routes.draw do
     post 'forfeit', on: :member
     resources :pieces, only: [:index, :create, :show, :update]
   end
-  
+
   post '/pusher/auth' => 'pusher#auth'
 end
