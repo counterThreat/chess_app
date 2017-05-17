@@ -3,7 +3,7 @@ class Pawn < Piece
   SECOND_MOVE = 1
 
   def valid_move?(x_new, y_new)
-    pawn_possible?(x_new, y_new)
+    super && pawn_possible?(x_new, y_new)
   end
 
   def move(x_new, y_new)

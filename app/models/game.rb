@@ -87,7 +87,7 @@ class Game < ApplicationRecord
       (1..8).each do |x|
         (1..8).each do |y|
           if piece.valid_move?(x, y)
-            out_of_check.push(piece.type, x, y)
+            #out_of_check.push(piece.type, x, y)
             original_x = piece.x_position
             original_y = piece.y_position
             captured_piece = pieces.find_by(x_position: x, y_position: y)
@@ -103,7 +103,9 @@ class Game < ApplicationRecord
               reload
             end
             #return out_of_check
-            return false if check_state.nil?
+            if check_state.nil?
+              return false
+            end
           end
         end
       end

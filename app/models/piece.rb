@@ -10,7 +10,7 @@ class Piece < ApplicationRecord
   validates :move_num, presence: true
 
   def valid_move?(x_new, y_new)
-    false
+    on_board? && !friendly_piece(x_new, y_new)
   end
 
   def on_board?
@@ -22,7 +22,7 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && your_turn? && attack!(x_new, y_new) != false
+    if valid_move?(x_new, y_new) && your_turn? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
@@ -32,7 +32,7 @@ class Piece < ApplicationRecord
         end
       end
       game.next_turn
-      reload
+      game.reload
       if game.checkmate || game.stalemate
         game.end_game
         Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
@@ -94,6 +94,10 @@ class Piece < ApplicationRecord
 
   def opponent(x_new, y_new)
     game.find_piece(x_new, y_new)
+  end
+
+  def friendly_piece(x_new, y_new)
+    game.pieces.find_by(x_position: x_new, y_position: y_new, color: color)
   end
 
   def attack!(x_new, y_new)
