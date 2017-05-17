@@ -152,10 +152,9 @@ class Game < ApplicationRecord
 
   def end_game
     if checkmate # implement turn code - winning_player_id = player whose turn it isn't
-      winning_player_color = player_turn == 'white' ? 'black' : 'white'
-      winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
+      winning_player = player_turn == 'white' ? black_player : white_player
       reload
-      update(winning_player_id: winning_id)
+      update(winning_player_id: winning_player.id)
       update(outcome: 'checkmate')
       update(finished: Time.now)
     elsif stalemate

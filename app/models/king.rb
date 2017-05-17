@@ -1,6 +1,6 @@
 class King < Piece
   def valid_move?(x_new, y_new)
-    super && obstructed?(x_new, y_new) && (((x_new - x_position).abs <= 1 && (y_new - y_position).abs <= 1) || castle!(x_new, y_new))
+    super && !obstructed?(x_new, y_new) && (((x_new - x_position).abs <= 1 && (y_new - y_position).abs <= 1) || castle!(x_new, y_new))
   end
 
   def can_castle?(x_new, y_new)
