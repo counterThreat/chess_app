@@ -15,5 +15,5 @@
 //= require_tree .
 //= require bootstrap
 //= require tether
-
+//= require toastr
 //= require jquery-ui
