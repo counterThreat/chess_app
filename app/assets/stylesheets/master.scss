@@ -250,3 +250,29 @@ ul {
   text-align: center;
   padding: 10px;
 }
+
+.button {
+  -webkit-border-radius: 30;
+  -moz-border-radius: 30;
+  border-radius: 30px;
+  font-family: Arial;
+  color: #004dff;
+  font-size: 26px;
+  padding: 11px 20px 10px 20px;
+  border: solid #004dff 3px;
+  text-decoration: none;
+  background: #fff
+}
+
+.button:hover {
+  background: #e4e6eb;
+  text-decoration: none;
+}
+
+p {
+  font-size: 15px;
+}
+
+.about-app {
+  padding-right: 30px;
+}
