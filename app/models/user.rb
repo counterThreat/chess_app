@@ -23,6 +23,18 @@ class User < ApplicationRecord
 
   validates_uniqueness_of :username
   validates_uniqueness_of :email
+  
+  def win_count
+    games.where(winner: self).count
+  end
+  
+  def user_data
+    {
+      name: username,
+      member_since: created_at.strftime('%m-%d-%Y'),
+      total_wins: wins_count
+      }
+  end
 
   # validates :username,
   #           presence: true,
