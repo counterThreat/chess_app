@@ -74,20 +74,20 @@ class Game < ApplicationRecord
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
     pieces.each do |piece|
-      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white' # && player_turn == 'black'
-      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black' # && player_turn == 'white'
+      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white' && piece.captured == false
+      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black' && piece.captured == false
     end
     nil
   end
 
   def no_legal_next_move?
     out_of_check = []
-    friendly_pieces = pieces.where(color: player_turn)
+    friendly_pieces = pieces.where(color: player_turn, captured: false)
     friendly_pieces.each do |piece|
-      out_of_check.push(piece)
       (1..8).each do |x|
         (1..8).each do |y|
           if piece.valid_move?(x, y)
+            out_of_check.push(piece.type, x, y)
             original_x = piece.x_position
             original_y = piece.y_position
             captured_piece = pieces.find_by(x_position: x, y_position: y)
@@ -100,8 +100,8 @@ class Game < ApplicationRecord
             ensure
               piece.update(x_position: original_x, y_position: original_y)
               captured_piece.update(x_position: x, y_position: y) if captured_piece
+              reload
             end
-            reload
             #return out_of_check
             return false if check_state.nil?
           end

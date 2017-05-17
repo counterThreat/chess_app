@@ -26,7 +26,7 @@ class Piece < ApplicationRecord
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
-        reload
+        # reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
@@ -36,7 +36,7 @@ class Piece < ApplicationRecord
       if game.checkmate || game.stalemate
         game.end_game
         Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
-          message: "#{player_turn} has lost the game in a #{game.outcome}!"
+          message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
         })
       end
     else
