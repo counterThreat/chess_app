@@ -41,7 +41,7 @@ class Game < ApplicationRecord
     Bishop.create(game_id: id, x_position: 6, y_position: 1, color: 'white', user_id: white_player_id, unicode: '&#9815;')
     Queen.create(game_id: id, x_position: 4, y_position: 1, color: 'white', user_id: white_player_id, unicode: '&#9813;')
     King.create(game_id: id, x_position: 5, y_position: 1, color: 'white', user_id: white_player_id, unicode: '&#9812;')
-  
+
     # create and place black pieces
     (1..8).each do |i|
       Pawn.create(game_id: id, x_position: i, y_position: 7, color: 'black', user_id: white_player_id, unicode: '&#9823;')
@@ -74,8 +74,8 @@ class Game < ApplicationRecord
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
     pieces.each do |piece|
-      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white' && player_turn == 'black'
-      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black' && player_turn == 'white'
+      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white' # && player_turn == 'black'
+      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black' # && player_turn == 'white'
     end
     nil
   end
