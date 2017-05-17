@@ -139,8 +139,10 @@ function showNewPlayer(){
       if(data.black_player_id > 0){
         $('#blackPlayer').html(userName);
         $('.alignright').addClass('player');
+        toastr.info("Begin play!");
       }else{
         $('#blackPlayer').html('*waiting*');
+        toastr.info('Waiting on a black player to join the game.');
       }
     });
   });
