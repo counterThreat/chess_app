@@ -1,8 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'something' do
-    it 'something' do
+  describe '#games' do
+    it 'documents games as a white player' do
+      game = create(:game_player_associations)
+      expect(game.white_player.games).to include game
+    end
+    
+    it 'documents games as a black player' do
+      game = create(:game_player_associations)
+      expect(game.black_player.games).to include game
     end
   end
   

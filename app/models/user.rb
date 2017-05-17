@@ -38,8 +38,8 @@ class User < ApplicationRecord
   
   def games 
     Game.where(
-      'white_player_id = :id OR black_player_id = :id',
-      id: id
+      'white_player_id = :user_id OR black_player_id = :user_id',
+      user_id: id
       )
   end
 
