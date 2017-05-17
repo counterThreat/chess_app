@@ -7,5 +7,6 @@ AllCops:
     - lib/**/*.rake
   Exclude:
     - db/schema.rb
+    - app/controllers/pieces_controller.rb
 Documentation:
   Enabled: false

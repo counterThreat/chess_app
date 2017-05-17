@@ -32,9 +32,6 @@ class GamesController < ApplicationController
             end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
     flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
-    Pusher.trigger("turn-channel-#{@game.id}", 'next-turn', {
-      message: 'Next users turn'
-    })
     Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
       message: 'blay player has joined the game'
     })

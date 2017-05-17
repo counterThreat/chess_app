@@ -28,8 +28,8 @@ class King < Piece
   def castle!(x_new, y_new)
     return false unless can_castle?(x_new, y_new)
     rook = game.find_piece((x_new < x_position ? 1 : 8), y_new)
-    rook.update!(x_position: x_new < x_position ? 4 : 6, moved: true)
-    update!(x_position: x_new, moved: true)
+    rook.update!(x_position: x_new < x_position ? 4 : 6, move_num: move_num + 1)
+    update!(x_position: x_new, move_num: move_num + 1)
     game.next_turn
   end
 

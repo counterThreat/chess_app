@@ -11,30 +11,27 @@ class Pawn < Piece
       Piece.transaction do
         last_piece_moved.update!(captured: true, x_position: -1, y_position: -1)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
+        game.next_turn
+        reload
         if game.check == color
-          reload
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
-        else
-          toggle_move!
         end
       end
     end
-    if promote?(y_new)
+    if promote?(y_new) && your_turn?
       Piece.transaction do
         attack!(x_new, y_new)
         update!(
           x_position: x_new, y_position: y_new,
           type: "Queen", unicode: color == "white" ? '&#9813' : '&#9819',
           move_num: move_num + 1)
+          game.next_turn
         if game.check == color
-          reload
-            raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
-        else
-          toggle_move!
+          raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
     end
-      super
+    super
   end
 
   def pawn_possible?(x_new, y_new)
@@ -105,6 +102,7 @@ class Pawn < Piece
 
   def valid_en_passant?(x_new, y_new)
     last_piece = last_piece_moved
+    your_turn? &&
     last_piece.type == "Pawn" &&
     last_piece.move_num == 1 &&
     last_piece.y_position == y_position &&
