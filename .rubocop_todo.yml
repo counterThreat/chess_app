@@ -54,7 +54,7 @@ Metrics/BlockLength:
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 107
+  Max: 110
 
 # Offense count: 3
 Metrics/CyclomaticComplexity:
@@ -256,13 +256,14 @@ Style/SpaceInsideBrackets:
   Exclude:
     - 'config/environments/production.rb'
 
-# Offense count: 16
+# Offense count: 17
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Exclude:
     - 'Gemfile'
+    - 'app/models/game.rb'
     - 'app/models/pawn.rb'
     - 'bin/spring'
     - 'config/environments/production.rb'
@@ -289,11 +290,12 @@ Style/SymbolProc:
     - 'db/migrate/20170412054338_create_queens.rb'
     - 'db/migrate/20170412054346_create_kings.rb'
 
-# Offense count: 3
+# Offense count: 4
 # Cop supports --auto-correct.
 Style/TrailingWhitespace:
   Exclude:
     - 'app/models/game.rb'
+    - 'app/models/piece.rb'
     - 'spec/models/pawn_spec.rb'
 
 # Offense count: 2

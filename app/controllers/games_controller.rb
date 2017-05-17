@@ -65,9 +65,14 @@ class GamesController < ApplicationController
     end
   end
 
+  def draw
+    current_game.drawing_player!
+    redirect_to games_path, alert: 'The game has been drawn.'
+  end
+
   def forfeit
     current_game.forfeiting_player!(current_user)
-    redirect_to games_path, alert: 'You forfeited the game.'
+    redirect_to games_path, alert: 'You have resigned the game.'
   end
 
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions

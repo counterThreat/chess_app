@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :games, only: [:index, :new, :create, :show, :edit, :update] do
     get 'data_view', on: :member
     post 'forfeit', on: :member
+    post 'draw', on: :member
     resources :pieces, only: [:index, :create, :show, :update]
   end
 end
