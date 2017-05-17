@@ -9,34 +9,25 @@
       <br>
       <p>Counter Threat Chess is a fullstack web application that allows users to play one another in fully-functional, live-updating games of chess. Gameplay is completely rule-enforced whether you're a beginner at chess or a grandmaster. Enjoy! </p>
       </div>
+      
       <div class="row">
-              <h4>The Architects of CounterThreat</h4>
-      <br>
-      <p><a href="www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
-      <p>Haley Mnatzaganian @<a href="https://github.com/haleymnatz">github</a></p>
-      <p>Lindsay Dages @<a href="https://github.com/lnzd17">github</a></p>
-      <p>David Michael Pena @<a href="https://github.com/DavidMichaelPena">github</a></p>
-      <p>Anna C @<a href="https://github.com/canelasa">github</a></p>
-      <p>Mentored by: Abe Polishchuk</p>
+        <h4>The Grand Masters</h4>
+        #leaderboard
       </div>
     </div>
 
     <div class="col-sm-3 readyplay">
-      <div class="row">
+      <div class="row" style="text-align:center">
       <%= image_tag ("bobby.jpg"), :class => 'img-responsive' %>
       <h4>Ready to Play?</h4>
-      <br>
       <% if user_signed_in? %>
       
         <p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
-        <br/>
         
-      <p>Start a new game: </p>
       <!-- new game  -->
       <%= button_to('New Game', new_game_path, :class => 'button') %>  
       <br>
       <!-- open games -->
-      <p>Join an existing match:</p>
       <%= button_to('Join Game', games_path, :class=> 'button') %>
       <br>
       
@@ -46,13 +37,17 @@
         </p>
       <% end %>
       </div>
-      <br>
-      <div class="row">
-        <h4>The Grand Masters</h4>
-        #leaderboard
+      <div class="row" style="text-align:center">
+        <h4>The Architects of CounterThreat</h4>
+        <br>
+        <p><a href="www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
+        <p>Haley Mnatzaganian @<a href="https://github.com/haleymnatz">github</a></p>
+        <p>Lindsay Dages @<a href="https://github.com/lnzd17">github</a></p>
+        <p>David Michael Pena @<a href="https://github.com/DavidMichaelPena">github</a></p>
+        <p>Anna C @<a href="https://github.com/canelasa">github</a></p>
+        <p>Mentored by: Abe Polishchuk</p>
       </div>
     </div>
   </div>
-    </div>
 
 </div>
