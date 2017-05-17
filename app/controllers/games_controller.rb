@@ -12,6 +12,7 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.games_as_white.create!(game_params.merge(white_player_id: current_user))
+
     if @game.valid?
       flash[:notice] = 'You are the white player. You will be notified when a black player joins the game!'
       redirect_to game_path(@game)
@@ -32,8 +33,9 @@ class GamesController < ApplicationController
             end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
     flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
+
     Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
-      message: 'blay player has joined the game'
+      message: 'black player has joined the game'
     })
 
     # html/json
@@ -69,8 +71,6 @@ class GamesController < ApplicationController
     current_game.forfeiting_player!(current_user)
     redirect_to games_path, alert: 'You forfeited the game.'
   end
-
-  # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions
 
   def text
     "You can't perform that action."

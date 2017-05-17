@@ -77,6 +77,10 @@ class Piece < ApplicationRecord
     (x_new - x_position).abs
   end
 
+  def opposite_color
+    black? ? 'white' : 'black'
+  end
+
   def y_diff(y_new)
     (y_new - y_position).abs
   end

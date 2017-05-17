@@ -1,7 +1,15 @@
 <script src="//js.pusher.com/4.0/pusher.min.js"></script>
-
+<div class="username">
+  <h4>signed in as: <%= current_user.username %></h4>
+</div>
 <div class="page-header">
   <h1> <%= @game.name %> </h1>
+</div>
+
+<div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
+  <h4 class="turn-notice">
+    CURRENT TURN: <span class="turn"><%= @game.player_turn %></span>
+  </h4>
 </div>
 
 <!-- <div class="col-xs-12 col-md-8 col-md-offset-2 players">
@@ -47,9 +55,3 @@
   <% end %>
   <br/>
 </div> -->
-
-<div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
-  <h4 class="turn-notice">
-    Current Turn: <span class="turn"><%= @game.player_turn%></span>
-  </h4>
-</div>
