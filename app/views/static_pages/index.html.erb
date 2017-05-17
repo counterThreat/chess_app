@@ -25,10 +25,10 @@
         <p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
         
       <!-- new game  -->
-      <%= button_to('New Game', new_game_path, :class => 'button') %>  
+      <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
       <br>
       <!-- open games -->
-      <%= button_to('Join Game', games_path, :class=> 'button') %>
+      <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
       <br>
       
       <% else %>
