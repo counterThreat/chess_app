@@ -32,8 +32,15 @@ class User < ApplicationRecord
     {
       name: username,
       member_since: created_at.strftime('%m-%d-%Y'),
-      total_wins: wins_count
+      total_wins: win_count
       }
+  end
+  
+  def games 
+    Game.where(
+      'white_player_id = :id OR black_player_id = :id',
+      id: id
+      )
   end
 
   # validates :username,
