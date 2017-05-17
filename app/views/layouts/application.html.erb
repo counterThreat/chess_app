@@ -51,6 +51,14 @@
 
   <div class="content">
 
+    <% if flash[:toastr] %>
+      <script type="text/javascript">
+        <% flash[:toastr].each do |type, message| %>
+          toastr.<%= type %>(<%= message.inspect %>)
+        <% end %>
+      </script>
+    <% end %>
+    
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
