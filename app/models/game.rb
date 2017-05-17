@@ -20,6 +20,7 @@ class Game < ApplicationRecord
                white_player
              end
     update(winner: winner)
+    end_game
   end
 
   def find_piece(x_position, y_position)
@@ -69,21 +70,21 @@ class Game < ApplicationRecord
   # on the black player since the game is created with the white player
 
   def check
-    # needs to incorporate color of player whose turn it is
     pieces.reload
     black_king = pieces.find_by(type: 'King', color: 'black')
     white_king = pieces.find_by(type: 'King', color: 'white')
     pieces.each do |piece|
-      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white'
-      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black'
+      return 'black' if piece.valid_move?(black_king.x_position, black_king.y_position) && piece.color == 'white' && player_turn == 'black'
+      return 'white' if piece.valid_move?(white_king.x_position, white_king.y_position) && piece.color == 'black' && player_turn == 'white'
     end
     nil
   end
 
-  def no_legal_next_move?(color)
-    # needs to incorporate color of player whose turn it is in friendly_pieces
-    friendly_pieces = pieces.where(color: color)
+  def no_legal_next_move?
+    out_of_check = []
+    friendly_pieces = pieces.where(color: player_turn)
     friendly_pieces.each do |piece|
+      out_of_check.push(piece)
       (1..8).each do |x|
         (1..8).each do |y|
           if piece.valid_move?(x, y)
@@ -93,11 +94,15 @@ class Game < ApplicationRecord
             begin
               captured_piece.update(x_position: -1, y_position: -1) if captured_piece
               piece.update(x_position: x, y_position: y)
+              reload
               check_state = check
+              #out_of_check.push(piece.type, x, y) if check_state.nil?
             ensure
               piece.update(x_position: original_x, y_position: original_y)
               captured_piece.update(x_position: x, y_position: y) if captured_piece
             end
+            reload
+            #return out_of_check
             return false if check_state.nil?
           end
         end
@@ -106,16 +111,16 @@ class Game < ApplicationRecord
     true
   end
 
-  def checkmate(color)
+  def checkmate
     if !check.nil?
-      return true if no_legal_next_move?(color)
+      return true if no_legal_next_move?
     end
     false
   end
 
-  def stalemate(color)
+  def stalemate
     if check.nil?
-      return true if no_legal_next_move?(color)
+      return true if no_legal_next_move?
     end
     false
   end
@@ -140,6 +145,25 @@ class Game < ApplicationRecord
       update(player_turn: 'black')
     else
       update(player_turn: 'white')
+    end
+  end
+
+  def end_game
+    if checkmate # implement turn code - winning_player_id = player whose turn it isn't
+      winning_player_color = player_turn == 'white' ? 'black' : 'white'
+      winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
+      reload
+      update(winning_player_id: winning_id)
+      update(outcome: 'checkmate')
+      update(finished: Time.now)
+    elsif stalemate
+      update(outcome: 'stalemate')
+      update(finished: Time.now)
+    else
+      winning_player = player_turn == 'white' ? black_player : white_player
+      update(winning_player_id: winning_player.id)
+      update(outcome: 'forfeit')
+      update(finished: Time.now)
     end
   end
 end

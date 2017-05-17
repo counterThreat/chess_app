@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorize_user, only: :forfeit
+  before_action :authorize_user, only: [:forfeit, :finish]
 
   def new
     @game = Game.new
@@ -24,16 +24,10 @@ class GamesController < ApplicationController
     @game = current_game
     @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
 
-    # if in check/checkmate
-    color = if current_game.white_player == current_user # fix when turns are added
-              'white'
-            else
-              'black'
-            end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
-    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
+    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
     Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
-      message: 'blay player has joined the game'
+      message: 'black player has joined the game'
     })
 
     # html/json

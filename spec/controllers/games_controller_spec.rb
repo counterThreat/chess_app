@@ -87,4 +87,8 @@ RSpec.describe GamesController, type: :controller do
       expect(game.reload.winner).to be_nil
     end
   end
+
+  describe 'game#finish' do
+    it 'renders the game unalterable after an outcome is determined'
+  end
 end

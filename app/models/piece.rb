@@ -22,15 +22,22 @@ class Piece < ApplicationRecord
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && your_turn?
+    if valid_move?(x_new, y_new) && on_board? && your_turn? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
-        game.next_turn
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
+      end
+      game.next_turn
+      reload
+      if game.checkmate || game.stalemate
+        game.end_game
+        Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+          message: "#{player_turn} has lost the game in a #{game.outcome}!"
+        })
       end
     else
       # puts 'Move is not allowed!' # can change this to be a flash method

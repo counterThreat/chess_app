@@ -60,7 +60,7 @@ function handleDrag(event, ui){
     type: 'PUT',
     data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
     success: function(data){
-        showMove();
+      showMove();
     }
   });
 }
@@ -100,7 +100,9 @@ function showMove() {
 
   var channel = pusher.subscribe("game-channel-" + number);
   channel.bind('piece-moved', function(data) {
-  setBoard();
+    var checkStatus = $('.checkmate').data('checkmate');
+    $('.checkmate').innerText = checkStatus;
+    setBoard();
   });
 }
 
@@ -143,6 +145,25 @@ function showNewPlayer(){
         $('#blackPlayer').html('*waiting*');
       }
     });
+  });
+}
+
+function showEnd() {
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+  Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("end-channel-" + number);
+  channel.bind('game-finished', function(data) {
+    console.log('GAME IS FINISHED')
+    //$('.turn-notice').innerText(data.message);
   });
 }
 

@@ -51,5 +51,7 @@
 <div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
   <h4 class="turn-notice">
     Current Turn: <span class="turn"><%= @game.player_turn%></span>
+    <span class="checkmate" data check="<%= @game.check %>" data-next-move="<%=@game.no_legal_next_move?%>" data-checkmate="<%= @game.checkmate %>">
+    </span>
   </h4>
 </div>
