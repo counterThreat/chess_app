@@ -32,9 +32,9 @@ class Piece < ApplicationRecord
 
   def pusher_game_end
     unless Rails.env == 'test'
-      Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
-        message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
-      })
+    #  Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+    # message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
+    #  })
     end
   end
 
