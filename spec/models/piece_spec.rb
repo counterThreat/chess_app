@@ -176,6 +176,7 @@ RSpec.describe Piece, type: :model do
       white_king = FactoryGirl.create(:king, color: 'white', game: game1, user: elvis)
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 7, y_position: 6)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 6, y_position: 2)
+      game1.player_turn = 'white'
       white_king.move(5, 2)
       white_king.reload
       expect(white_king.y_position).to eq 1
@@ -189,6 +190,7 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king_black_58, game: game1, user: michael)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 2)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 7)
+      game1.player_turn = 'white'
       white_rook.move(6, 2)
       white_rook.reload
       expect(white_rook.x_position).to eq 5
@@ -203,6 +205,7 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 7)
+      game1.player_turn = 'white'
       white_rook.move(5, 4)
       white_rook.reload
       expect(white_rook.x_position).to eq 5
@@ -218,6 +221,7 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 4, y_position: 2)
+      game1.player_turn = 'white'
       white_rook.move(5, 2)
       white_rook.reload
       expect(white_rook.x_position).to eq 5
@@ -233,6 +237,7 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 4, y_position: 2)
+      game1.player_turn = 'white'
       white_king.move(4, 1)
       white_king.reload
       expect(white_king.x_position).to eq 4
@@ -248,6 +253,7 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 6, y_position: 1)
+      game1.player_turn = 'white'
       white_rook.move(6, 3)
       white_rook.reload
       expect(white_rook.x_position).to eq 6
@@ -262,6 +268,7 @@ RSpec.describe Piece, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user: michael, x_position: 8, y_position: 7)
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 6, y_position: 1)
+      game1.player_turn = 'white'
       white_king.move(5, 2)
       white_king.reload
       expect(white_king.x_position).to eq 5
@@ -280,6 +287,7 @@ RSpec.describe Piece, type: :model do
       black_rook = FactoryGirl.create(:rook, color: 'black', game: game1, user: michael, x_position: 5, y_position: 4)
       black_bishop = FactoryGirl.create(:bishop, color: 'black', game: game1, user: michael, x_position: 3, y_position: 3)
       white_rook = FactoryGirl.create(:rook, color: 'white', game: game1, user: elvis, x_position: 5, y_position: 8)
+      game1.player_turn = 'white'
       white_rook.move(5, 4)
       white_rook.reload
       expect(white_rook.x_position).to eq 5

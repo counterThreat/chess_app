@@ -30,15 +30,18 @@ class PiecesController < ApplicationController
     y = params[:piece][:y_position].to_i
     puts 'in update action'
     current_piece.move(x, y)
-    # && pusher_status
-    Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
-      message: 'A piece has been moved'
-    })
+    game.reload
+    game.end_game_checkmate && current_piece.pusher_game_end if game.checkmate
+    game.end_game_stalemate && current_piece.pusher_game_end if game.stalemate
+    unless Rails.env == 'test'
+      Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
+        message: 'A piece has been moved'
+      })
 
-    Pusher.trigger("game-channel-#{game.id}", 'current-turn', {
-      message: "It is #{current_piece.color}'s move."
-    })
-
+      Pusher.trigger("game-channel-#{game.id}", 'current-turn', {
+        message: "It is #{current_piece.color}'s move."
+      })
+    end
     render json: current_piece.game.pieces
   end
 

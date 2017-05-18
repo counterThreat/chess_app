@@ -33,7 +33,7 @@ function setBoard(){
     // puts pieces on the board
     data.forEach(appendPieceToSquare);
 
-    dragDropPiece();
+    canMove();
     gameTurn();
 
   });
@@ -60,9 +60,9 @@ function handleDrag(event, ui){
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
   var user = chess_piece.attr('data-user-id');
-  
+
   var url = window.location.href + '/pieces/' + piece_id;
-  
+
   $.ajax({
     url: url,
     type: 'PUT',
@@ -79,6 +79,14 @@ function handleDrag(event, ui){
     }
   });
 }
+
+function canMove() {
+  var outcome = $('.outcome').data('outcome');
+  if ( outcome === "" || outcome === null || outcome === undefined) {
+    dragDropPiece();
+  }
+}
+
 
 function dragDropPiece(){
   $('.piece').draggable({
@@ -115,7 +123,9 @@ function showMove() {
 
   var channel = pusher.subscribe("game-channel-" + number);
   channel.bind('piece-moved', function(data) {
-  setBoard();
+    var checkStatus = $('.checkmate').data('checkmate');
+    $('.checkmate').innerText = checkStatus;
+    setBoard();
   });
 }
 
@@ -158,6 +168,25 @@ function showNewPlayer(){
         $('#blackPlayer').html('*waiting*');
       }
     });
+  });
+}
+
+function showEnd() {
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+  Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("end-channel-" + number);
+  channel.bind('game-finished', function(data) {
+    console.log('GAME IS FINISHED')
+    //$('.turn-notice').innerText(data.message);
   });
 }
 

@@ -10,31 +10,31 @@ class Piece < ApplicationRecord
   validates :move_num, presence: true
 
   def valid_move?(x_new, y_new)
-    false
+    on_board? && !friendly_piece(x_new, y_new)
   end
 
   def on_board?
-    if x_position >= 1 && x_position <= 8 && y_position >= 1 && y_position <= 8
-      true
-    else
-      false
-    end
+    x_position >= 1 && x_position <= 8 && y_position >= 1 && y_position <= 8
   end
 
   def move(x_new, y_new)
-    if valid_move?(x_new, y_new) && on_board? && your_turn?
+    if valid_move?(x_new, y_new) && your_turn? && attack!(x_new, y_new) != false
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
-        game.next_turn
-        reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
-    else
-      # puts 'Move is not allowed!' # can change this to be a flash method
-      return
+      game.next_turn
+    end
+  end
+
+  def pusher_game_end
+    unless Rails.env == 'test'
+      Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+        message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
+      })
     end
   end
 
@@ -87,6 +87,10 @@ class Piece < ApplicationRecord
 
   def opponent(x_new, y_new)
     game.find_piece(x_new, y_new)
+  end
+
+  def friendly_piece(x_new, y_new)
+    game.pieces.find_by(x_position: x_new, y_position: y_new, color: color)
   end
 
   def attack!(x_new, y_new)
