@@ -18,14 +18,27 @@
 
     <div class="col-sm-3 readyplay">
       <div class="row" style="text-align:center">
+
       <%= image_tag ("bobby.jpg"), :class => 'img-responsive' %>
+        
+      <div class="user-profile">
+
       <h4>Ready to Play?</h4>
       
-          <% if user_signed_in? %>
-          <p><span>Welcome <%= link_to "#{current_user.username}", current_user %>! </span></p>
-          <%= gravatar_for current_user, :style =>"float:left" %>
-          
-          <p>Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+        <% if user_signed_in? %>
+
+          <%= gravatar_for current_user, :id => "gravatar" %>
+            
+          <ul id="prof-data">
+            <p>Welcome!</p>
+            <p>@<b><%= current_user.username %></b>!</p>
+      
+            <p><%= link_to "Edit", edit_user_registration_path %> account information</p>
+
+            <p>Total wins: <%= current_user.win_count %></p>
+        
+            <p>Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+          </ul> 
         
           <!-- new game  -->
           <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
@@ -33,7 +46,7 @@
           <!-- open games -->
           <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
           <br>
-      
+             </div>
           <% else %>
           
             <p>Welcome! Sign up here to get started:
