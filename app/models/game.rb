@@ -12,6 +12,19 @@ class Game < ApplicationRecord
   def players
     [white_player, black_player].compact
   end
+  
+  def drawing_player!
+    update(outcome: "draw")
+  end
+
+  def forfeiting_player!(player)
+    winner = if player == white_player
+               black_player
+             else
+               white_player
+             end
+    update(winner: winner)
+  end
 
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)

@@ -61,6 +61,11 @@ class GamesController < ApplicationController
     end
   end
 
+  def draw
+    current_game.drawing_player!
+    redirect_to games_path, alert: 'The game has been drawn.'
+  end
+
   def forfeit
     current_game.end_game_forfeit(current_user)
     redirect_to games_path, alert: 'You forfeited the game.'

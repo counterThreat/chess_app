@@ -17,7 +17,47 @@
   <h4 class="alignright">BLACK: <span id='blackPlayer'></span></h4>
 </div>
 
+<div class="container-fluid">
+  <div class="btn-toolbar">
+      <!--Default buttons with dropdown menu-->
+      <div class="btn-group">
+          <button type="button" class="btn btn-default">Game Options</button>
+          <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><button id="btnShowModal" type="button" class="btn btn-warning btn-sm">Offer Draw</button></li>
+            <li><button type="button" class="btn btn-danger btn-sm"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit %></button></li>
+            <hr>
+            <li class="divider"></li>
+            <li><a href="#">Flip Board</a></li>
+            <li><a href="#">Show Captured Pieces</a></li>
+            <li><a href="#">Show Record of Moves</a></li>
+            <li><a href="#">Show Board Coordinates</a></li>
+          </ul>
+      </div>
 
+      <div class="modal fade" id="drawModal" role="dialog" data-backdrop="static">
+      <div class="modal-dialog modal-sm">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><%= get_username(@game.white_player_id)%> offers a draw</h4>
+          </div>
+          <!--<div class="modal-body">
+            <p>Your opponent offers you a draw.</p>
+          </div>-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-lg pull-left"><%= link_to 'Accept', draw_game_path(@game), method: 'POST', action: :draw %></button>
+            <button type="button" class="btn btn-default btn-lg pull-right" data-dismiss="modal">Decline</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div>
 
 
 <table class="chessboard">
@@ -32,10 +72,6 @@
     </tr>
   <% end %>
 </table>
-
-
-<%= button_to "Forfeit", forfeit_game_path(@game), class: "btn forfeit", method: 'PUT', action: :forfeit if can_forfeit?(@game) %>
-<hr/>
 
 <!-- <div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
   <% if @game.black_player && @game.current_user_is_black_player? %>
@@ -55,3 +91,11 @@
     </span>
   </h4>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#btnShowModal').click(function () {
+      $('#drawModal').modal('show');
+    });
+});
+</script>

@@ -3,6 +3,21 @@ $( document ).ready(function(){
   $('.alert-notice').fadeOut(4000);
 });
 
+function appendPieceToSquare(piece) {
+  var cssSelector = "#" + piece.x_position + piece.y_position;
+  var square = $(cssSelector);
+
+  var chess_piece = $('<div></div>');
+  chess_piece.html(piece.unicode);
+  chess_piece.addClass('piece');
+  chess_piece.attr('data-id', piece.id);
+  chess_piece.attr('data-x-position', piece.x_position);
+  chess_piece.attr('data-y-position', piece.y_position);
+  chess_piece.attr('data-user-id', piece.user_id);
+  square.html('');
+  square.html(chess_piece);
+}
+
 function setBoard(){
   var url = window.location.href;
 
@@ -16,21 +31,7 @@ function setBoard(){
     }
 
     // puts pieces on the board
-    data.forEach(function(piece){
-      var cssSelector = "#" + piece.x_position + piece.y_position;
-      var square = $(cssSelector);
-      console.log(square);
-
-      var chess_piece = $('<div></div>');
-      chess_piece.html(piece.unicode);
-      chess_piece.addClass('piece');
-      chess_piece.attr('data-id', piece.id);
-      chess_piece.attr('data-x-position', piece.x_position);
-      chess_piece.attr('data-y-position', piece.y_position);
-
-      square.html('');
-      square.html(chess_piece);
-    });
+    data.forEach(appendPieceToSquare);
 
     dragDropPiece();
     gameTurn();
@@ -45,22 +46,36 @@ function gameTurn(){
   });
 }
 
+function fetchAndReplaceSpecificPiece(piece_id) {
+  var url = window.location.href;
+  const chess_piece = $('[data-id="' + piece_id + '"]')
+  chess_piece.remove()
+  $.get(url + "/pieces/" + piece_id).success(appendPieceToSquare)
+}
+
 function handleDrag(event, ui){
   var chess_piece = $(ui.draggable);
   var square = $(this);
-
   var piece_id = chess_piece.attr('data-id');
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
-
+  var user = chess_piece.attr('data-user-id');
+  
   var url = window.location.href + '/pieces/' + piece_id;
-
+  
   $.ajax({
     url: url,
     type: 'PUT',
-    data: { piece: { x_position: dx, y_position: dy, id: piece_id }, _method: 'patch' },
+    data: { piece: { x_position: dx, y_position: dy, id: piece_id, user_id: user }, _method: 'patch' },
     success: function(data){
-      showMove();
+        showMove();
+    },
+    error: (response, error) => {
+      if (response.status === 403) {
+        const piece_id = JSON.parse(response.responseText).piece_id
+        fetchAndReplaceSpecificPiece(piece_id)
+//        setBoard();
+      }
     }
   });
 }
@@ -71,7 +86,7 @@ function dragDropPiece(){
     snap: ".square",
     snapMode: 'inner',
     snapTolerance: 40
-    //revert: true
+//    revert: true
   });
   $('.square').droppable({
     drop: handleDrag

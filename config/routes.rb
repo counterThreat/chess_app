@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     member do
       post 'forfeit'
       get 'data_view'
+      post 'draw'
     end
     resources :pieces, only: [:index, :create, :show, :update]
   end
