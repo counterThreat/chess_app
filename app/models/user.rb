@@ -24,6 +24,31 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
   validates_uniqueness_of :email
 
+  def win_count
+    games.where(winner: self).count
+  end
+
+  def user_data
+    {
+      name: username,
+      gravatar_url: gravatar_url,
+      member_since: created_at.strftime('%m-%d-%Y'),
+      total_wins: win_count
+    }
+  end
+
+  def games
+    Game.where(
+      'white_player_id = :user_id OR black_player_id = :user_id',
+      user_id: id
+    )
+  end
+  
+  def gravatar_url
+    gravatar_id = Digest::MD5.hexdigest(email.downcase)
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?s=75"
+  end
+
   # validates :username,
   #           presence: true,
   #           uniqueness: {
