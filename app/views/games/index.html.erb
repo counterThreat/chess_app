@@ -26,7 +26,7 @@
                   <% if current_user && (current_user == game.white_player ||
                     current_user == game.black_player) %>
                     <%= link_to 'Continue', game_path(game.id) %>
-                  <% elsif game.outcome != nil %>
+                  <% elsif game.outcome %>
                     Completed
                   <% elsif game.white_player_id && game.black_player_id %>
                     Game is full

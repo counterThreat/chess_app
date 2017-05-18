@@ -26,9 +26,9 @@ class GamesController < ApplicationController
 
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
     flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
-    Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
-      message: 'black player has joined the game'
-    })
+  #  Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
+  #    message: 'black player has joined the game'
+  #  })
 
     # html/json
     respond_to do |format|

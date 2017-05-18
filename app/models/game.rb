@@ -127,17 +127,6 @@ class Game < ApplicationRecord
     false
   end
 
-  # If we want to be DRYer in the future (and run less code for each move), we can use something like this:
-  # def checkmate_or_stalemate
-  #   if check.nil? && no_legal_next_move?
-  #     return 'stalemate'
-  #   elsif !check.nil? && no_legal_next_move?
-  #     return 'checkmate'
-  #   else
-  #     nil
-  #   end
-  # end
-
   def pieces_no_king(color)
     pieces.where.not(type: 'King', color: color)
   end
@@ -152,9 +141,9 @@ class Game < ApplicationRecord
 
   def end_game
     if checkmate # implement turn code - winning_player_id = player whose turn it isn't
-      winning_player = player_turn == 'white' ? black_player : white_player
-      reload
-      update(winning_player_id: winning_player.id)
+      winning_player_color = player_turn == 'white' ? 'black' : 'white'
+      winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
+      update(winning_player_id: winning_id)
       update(outcome: 'checkmate')
       update(finished: Time.now)
     elsif stalemate

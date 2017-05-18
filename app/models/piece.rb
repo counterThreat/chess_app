@@ -35,9 +35,9 @@ class Piece < ApplicationRecord
       game.reload
       if game.checkmate || game.stalemate
         game.end_game
-        Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
-          message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
-        })
+      #  Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+      #    message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
+      #  })
       end
     else
       # puts 'Move is not allowed!' # can change this to be a flash method
