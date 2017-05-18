@@ -139,6 +139,10 @@ class Game < ApplicationRecord
     update(finished: Time.now)
   end
 
+  def end_game_draw(player)
+    update(outcome: 'draw')
+    update(finished: Time.now)
+
   def end_game_forfeit(player)
     winning_player = player == white_player ? black_player : white_player
     update(winning_player_id: winning_player.id)
