@@ -26,7 +26,7 @@
             <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li><button id="btnShowModal" type="button" class="btn btn-warning btn-sm">Offer Draw</button></li>
-              <li><button type="button" class="btn btn-danger btn-sm"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit %></button></li>
+              <li><button type="button" class="btn btn-danger btn-sm disable-button"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit %></button></li>
               <hr>
               <li class="divider"></li>
               <li><a href="#">Flip Board</a></li>
@@ -277,6 +277,13 @@ function showNewPlayer(){
     });
   });
 }
+
+$(function() {
+  var outcome = $('.outcome').data('outcome');
+  if(outcome) {
+    $('.disable-button').addClass('disabled');
+  }
+});
 
 
 
