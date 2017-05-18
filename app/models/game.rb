@@ -7,8 +7,8 @@ class Game < ApplicationRecord
   after_create :make_newboard
   validates :name, presence: true
 
-  enum current_player: [:current_user_is_black_player, :current_user_is_white_player]
-
+  scope :active_games, -> { where(winning_player: nil)}
+  
   def players
     [white_player, black_player].compact
   end
