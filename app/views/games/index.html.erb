@@ -14,7 +14,7 @@
               <br/>
               <small><%= display_date(game.created_at)%></small>
             </div>
-            <div class="col-sm-3" style=text-align:center><em>
+            <div class="col-sm-3" style=text-align:center>
                 <% if game.white_player_id && game.black_player_id %>
                   <b>Black Player:</b> <%=get_username(game.black_player_id) %>
                 <% else %>
@@ -23,18 +23,23 @@
             </div>
             <div class="col-sm-3">
               <span class="badge badge-default badge-pill pull-right">
-                  <% if current_user && (current_user == game.white_player ||
-                    current_user == game.black_player) %>
-                    <%= link_to 'Continue', game_path(game.id) %>
-                  <% elsif game.outcome %>
-                    Completed
-                    <small><%= game.winning_player_id if game.winning_player_id %></small>
-                  <% elsif game.white_player_id && game.black_player_id %>
-                    Game is full
-                  <% else %>
-                    <%= link_to 'Join', edit_game_path(game.id) %>
-                  <% end %>
+                <% if game.outcome %>
+                  Completed
+                <% elsif current_user && (current_user == game.white_player ||
+                  current_user == game.black_player) %>
+                  <%= link_to 'Continue', game_path(game.id) %>
+                <% elsif game.white_player_id && game.black_player_id %>
+                  Game is full
+                <% else %>
+                  <%= link_to 'Join', edit_game_path(game.id) %>
+                <% end %>
               </span>
+              <div>
+                <% if game.winning_player_id %>
+                  <% winner = get_username(game.winning_player_id) %>
+                  Winner: <%= winner if winner %>
+                <% end %>
+              </div>
             </div>
         </li>
       </ul>
