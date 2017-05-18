@@ -1,9 +1,5 @@
 <script src="//js.pusher.com/4.0/pusher.min.js"></script>
 
-<div class="page-header">
-  <h1> <%= @game.name %> </h1>
-</div>
-
 <!-- <div class="col-xs-12 col-md-8 col-md-offset-2 players">
 <% if @game.black_player_id == nil %>
 <h3>WHITE: <%= get_username(@game.white_player_id)%></h3>
@@ -12,29 +8,73 @@
   <h4 class="alignright">BLACK: <%= get_username(@game.black_player_id)%></h4>
 
 <% end %> -->
-<div class="col-xs-12 col-md-8 col-md-offset-2 players">
-  <h4 class="alignleft player">WHITE: <%= get_username(@game.white_player_id)%></h4>
-  <h4 class="alignright">BLACK: <span id='blackPlayer'></span></h4>
-</div>
 
-<div class="container-fluid">
-  <div class="btn-toolbar">
-      <!--Default buttons with dropdown menu-->
-      <div class="btn-group">
-          <button type="button" class="btn btn-default">Game Options</button>
-          <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
-          <ul class="dropdown-menu">
-            <li><button id="btnShowModal" type="button" class="btn btn-warning btn-sm">Offer Draw</button></li>
-            <li><button type="button" class="btn btn-danger btn-sm"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit %></button></li>
-            <hr>
-            <li class="divider"></li>
-            <li><a href="#">Flip Board</a></li>
-            <li><a href="#">Show Captured Pieces</a></li>
-            <li><a href="#">Show Record of Moves</a></li>
-            <li><a href="#">Show Board Coordinates</a></li>
-          </ul>
+<div class="container">
+  <div class="row">
+    <!-- LEFT SIDEBAR -->
+    <div class="col-sm-3">
+      <!-- PLAYER LABELS -->
+      <div class="players">
+        <h4 style="text-align: center"><%= @game.name %></h4>
+        <h4 class="alignleft player">White Player: <%= get_username(@game.white_player_id)%></h4>
+        <h4 class="alignleft player">Black Player: <span id='blackPlayer'></span></h4>
       </div>
+      <!-- BUTTON TOOLBAR -->
+      <div class="btn-toolbar">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">Game Options</button>
+            <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><button id="btnShowModal" type="button" class="btn btn-warning btn-sm">Offer Draw</button></li>
+              <li><button type="button" class="btn btn-danger btn-sm"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit %></button></li>
+              <hr>
+              <li class="divider"></li>
+              <li><a href="#">Flip Board</a></li>
+              <li><a href="#">Show Captured Pieces</a></li>
+              <li><a href="#">Show Record of Moves</a></li>
+              <li><a href="#">Show Board Coordinates</a></li>
+            </ul>
+        </div>
+      </div>
+      <!-- TURN STATUS -->
+      <div class="game-status"><br>
+        <div class="turn-status">
+          <h4 class="turn-notice">Turn Status</h4>
+          <p><span class="turn"><%= @game.player_turn %></span></p>
+        </div>
+      </div>
+      <!-- USER STATS -->
+      <div class="user-stats"><br>
+        <!-- user state? -->
+      </div>
+      <!-- OUTCOME -->
+      <div class="outcome" data-outcome="<%= @game.outcome %>"></div>
+    </div>
+    <!-- CHESSBOARD -->
+    <div class="col-sm-9">
+        <table class="chessboard">
+          <% (1..8).reverse_each do |column| %>
+          <tr class="row">
+          <% (1..8).each do |row| %>
+            <td class="square" id="<%=row%><%=column%>" data-x="<%=row%>" data-y="<%= column %>">
+            </td>
+          <% end %>
+            </tr>
+          <% end %>
+        </table>
+    </div>
+  </div>
+  </div>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#btnShowModal').click(function () {
+      $('#drawModal').modal('show');
+    });
+});
+</script>
+
+      <!-- MODAL -->
       <div class="modal fade" id="drawModal" role="dialog" data-backdrop="static">
       <div class="modal-dialog modal-sm">
 
@@ -56,47 +96,179 @@
       </div>
     </div>
 
-  </div>
-  </div>
+<!-- FORMER GAMES.JS FILE -->
 
-<div class="outcome" data-outcome="<%= @game.outcome %>"></div>
-
-<table class="chessboard">
-  <% (1..8).reverse_each do |column| %>
-    <tr class="row">
-      <% (1..8).each do |row| %>
-        <td class="square" id="<%=row%><%=column%>" data-x="<%=row%>" data-y="<%= column %>">
-
-        </td>
-
-      <% end %>
-    </tr>
-  <% end %>
-</table>
-
-<!-- <div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
-  <% if @game.black_player && @game.current_user_is_black_player? %>
-  <h4> It is <% get_username(@game.black_player_id)%>'s turn as BLACK</p>
-  <% elsif @game.white_player && @game.current_user_is_white_player? %>
-  <h4> It is <% get_username(@game.white_player_id)%>'s turn as WHITE </p>
-  <% else %>
-  <h4> "Waiting for another player to join the game!" </p>
-  <% end %>
-  <br/>
-</div> -->
-
-<div class="col-xs-12 col-md-8 col-md-offset-2 game-status">
-  <h4 class="turn-notice">
-    Current Turn: <span class="turn"><%= @game.player_turn%></span>
-    <span class="checkmate" data check="<%= @game.check %>" data-next-move="<%=@game.no_legal_next_move?%>" data-checkmate="<%= @game.checkmate %>">
-    </span>
-  </h4>
-</div>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#btnShowModal').click(function () {
-      $('#drawModal').modal('show');
-    });
+<script>
+  
+$( document ).ready(function(){
+  $('.alert-notice').fadeOut(4000);
 });
+
+function appendPieceToSquare(piece) {
+  var cssSelector = "#" + piece.x_position + piece.y_position;
+  var square = $(cssSelector);
+
+  var chess_piece = $('<div></div>');
+  chess_piece.html(piece.unicode);
+  chess_piece.addClass('piece');
+  chess_piece.attr('data-id', piece.id);
+  chess_piece.attr('data-x-position', piece.x_position);
+  chess_piece.attr('data-y-position', piece.y_position);
+  chess_piece.attr('data-user-id', piece.user_id);
+  square.html('');
+  square.html(chess_piece);
+}
+
+function setBoard(){
+  var url = window.location.href;
+
+  // refreshes the board
+  $.get(url + "/pieces").success(function(data){
+    for(var x = 1; x <= 8; x++) {
+      for (var y = 1; y <= 8; y++) {
+        var square = $('#' + x + y);
+        square.html('');
+      }
+    }
+
+    // puts pieces on the board
+    data.forEach(appendPieceToSquare);
+
+    dragDropPiece();
+    gameTurn();
+
+  });
+}
+
+function gameTurn(){
+  var dataViewUrl = window.location.href + '/data_view/';
+  $.get(dataViewUrl).success(function(data){
+    $('.turn').html(data.player_turn);
+  });
+}
+
+function fetchAndReplaceSpecificPiece(piece_id) {
+  var url = window.location.href;
+  const chess_piece = $('[data-id="' + piece_id + '"]')
+  chess_piece.remove()
+  $.get(url + "/pieces/" + piece_id).success(appendPieceToSquare)
+}
+
+function handleDrag(event, ui){
+  var chess_piece = $(ui.draggable);
+  var square = $(this);
+  var piece_id = chess_piece.attr('data-id');
+  var dx = square.attr('data-x');
+  var dy = square.attr('data-y');
+  var user = chess_piece.attr('data-user-id');
+  
+  var url = window.location.href + '/pieces/' + piece_id;
+  
+  $.ajax({
+    url: url,
+    type: 'PUT',
+    data: { piece: { x_position: dx, y_position: dy, id: piece_id, user_id: user }, _method: 'patch' },
+    success: function(data){
+        showMove();
+    },
+    error: (response, error) => {
+      if (response.status === 403) {
+        const piece_id = JSON.parse(response.responseText).piece_id
+        fetchAndReplaceSpecificPiece(piece_id)
+//        setBoard();
+      }
+    }
+  });
+}
+
+function dragDropPiece(){
+  $('.piece').draggable({
+    containment: ".chessboard",
+    snap: ".square",
+    snapMode: 'inner',
+    snapTolerance: 40
+//    revert: true
+  });
+  $('.square').droppable({
+    drop: handleDrag
+    // add revert false for when the drop is valid
+  });
+}
+
+function getPath() {
+  var pathArray = window.location.pathname.split( '/' );
+  var gameId = pathArray[pathArray.length -1]
+  return gameId;
+}
+
+function showMove() {
+  // Enable pusher logging - don't include this in production
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+  Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("game-channel-" + number);
+  channel.bind('piece-moved', function(data) {
+  setBoard();
+  });
+}
+
+function newPlayer(){
+  var environment = $('body').data('rails-env');
+  if (environment != 'production') {
+    Pusher.logToConsole = true;
+  }
+
+  var pusher = new Pusher('85619837e880f6d5568c', {
+    encrypted: true
+  });
+
+  var number = getPath();
+
+  var channel = pusher.subscribe("player-channel-" + number);
+  channel.bind('new-player', function(data) {
+    showNewPlayer();
+  });
+}
+
+function showNewPlayer(){
+  var dataViewUrl = window.location.href + '/data_view/';
+  var userViewUrl = '/users';
+  $.get(dataViewUrl).success(function(data){
+    newPlayer();
+    $.get(userViewUrl).success(function(user){
+     var userName = '';
+     user.forEach(
+           function(userID){
+            if(userID.id == data.black_player_id ){
+              console.log(userID.username);
+              userName = userID.username;
+            }
+          });
+      if(data.black_player_id > 0){
+        $('#blackPlayer').html(userName);
+        $('.alignright').addClass('player');
+      }else{
+        $('#blackPlayer').html('*waiting*');
+      }
+    });
+  });
+}
+
+
+
+$( document ).ready(function(){
+  setBoard();
+  showMove();
+  showNewPlayer();
+  newPlayer();
+});
+
 </script>

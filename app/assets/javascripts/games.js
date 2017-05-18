@@ -1,4 +1,4 @@
-
+/*
 $( document ).ready(function(){
   $('.alert-notice').fadeOut(4000);
 });
@@ -198,3 +198,5 @@ $( document ).ready(function(){
   showNewPlayer();
   newPlayer();
 });
+
+*/
