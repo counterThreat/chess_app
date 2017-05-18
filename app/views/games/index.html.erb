@@ -28,9 +28,9 @@
                     <%= link_to 'Continue', game_path(game.id) %>
                   <% elsif game.outcome %>
                     Completed
+                    <small><%= game.winning_player_id if game.winning_player_id %></small>
                   <% elsif game.white_player_id && game.black_player_id %>
                     Game is full
-                    <small><%= game.winning_player_id if game.winning_player_id %></small>
                   <% else %>
                     <%= link_to 'Join', edit_game_path(game.id) %>
                   <% end %>
