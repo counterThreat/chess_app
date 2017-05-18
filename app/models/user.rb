@@ -43,7 +43,7 @@ class User < ApplicationRecord
       user_id: id
     )
   end
-  
+
   def gravatar_url
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
     "https://secure.gravatar.com/avatar/#{gravatar_id}?s=75"
