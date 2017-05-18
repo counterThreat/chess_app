@@ -20,22 +20,26 @@
       <div class="row" style="text-align:center">
       <%= image_tag ("bobby.jpg"), :class => 'img-responsive' %>
       <h4>Ready to Play?</h4>
-      <% if user_signed_in? %>
       
-        <p>Welcome <%= link_to "#{current_user.username}", current_user %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+          <% if user_signed_in? %>
+          <p><span>Welcome <%= link_to "#{current_user.username}", current_user %>! </span></p>
+          <%= gravatar_for current_user, :style =>"float:left" %>
+          
+          <p>Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
         
-      <!-- new game  -->
-      <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
-      <br>
-      <!-- open games -->
-      <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
-      <br>
+          <!-- new game  -->
+          <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
+          <br>
+          <!-- open games -->
+          <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
+          <br>
       
-      <% else %>
-        <p>Welcome! Sign up here to get started:
-        <%= link_to 'Sign Up', new_user_registration_path %>
-        </p>
-      <% end %>
+          <% else %>
+          
+            <p>Welcome! Sign up here to get started:
+            <%= link_to 'Sign Up', new_user_registration_path %>
+            </p>
+          <% end %>
       </div>
       <div class="row" style="text-align:center">
         <h4>The Architects of CounterThreat</h4>

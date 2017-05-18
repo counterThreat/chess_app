@@ -25,11 +25,11 @@
               <span class="badge badge-default badge-pill pull-right">
                   <% if current_user && (current_user == game.white_player ||
                     current_user == game.black_player) %>
-                    <%= link_to 'Continue', game_path(game.id) %>
+                    <%= link_to 'Continue', game_path(game.id), :style => "color:white" %>
                   <% elsif game.white_player_id && game.black_player_id %>
                     Game is full
                   <% else %>
-                    <%= link_to 'Join', edit_game_path(game.id) %>
+                    <%= link_to 'Join', edit_game_path(game.id), :style => "color:white" %>
                   <% end %>
               </span>
             </div>
