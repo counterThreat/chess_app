@@ -1,68 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ChessApp</title>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="611415831324-6racf1ta4f1ska6ns5eeupo0k3f84ves.apps.googleusercontent.com">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<head>
+  <title>ChessApp</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="611415831324-6racf1ta4f1ska6ns5eeupo0k3f84ves.apps.googleusercontent.com">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
 
-
-  </head>
-
-  <body data-rails-env="<%= Rails.env %>">
+<!-- HEADER -->
+<body data-rails-env="<%= Rails.env %>">
 <div id="flex-content-container">
   <div class="header">
-
-      <div class="container-fluid">
-           <div class="navbar navbar-static-top navbar-left" role="navigation">
-               <div class="collapse navbar-collapse">
-                 <div class="container-fluid">
-                 <a href="#" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-menu-hamburger"></i> <span class="hidden-xs"></span></a>
-                 <ul class="dropdown-menu">
-                   <li><a href="#">Rules</a></li>
-                   <li><a href="#">FAQ</a></li>
-                   <li><a href="#">About</a></li>
-                   <li class="divider"></li>
-                   <li><%= link_to 'New Game', new_game_path %></li>
-                   <li><%= link_to 'Open Games', games_path %></li>
-                   <li class="divider"></li>
-                   <% if !user_signed_in? %>
-                     <li><%= link_to 'Sign In', new_user_session_path %></li>
-                     <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-                     <% else %>
-                     <li><%= link_to 'Account', edit_user_registration_path %></li>
-                     <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
-                   <% end %>
-                 </ul>
-                 <div class="navbar-right">
-                   <p><h1><%= link_to 'Counter Threat', root_path %></h1></p>
-                 </div>
-               </div>
-             </div>
-
+    <div class="container-fluid">
+       <div class="navbar navbar-static-top navbar-left" role="navigation">
+         <div class="collapse navbar-collapse">
+           <div class="container-fluid">
+           <a href="#" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-menu-hamburger"></i> <span class="hidden-xs"></span></a>
+             <ul class="dropdown-menu">
+               <li><a href="#">Rules</a></li>
+               <li><a href="#">FAQ</a></li>
+               <li><a href="#">About</a></li>
+               <li class="divider"></li>
+               <li><%= link_to 'New Game', new_game_path %></li>
+               <li><%= link_to 'Open Games', games_path %></li>
+               <li class="divider"></li>
+               <% if !user_signed_in? %>
+                 <li><%= link_to 'Sign In', new_user_session_path %></li>
+                 <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+                 <% else %>
+                 <li><%= link_to 'Account', edit_user_registration_path %></li>
+                 <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
+               <% end %>
+             </ul>
+           <div class="navbar-right">
+             <p><h1><%= link_to 'Counter Threat', root_path %></h1></p>
            </div>
+         </div>
         </div>
-       </div>
+      </div>
+    </div>
+  </div>
 
-
-  <!-- body content -->
+  <!-- BODY CONTENT -->
 
   <div class="content">
-
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
-
     <%= yield %>
-
   </div>
-</div>
-  <br class="clr"/>
-
-    <!-- <footer class="footer"> -->
+  
+  <!-- FOOTER -->
     <div id="footer">
       <div class="footer-container">
         <div class="footer-social-icons">
@@ -81,7 +72,7 @@
         </div>
       </div>
     </div>
-
+    
+    </div>
   </body>
-
 </html>
