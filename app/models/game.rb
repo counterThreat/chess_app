@@ -7,8 +7,8 @@ class Game < ApplicationRecord
   after_create :make_newboard
   validates :name, presence: true
 
-  scope :active_games, -> { where(winning_player: nil)}
-  
+  scope :active_games, (-> { where(winning_player: nil) })
+
   def players
     [white_player, black_player].compact
   end
