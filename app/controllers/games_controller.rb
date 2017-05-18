@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorize_user, only: :forfeit
+  before_action :authorize_user, only: [:forfeit]
 
   def new
     @game = Game.new
@@ -24,17 +24,13 @@ class GamesController < ApplicationController
     @game = current_game
     @pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
 
-    # if in check/checkmate
-    color = if current_game.white_player == current_user # fix when turns are added
-              'white'
-            else
-              'black'
-            end
     flash.now[:notice] = @game.check.upcase + ' IN CHECK' if @game.check
-    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate(color)
-    Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
-      message: 'blay player has joined the game'
-    })
+    flash.now[:notice] = @game.check.upcase + ' IN CHECKMATE' if @game.check && @game.checkmate
+    unless Rails.env == 'test'
+      Pusher.trigger("player-channel-#{@game.id}", 'new-player', {
+        message: 'black player has joined the game'
+      })
+    end
 
     # html/json
     respond_to do |format|
@@ -71,8 +67,8 @@ class GamesController < ApplicationController
   end
 
   def forfeit
-    current_game.forfeiting_player!(current_user)
-    redirect_to games_path, alert: 'You have resigned the game.'
+    current_game.end_game_forfeit(current_user)
+    redirect_to games_path, alert: 'You forfeited the game.'
   end
 
   # add update, join, forefit, draw, check/checkmate(here or pieces controller/model), load-board functions

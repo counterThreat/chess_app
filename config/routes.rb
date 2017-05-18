@@ -5,11 +5,12 @@ Rails.application.routes.draw do
 
   root 'static_pages#index'
   resources :pieces, only: [:update]
-
   resources :games, only: [:index, :new, :create, :show, :edit, :update] do
-    get 'data_view', on: :member
-    post 'forfeit', on: :member
-    post 'draw', on: :member
+    member do
+      post 'forfeit'
+      get 'data_view'
+      post 'draw'
+    end
     resources :pieces, only: [:index, :create, :show, :update]
   end
 end

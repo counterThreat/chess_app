@@ -51,8 +51,8 @@ RSpec.describe Game, type: :model do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
       check_game = FactoryGirl.create(:game)
-      FactoryGirl.create(:king_white_51, game: check_game, user_id: user3.id)
-      FactoryGirl.create(:king_black_58, game: check_game, user_id: user4.id)
+      white_king = FactoryGirl.create(:king_white_51, game: check_game, user_id: user3.id)
+      black_king = FactoryGirl.create(:king_black_58, game: check_game, user_id: user4.id)
       rook = FactoryGirl.create(:rook_white_11, game: check_game, user_id: user3.id)
       bishop = FactoryGirl.create(:bishop, color: 'black', game: check_game, x_position: 2, y_position: 2, user_id: user4.id)
       rook.move(1, 2) # allows black turn
@@ -93,7 +93,8 @@ RSpec.describe Game, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 7)
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user_id: user4.id)
-      expect(check_game.checkmate('white)')).to eq true
+      check_game.player_turn = 'white'
+      expect(check_game.checkmate).to eq true
     end
 
     it 'returns checkmate when a king is in check and cannot escape check TWO' do
@@ -104,7 +105,8 @@ RSpec.describe Game, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 5, y_position: 8)
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 8, y_position: 1, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 7, y_position: 2, user_id: user4.id)
-      expect(check_game.checkmate('white')).to eq true
+      check_game.player_turn = 'white'
+      expect(check_game.checkmate).to eq true
     end
 
     it 'does not return checkmate when the attacker can be blocked' do
@@ -116,7 +118,8 @@ RSpec.describe Game, type: :model do
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user_id: user4.id)
       white_bishop = FactoryGirl.create(:bishop, color: 'white', game: check_game, x_position: 2, y_position: 1, user_id: user3.id)
-      expect(check_game.checkmate('white')).to eq false
+      check_game.player_turn = 'white'
+      expect(check_game.checkmate).to eq false
     end
 
     it 'does not return checkmate when the attacker can be captured' do
@@ -128,7 +131,8 @@ RSpec.describe Game, type: :model do
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user_id: user4.id)
       white_bishop = FactoryGirl.create(:bishop, color: 'white', game: check_game, x_position: 2, y_position: 4, user_id: user3.id)
-      expect(check_game.checkmate('white')).to eq false
+      check_game.player_turn = 'white'
+      expect(check_game.checkmate).to eq false
     end
 
     it 'does not return checkmate when a king is in check but can move out of check' do
@@ -138,7 +142,8 @@ RSpec.describe Game, type: :model do
       white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id, x_position: 1, y_position: 1)
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 7)
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
-      expect(check_game.checkmate('white')).to eq false
+      check_game.player_turn = 'white'
+      expect(check_game.checkmate).to eq false
     end
   end
 
@@ -150,8 +155,9 @@ RSpec.describe Game, type: :model do
       white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id, x_position: 6, y_position: 7)
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 8)
       white_queen = FactoryGirl.create(:queen, color: 'white', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
+      check_game.player_turn = 'black'
       expect(check_game.check).to eq nil
-      expect(check_game.stalemate('black')).to eq true
+      expect(check_game.stalemate).to eq true
     end
 
     it 'returns false when the player is not in check and can make a legal move' do
@@ -161,8 +167,9 @@ RSpec.describe Game, type: :model do
       white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id, x_position: 4, y_position: 7)
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 8)
       white_queen = FactoryGirl.create(:queen, color: 'white', game: check_game, user_id: user4.id, x_position: 7, y_position: 5)
+      check_game.player_turn = 'black'
       expect(check_game.check).to eq nil
-      expect(check_game.stalemate('black')).to eq false
+      expect(check_game.stalemate).to eq false
     end
 
     it 'returns false in the case of checkmate (no false positive)' do
@@ -173,8 +180,57 @@ RSpec.describe Game, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 8)
       white_queen = FactoryGirl.create(:queen, color: 'white', game: check_game, user_id: user4.id, x_position: 7, y_position: 6)
       white_bishop = FactoryGirl.create(:bishop, color: 'white', game: check_game, user_id: user3.id, x_position: 5, y_position: 5)
-      expect(check_game.stalemate('black')).to eq false
-      expect(check_game.checkmate('black')).to eq true
+      check_game.player_turn = 'black'
+      expect(check_game.stalemate).to eq false
+      expect(check_game.checkmate).to eq true
+    end
+  end
+
+  describe 'end_game_checkmate method' do
+    it 'updates winning_player_id, outcome, and finished for a checkmate' do
+      user3 = FactoryGirl.create(:user)
+      user4 = FactoryGirl.create(:user)
+      check_game = FactoryGirl.create(:game)
+      white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id, x_position: 1, y_position: 1)
+      black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 7)
+      rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
+      rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user_id: user4.id)
+      check_game.player_turn = 'white'
+      check_game.end_game_checkmate
+
+      expect(check_game.reload.outcome).to eq 'checkmate'
+      expect(check_game.finished.utc).to be_within(1.second).of Time.now
+      expect(check_game.reload.winning_player_id).to eq user4.id
+    end
+  end
+
+  describe 'end_game_stalemate method' do
+    it 'updates outcome and finished for a stalemate' do
+      user3 = FactoryGirl.create(:user)
+      user4 = FactoryGirl.create(:user)
+      game1 = FactoryGirl.create(:game)
+      white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: user3.id, x_position: 6, y_position: 7)
+      black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: user4.id, x_position: 8, y_position: 8)
+      white_queen = FactoryGirl.create(:queen, color: 'white', game: game1, user_id: user4.id, x_position: 7, y_position: 6)
+      game1.player_turn = 'black'
+      game1.end_game_stalemate
+
+      expect(game1.winning_player_id).to eq nil
+      expect(game1.outcome).to eq 'stalemate'
+      expect(game1.finished.utc).to be_within(1.second).of Time.now
+    end
+  end
+
+  describe 'end_game_forfeit method' do
+    it 'updates winning_player_id, outcome, and finished for a forfeit' do
+      white_player = create(:user)
+      black_player = create(:user)
+      game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.player_turn = 'white'
+      game.end_game_forfeit(white_player)
+      expect(game.winning_player_id).to eq black_player.id
+      expect(game.outcome).to eq 'forfeit'
+      expect(game.finished.utc).to be_within(1.second).of Time.now
     end
   end
 end

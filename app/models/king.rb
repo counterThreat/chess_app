@@ -1,12 +1,6 @@
 class King < Piece
   def valid_move?(x_new, y_new)
-    if obstructed?(x_new, y_new)
-      false
-    elsif (x_new - x_position).abs <= 1 && (y_new - y_position).abs <= 1
-      true
-    else
-      return super unless castle!(x_new, y_new)
-    end
+    super && !obstructed?(x_new, y_new) && (((x_new - x_position).abs <= 1 && (y_new - y_position).abs <= 1) || castle!(x_new, y_new))
   end
 
   def can_castle?(x_new, y_new)

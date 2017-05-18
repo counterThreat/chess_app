@@ -66,10 +66,9 @@ RSpec.describe GamesController, type: :controller do
       black_player = create(:user)
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
       sign_in black_player
-
       put :forfeit, params: { id: game }
       expect(response).to redirect_to games_path
-      expect(game.reload.winner).to eq white_player
+      expect(game.reload.winning_player_id).to eq white_player.id
     end
 
     it 'returns an error if you try to forfeit and its not your turn' do
