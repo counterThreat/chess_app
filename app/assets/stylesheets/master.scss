@@ -232,7 +232,7 @@ a {
 }
 
 ul {
-  list-style: none; 
+  list-style: none;
 }
 
 .alert-notice{
@@ -257,7 +257,7 @@ ul {
   -moz-border-radius: 30;
   border-radius: 30px;
   font-family: Arial;
-  color: #004dff;
+  color: white;
   font-size: 26px;
   padding: 11px 20px 10px 20px;
   border: solid #004dff 3px;
@@ -291,4 +291,15 @@ p {
   text-align: center;
   padding: 5px;
   max-width: 210px;
+}
+
+.game-end {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.game-winner {
+  font-size: 18px;
+  font-weight: 400;
 }

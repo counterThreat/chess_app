@@ -39,6 +39,9 @@
                  </ul>
                  <div class="navbar-right">
                    <p><h1><%= link_to 'Counter Threat', root_path %></h1></p>
+                   <% if current_user %>
+                     <h5> Signed in as <%= current_user.username %></h5>
+                   <% end %>
                  </div>
                </div>
              </div>
