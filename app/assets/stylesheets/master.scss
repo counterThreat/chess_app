@@ -258,11 +258,15 @@ ul {
   border-radius: 30px;
   font-family: Arial;
   color: #004dff;
-  font-size: 26px;
+  font-size: 22px;
   padding: 11px 20px 10px 20px;
   border: solid #004dff 3px;
   text-decoration: none;
-  background: #fff
+  background: #fff;
+  float:right;
+  margin-right: 3px;
+  margin-top: 4px;
+  clear:both;
 }
 
 .button:hover {
@@ -294,15 +298,43 @@ p {
 }
 
 #gravatar {
-  text-align:left;
+  text-align:right;
   padding-left:0;
   margin-left:0;
-  position:absolute;
+  position:relative;
+  //display:inline;
+  //float:left;
+  margin-right: 0;
+  padding-right: 0;
+  //clear:both;
 }
 
 #prof-data {
   float:right;
   text-align:right;
-  padding-right:20px;
-  padding-top: 5px;
+  padding-right:10px;
+  padding-left: 0;
+  clear:both;
+  margin-left: 10px;
+  //min-width: 100%;
+}
+
+.architects {
+  clear: both !important;
+  padding-top: 10px;
+}
+
+.user-profile {
+  float:right;
+  min-width: 100%;
+  position: center;
+}
+
+.readyplay {
+  float:right;
+  max-width: 28%;
+}
+
+app-info {
+  margin-right: 50px;
 }

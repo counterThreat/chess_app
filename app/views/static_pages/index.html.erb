@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-sm-8 col-sm-offset-1">
+    <div class="col-sm-8 col-sm-offset-1 app-info">
       <div class="row about-app">
 
       <h4>What is Counter Threat?</h4>
@@ -17,36 +17,35 @@
     </div>
 
     <div class="col-sm-3 readyplay">
-      <div class="row" style="text-align:center">
+      <div class="row" >
 
       <%= image_tag ("bobby.jpg"), :class => 'img-responsive' %>
         
-      <div class="user-profile">
+      <div class="user-profile"><br>
 
-      <h4>Ready to Play?</h4>
+      <h4 style="text-align:center">Ready to Play?</h4><br>
       
         <% if user_signed_in? %>
 
-          <%= gravatar_for current_user, :id => "gravatar" %>
+          <%= gravatar_for current_user, :class => "img-responsive", :id => "gravatar" %>
             
           <ul id="prof-data">
-            <p>Welcome!</p>
             <p>@<b><%= current_user.username %></b>!</p>
       
-            <p><%= link_to "Edit", edit_user_registration_path %> account information</p>
+            <p><%= link_to "Edit", edit_user_registration_path %> account</p>
 
             <p>Total wins: <%= current_user.win_count %></p>
-        
-            <p>Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p><br>
+            <p>User ranking: ## </p>
+            <p>Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
           </ul> 
-        
+        </div>
+
           <!-- new game  -->
           <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
           <br>
           <!-- open games -->
           <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
           <br>
-             </div>
           <% else %>
           
             <p>Welcome! Sign up here to get started:
@@ -54,8 +53,8 @@
             </p>
           <% end %>
       </div>
-      <div class="row" style="text-align:center">
-        <h4>The Architects of CounterThreat</h4>
+      <div class="row architects" style="text-align:right;padding-right:10px;">
+        <h4 style="text-align:center !important">The Architects of CounterThreat</h4>
         <br>
         <p><a href="http://www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
         <p>Haley Mnatzaganian @<a href="https://github.com/haleymnatz">github</a></p>
