@@ -19,11 +19,9 @@ class PiecesController < ApplicationController
     x = params[:piece][:x_position].to_i
     y = params[:piece][:y_position].to_i
     current_piece.move(x, y)
-    unless Rails.env == 'test'
-      Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
-        message: 'A piece has been moved'
-      })
-    end
+  #  Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
+  #    message: 'A piece has been moved'
+  #  })
     render json: current_piece.game.pieces
   end
 

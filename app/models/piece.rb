@@ -33,16 +33,18 @@ class Piece < ApplicationRecord
       end
       game.next_turn
       game.reload
-      if game.checkmate || game.stalemate
-        game.end_game
-      #  Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
-      #    message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
-      #  })
-      end
+      game.end_game_checkmate && pusher_game_end if game.checkmate
+      game.end_game_stalemate && pusher_game_end if game.stalemate
     else
       # puts 'Move is not allowed!' # can change this to be a flash method
       return
     end
+  end
+
+  def pusher_game_end
+    #  Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+    #    message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
+    #  })
   end
 
   def obstructed?(x_new, y_new) # Integrate with color

@@ -20,7 +20,7 @@ class Game < ApplicationRecord
                white_player
              end
     update(winner: winner)
-    end_game
+    end_game_forfeit
   end
 
   def find_piece(x_position, y_position)
@@ -81,13 +81,11 @@ class Game < ApplicationRecord
   end
 
   def no_legal_next_move?
-    out_of_check = []
     friendly_pieces = pieces.where(color: player_turn, captured: false)
     friendly_pieces.each do |piece|
       (1..8).each do |x|
         (1..8).each do |y|
           if piece.valid_move?(x, y)
-            #out_of_check.push(piece.type, x, y)
             original_x = piece.x_position
             original_y = piece.y_position
             captured_piece = pieces.find_by(x_position: x, y_position: y)
@@ -96,13 +94,11 @@ class Game < ApplicationRecord
               piece.update(x_position: x, y_position: y)
               reload
               check_state = check
-              #out_of_check.push(piece.type, x, y) if check_state.nil?
             ensure
               piece.update(x_position: original_x, y_position: original_y)
               captured_piece.update(x_position: x, y_position: y) if captured_piece
               reload
             end
-            #return out_of_check
             if check_state.nil?
               return false
             end
@@ -139,21 +135,23 @@ class Game < ApplicationRecord
     end
   end
 
-  def end_game
-    if checkmate # implement turn code - winning_player_id = player whose turn it isn't
-      winning_player_color = player_turn == 'white' ? 'black' : 'white'
-      winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
-      update(winning_player_id: winning_id)
-      update(outcome: 'checkmate')
-      update(finished: Time.now)
-    elsif stalemate
-      update(outcome: 'stalemate')
-      update(finished: Time.now)
-    else
-      winning_player = player_turn == 'white' ? black_player : white_player
-      update(winning_player_id: winning_player.id)
-      update(outcome: 'forfeit')
-      update(finished: Time.now)
-    end
+  def end_game_checkmate
+    winning_player_color = player_turn == 'white' ? 'black' : 'white'
+    winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
+    update(winning_player_id: winning_id)
+    update(outcome: 'checkmate')
+    update(finished: Time.now)
+  end
+
+  def end_game_stalemate
+    update(outcome: 'stalemate')
+    update(finished: Time.now)
+  end
+
+  def end_game_forfeit
+    winning_player = player_turn == 'white' ? black_player : white_player
+    update(winning_player_id: winning_player.id)
+    update(outcome: 'forfeit')
+    update(finished: Time.now)
   end
 end

@@ -3,35 +3,35 @@ class Pawn < Piece
   SECOND_MOVE = 1
 
   def valid_move?(x_new, y_new)
-    super && pawn_possible?(x_new, y_new)
+    super && !obstructed?(x_new, y_new) && pawn_possible?(x_new, y_new)
   end
 
   def move(x_new, y_new)
     if valid_en_passant?(x_new, y_new)
       Piece.transaction do
         last_piece_moved.update!(captured: true, x_position: -1, y_position: -1)
-        update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
-        game.next_turn
+        update!(x_position: x_new, y_position: y_new, move_num: move_num + 1, moved: true)
         reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
-    end
-    if promote?(y_new) && your_turn?
+      game.next_turn
+    elsif promote?(y_new) && your_turn?
       Piece.transaction do
         attack!(x_new, y_new)
         update!(
           x_position: x_new, y_position: y_new,
           type: "Queen", unicode: color == "white" ? '&#9813' : '&#9819',
           move_num: move_num + 1)
-          game.next_turn
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
+      game.next_turn
+    else
+      super
     end
-    super
   end
 
   def pawn_possible?(x_new, y_new)

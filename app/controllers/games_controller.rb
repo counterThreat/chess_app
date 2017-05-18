@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorize_user, only: [:forfeit, :finish]
+  before_action :authorize_user, only: [:forfeit]
 
   def new
     @game = Game.new

@@ -186,7 +186,7 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  describe 'end_game method' do
+  describe 'end_game_checkmate method' do
     it 'updates winning_player_id, outcome, and finished for a checkmate' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
@@ -196,13 +196,15 @@ RSpec.describe Game, type: :model do
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
       rook_b2 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 2, y_position: 3, user_id: user4.id)
       check_game.player_turn = 'white'
-      check_game.end_game
+      check_game.end_game_checkmate
 
       expect(check_game.reload.outcome).to eq 'checkmate'
       expect(check_game.finished.utc).to be_within(1.second).of Time.now
       expect(check_game.reload.winning_player_id).to eq user4.id
     end
+  end
 
+  describe 'end_game_stalemate method' do
     it 'updates outcome and finished for a stalemate' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
@@ -211,19 +213,21 @@ RSpec.describe Game, type: :model do
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: user4.id, x_position: 8, y_position: 8)
       white_queen = FactoryGirl.create(:queen, color: 'white', game: game1, user_id: user4.id, x_position: 7, y_position: 6)
       game1.player_turn = 'black'
-      game1.end_game
+      game1.end_game_stalemate
 
       expect(game1.winning_player_id).to eq nil
       expect(game1.outcome).to eq 'stalemate'
       expect(game1.finished.utc).to be_within(1.second).of Time.now
     end
+  end
 
+  describe 'end_game_forfeit method' do
     it 'updates winning_player_id, outcome, and finished for a forfeit' do
       white_player = create(:user)
       black_player = create(:user)
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
       game.player_turn = 'white'
-      game.forfeiting_player!(white_player) # calls end_game method directly
+      game.forfeiting_player!(white_player) # calls end_game_forfeit method directly
       expect(game.winning_player_id).to eq black_player.id
       expect(game.outcome).to eq 'forfeit'
       expect(game.finished.utc).to be_within(1.second).of Time.now

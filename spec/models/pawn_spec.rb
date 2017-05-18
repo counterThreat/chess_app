@@ -67,12 +67,15 @@ RSpec.describe Pawn, type: :model do
     it 'returns true for en passant passant capture' do
       myepgame = FactoryGirl.create(:game)
       pawngrabber = FactoryGirl.create(:user)
+      pawnloser = FactoryGirl.create(:user)
       king = FactoryGirl.create(:king_white_51, game: myepgame, user: pawngrabber)
-      FactoryGirl.create(:king_black_58, game: myepgame, user: pawngrabber)
-      king.move(5, 2) # this allows it to be blacks turn
+      FactoryGirl.create(:king_black_58, game: myepgame, user: pawnloser)
       pawn_white_55 = FactoryGirl.create(:pawn_white_55, game: myepgame, user: pawngrabber)
-      pawn_black_47 = FactoryGirl.create(:pawn_black_47, game: myepgame, user: pawngrabber)
+      pawn_black_47 = FactoryGirl.create(:pawn_black_47, game: myepgame, user: pawnloser)
+      king.move(5, 2) # this allows it to be blacks turn
       pawn_black_47.move(4, 5)
+      pawn_black_47.reload
+      debugger
       expect(pawn_white_55.valid_en_passant?(4, 6)).to eq(true)
     end
   end
