@@ -13,10 +13,6 @@ class Game < ApplicationRecord
     [white_player, black_player].compact
   end
 
-  def drawing_player!
-    update(outcome: "draw")
-  end
-
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
   end
@@ -144,6 +140,7 @@ class Game < ApplicationRecord
     ##for attributing players with draw, and for index and display. 
     update(outcome: 'draw')
     update(finished: Time.now)
+  end
 
   def end_game_forfeit(player)
     winning_player = player == white_player ? black_player : white_player
