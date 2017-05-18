@@ -2,7 +2,7 @@ class Game < ApplicationRecord
   has_many :pieces
   belongs_to :white_player, class_name: 'User', required: false
   belongs_to :black_player, class_name: 'User', required: false
-  belongs_to :winner, class_name: 'User', required: false
+  belongs_to :winning_player, class_name: 'User', required: false
 
   after_create :make_newboard
   validates :name, presence: true

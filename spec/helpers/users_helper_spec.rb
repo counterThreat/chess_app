@@ -17,7 +17,6 @@ RSpec.describe UsersHelper, type: :helper do
       expect(get_username(user.id)).to eq(user.username)
     end
   end
-  
   describe '#gravatar_for' do
     it 'generates an image tag' do
       user = create(:user)

@@ -76,14 +76,14 @@ RSpec.describe GamesController, type: :controller do
       sign_in create(:user)
       put :forfeit, params: { id: game }
       expect(response).to have_http_status(:unauthorized)
-      expect(game.reload.winner).to be_nil
+      expect(game.reload.winning_player_id).to be_nil
     end
 
     it 'requires that user be signed in' do
       game = create(:game_player_associations)
       put :forfeit, params: { id: game }
       expect(response).to redirect_to new_user_session_path
-      expect(game.reload.winner).to be_nil
+      expect(game.reload.winning_player_id).to be_nil
     end
   end
 end

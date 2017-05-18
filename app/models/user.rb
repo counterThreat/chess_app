@@ -25,7 +25,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
 
   def win_count
-    games.where(winner: self).count
+    games.where(winning_player: self).count
   end
 
   def user_data

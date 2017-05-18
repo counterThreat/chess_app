@@ -12,7 +12,6 @@ RSpec.describe User, type: :model do
       expect(game.black_player.games).to include game
     end
   end
-  
   describe '#user_data' do
     it 'returns correct user data' do
       user = create(:user)
