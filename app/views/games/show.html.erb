@@ -39,8 +39,17 @@
       <!-- TURN STATUS -->
       <div class="game-status"><br>
         <div class="turn-status">
-          <h4 class="turn-notice">Turn Status</h4>
-          <p><span class="turn"><%= @game.player_turn %></span></p>
+          <% if @game.outcome %>
+            <div class="game-winner">
+              Winner: <%= get_username(@game.winning_player_id) %>
+            </div>
+            <div class="game-end">
+              <%= @game.outcome %>
+            </div>
+          <% else %>
+            <h4 class="turn-notice">Turn Status</h4>
+            <p><span class="turn"><%= @game.player_turn %></span></p>
+          <% end %>
         </div>
       </div>
       <!-- USER STATS -->
@@ -99,7 +108,7 @@
 <!-- FORMER GAMES.JS FILE -->
 
 <script>
-  
+
 $( document ).ready(function(){
   $('.alert-notice').fadeOut(4000);
 });
@@ -134,7 +143,7 @@ function setBoard(){
     // puts pieces on the board
     data.forEach(appendPieceToSquare);
 
-    dragDropPiece();
+    canMove();
     gameTurn();
 
   });
@@ -161,9 +170,9 @@ function handleDrag(event, ui){
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
   var user = chess_piece.attr('data-user-id');
-  
+
   var url = window.location.href + '/pieces/' + piece_id;
-  
+
   $.ajax({
     url: url,
     type: 'PUT',
@@ -179,6 +188,13 @@ function handleDrag(event, ui){
       }
     }
   });
+}
+
+function canMove() {
+  var outcome = $('.outcome').data('outcome');
+  if ( outcome === "" || outcome === null || outcome === undefined) {
+    dragDropPiece();
+  }
 }
 
 function dragDropPiece(){
