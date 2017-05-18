@@ -62,7 +62,7 @@ class GamesController < ApplicationController
   end
 
   def forfeit
-    current_game.forfeiting_player!(current_user)
+    current_game.end_game_forfeit(current_user)
     redirect_to games_path, alert: 'You forfeited the game.'
   end
 

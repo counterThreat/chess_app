@@ -227,7 +227,7 @@ RSpec.describe Game, type: :model do
       black_player = create(:user)
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
       game.player_turn = 'white'
-      game.forfeiting_player!(white_player) # calls end_game_forfeit method directly
+      game.end_game_forfeit(white_player)
       expect(game.winning_player_id).to eq black_player.id
       expect(game.outcome).to eq 'forfeit'
       expect(game.finished.utc).to be_within(1.second).of Time.now

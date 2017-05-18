@@ -13,16 +13,6 @@ class Game < ApplicationRecord
     [white_player, black_player].compact
   end
 
-  def forfeiting_player!(player)
-    winner = if player == white_player
-               black_player
-             else
-               white_player
-             end
-    update(winner: winner)
-    end_game_forfeit
-  end
-
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
   end
@@ -145,8 +135,8 @@ class Game < ApplicationRecord
     update(finished: Time.now)
   end
 
-  def end_game_forfeit
-    winning_player = player_turn == 'white' ? black_player : white_player
+  def end_game_forfeit(player)
+    winning_player = player == white_player ? black_player : white_player
     update(winning_player_id: winning_player.id)
     update(outcome: 'forfeit')
     update(finished: Time.now)
