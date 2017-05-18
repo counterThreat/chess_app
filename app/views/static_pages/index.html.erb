@@ -22,7 +22,7 @@
       <h4>Ready to Play?</h4>
       <% if user_signed_in? %>
       
-        <p>Welcome <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+        <p>Welcome <%= link_to "#{current_user.username}", current_user %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
         
       <!-- new game  -->
       <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
@@ -40,7 +40,7 @@
       <div class="row" style="text-align:center">
         <h4>The Architects of CounterThreat</h4>
         <br>
-        <p><a href="www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
+        <p><a href="http://www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
         <p>Haley Mnatzaganian @<a href="https://github.com/haleymnatz">github</a></p>
         <p>Lindsay Dages @<a href="https://github.com/lnzd17">github</a></p>
         <p>David Michael Pena @<a href="https://github.com/DavidMichaelPena">github</a></p>

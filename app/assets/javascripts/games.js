@@ -164,8 +164,10 @@ function showNewPlayer(){
 
 
 $( document ).ready(function(){
-  setBoard();
-  showMove();
-  showNewPlayer();
-  newPlayer();
+ // if (window.location.pathname == '/games/:id') {
+    setBoard();
+    showMove();
+    showNewPlayer();
+    newPlayer();
+ // }
 });

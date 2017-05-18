@@ -1,0 +1,8 @@
+<div class="container-fluid" id="user-profile">
+  <h2><%= current_user.username %></h2>
+  <br>
+  <%= gravatar_for current_user %>
+  <h4>player stats</h4>
+  <br>
+<p>Edit account info: <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+</div>
