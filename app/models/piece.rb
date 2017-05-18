@@ -14,11 +14,7 @@ class Piece < ApplicationRecord
   end
 
   def on_board?
-    if x_position >= 1 && x_position <= 8 && y_position >= 1 && y_position <= 8
-      true
-    else
-      false
-    end
+    x_position >= 1 && x_position <= 8 && y_position >= 1 && y_position <= 8
   end
 
   def move(x_new, y_new)
@@ -26,25 +22,20 @@ class Piece < ApplicationRecord
       Piece.transaction do
         attack!(x_new, y_new)
         update!(x_position: x_new, y_position: y_new, move_num: move_num + 1)
-        # reload
         if game.check == color
           raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
         end
       end
       game.next_turn
-      game.reload
-      game.end_game_checkmate && pusher_game_end if game.checkmate
-      game.end_game_stalemate && pusher_game_end if game.stalemate
-    else
-      # puts 'Move is not allowed!' # can change this to be a flash method
-      return
     end
   end
 
   def pusher_game_end
-    #  Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
-    #    message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
-    #  })
+    unless Rails.env == 'test'
+      Pusher.trigger("end-channel-#{game.id}", 'game-finished', {
+        message: "#{game.player_turn} has lost the game in a #{game.outcome}!"
+      })
+    end
   end
 
   def obstructed?(x_new, y_new) # Integrate with color

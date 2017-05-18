@@ -65,9 +65,6 @@ class Game < ApplicationRecord
   def self.with_one_player
     where(black_player_id: nil)
   end
-  # from here first thing to do is create method for player joining a free game
-  # where white player is already present so we need a JOIN method that focuses
-  # on the black player since the game is created with the white player
 
   def check
     pieces.reload
