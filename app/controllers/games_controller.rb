@@ -62,7 +62,7 @@ class GamesController < ApplicationController
   end
 
   def draw
-    current_game.drawing_player!
+    current_game.end_game_draw(current_user)
     redirect_to games_path, alert: 'The game has been drawn.'
   end
 

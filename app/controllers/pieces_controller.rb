@@ -33,6 +33,7 @@ class PiecesController < ApplicationController
     game.reload
     game.end_game_checkmate && current_piece.pusher_game_end if game.checkmate
     game.end_game_stalemate && current_piece.pusher_game_end if game.stalemate
+    #game.end_game_draw && current_piece.pusher_game_end if game.draw
     unless Rails.env == 'test'
       Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
         message: 'A piece has been moved'

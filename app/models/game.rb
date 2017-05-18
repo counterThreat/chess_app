@@ -140,6 +140,8 @@ class Game < ApplicationRecord
   end
 
   def end_game_draw(player)
+    #another game string column might be needed and could be useful 
+    ##for attributing players with draw, and for index and display. 
     update(outcome: 'draw')
     update(finished: Time.now)
 
