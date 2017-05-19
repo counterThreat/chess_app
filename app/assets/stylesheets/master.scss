@@ -1,5 +1,32 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
+
+p {
+ font-family: 'Roboto', sans-serif !important;
+}
+
+a, h1, h2, h3, h4, #profile-header, b {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+}
+
+html, body {
+  background-color: #F1F1F1 !important;
+}
+
+#full-row {
+  background-color: #fff !important;
+  padding-bottom: 30px;
+}
+
+#profile-header {
+  font-size: 18px;
+  color: #000;
+  font-weight: 500;
+}
 
 .clr {
   clear:both;
@@ -175,6 +202,19 @@ hr {
   }
 }
 
+h4 {
+  font-size: 23px !important;
+  //line-spacing: 18px !important;
+  font-weight: 600 !important;
+  letter-spacing: 14px;
+  ///text-transform: uppercase !important;
+  color: #333333 !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Roboto Mono', monospace;
+  padding-bottom: 8px;
+}
+
 .players {
   width: auto;
 }
@@ -212,15 +252,6 @@ tr:nth-child(even) td:nth-child(odd) {
 		opacity: 0.3;
 }
 
-//td:active{
-//  background-color:lightblue;
-//}
-
-//tr:nth-child(odd) td:nth-child(even):active,
-//tr:nth-child(even) td:nth-child(odd):active {
-//  background: lightblue;
-//}
-
 .btn {
   padding: 10px;
   margin: 10px;
@@ -228,7 +259,6 @@ tr:nth-child(even) td:nth-child(odd) {
 
 a {
   text-decoration: none !important;
-  //color: inherit !important;
 }
 
 ul {
@@ -256,11 +286,11 @@ ul {
   -webkit-border-radius: 30;
   -moz-border-radius: 30;
   border-radius: 30px;
-  font-family: Arial;
-  color: #004dff;
+  font-family: 'Roboto Mono', monospace;
+  color: #333333;
   font-size: 18px;
   padding: 11px 20px 10px 20px;
-  border: solid #004dff 3px;
+  border: solid #333333 3px;
   text-decoration: none;
   background: #fff;
   float:right;
@@ -299,11 +329,8 @@ p {
   padding-left:0;
   margin-left:0;
   position:relative;
-  //display:inline;
-  //float:left;
   margin-right: 0;
   padding-right: 0;
-  //clear:both;
 }
 
 #prof-data {
@@ -313,17 +340,24 @@ p {
   padding-left: 0;
   clear:both;
   margin-left: 3px;
-  //min-width: 100%;
 }
 
 .architects {
   clear: both !important;
   padding-top: 10px;
+  p, a {
+    font-weight: 600;
+    color: inherit;
+  }
 }
 
 .user-profile {
   float:left !important;
   width: 150px;
+  small, a, b {
+        font-weight: 600;
+    color: inherit;
+  }
 }
 
 #readyplay {
@@ -333,7 +367,6 @@ p {
   max-width: 325px;
   padding-right: 0;
   margin-right: 25px;
-  //margin-left: 20px;
 }
 
 .play-rights {
@@ -349,11 +382,41 @@ p {
 }
 
 #info-text {
-  font-size: 19px;
+  font-size: 25px;
   text-align: justify;
-  margin-right: 40px;
+  margin-right: 5px;
 }
 
 #app-info {
   margin-left: 25px;
+}
+
+#logo {
+  font-size: 48px;
+  padding-top: 5px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+#bobby-fischer {
+  width: 225px;
+  padding-bottom: 5px;
+  float: left;
+  margin-right: 20px;
+}
+
+.definition {
+  width: 225px;
+  text-align: right;
+  padding-right: 10px;
+  padding-bottom: 3px;
+  padding-top: 0;
+}
+
+.right {
+  //background-color: rgba(186, 204, 239, 0.4);
+  background-color: rgba(181, 184, 191, 0.5);
+  padding: 6px;
+  border: solid #333333 2px;
 }

@@ -1,12 +1,20 @@
+<div class="definition pull-right">
+  <b>
+  coun·ter threat
+  </b>
+  <p>
+    ˈkoun(t)ər/-THret/ˈ
+  </p>
+</div>
 <div class="container-fluid">
   <!-- LEFT HOMEPAGE -->
-  <div class="row">
+  <div class="row" id="full-row">
     <div class="col-sm-7 col-sm-offset-1" id="app-info">
       <!-- APP DESCRIPTION -->
       <div class="row">
       <h4>What is Counter Threat?</h4>
-        <%= image_tag ("logo.png"), :class => 'img-responsive' %>
-      <br>
+        <!-- bobby fischer -->
+        <%= image_tag ("bobby.jpg"), :id => 'bobby-fischer' %> 
         <p id="info-text">Counter Threat Chess is a fullstack web application that allows users to play one another in fully-functional, live-updating games of chess. Gameplay is completely rule-enforced whether you're a beginner at chess or a grandmaster. Enjoy!</p>
       </div>
       <!-- USER RANKINGS -->
@@ -18,10 +26,9 @@
 
     <!-- RIGHT SIDEBAR -->
     <div class="col-sm-3 col-sm-1" id="readyplay">
-      <div class="row" >
-        <!-- bobby fischer -->
-        <%= image_tag ("bobby.jpg"), :class => 'img-responsive' %> 
-        <br>
+      <div class="row right" >
+        <h4 style="text-align:center">Match Portal</h4>
+
         <% if user_signed_in? %>
 
         <div class="active-side">
@@ -30,7 +37,7 @@
           <div class="user-profile">
 
               <!-- username block -->
-              <p style="text-align:left;font-size:17px">@<b><%= current_user.username %></b></p>
+              <p id="profile-header" style="text-align:left;font-size:17px">@<b><%= current_user.username %></b></p>
 
               <!-- user avatar -->
               <%= gravatar_for current_user, :class => "img-responsive", :id => "gravatar" %>
@@ -61,7 +68,7 @@
         <% else %>
         
         <!-- sign up if you're not a member -->
-        <p>Welcome! Sign up here to get started:
+        <p id="profile-header">Welcome! Sign up here to get started:
         <%= link_to 'Sign Up', new_user_registration_path %>
         </p>
         
@@ -70,14 +77,13 @@
       
       <!-- CREATOR CREDITS -->
       
-      <div class="row architects" style="text-align:right;padding-right:10px;">
-        <h4 style="text-align:right !important">The Architects of CounterThreat</h4>
-        <br>
-        <p><a href="http://www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
-        <p><a href="http://haleymnatzaganian.getforge.io/">Haley Mnatzaganian</a> @<a href="https://github.com/haleymnatz">github</a></p>
-        <p>Lindsay Dages @<a href="https://github.com/lnzd17">github</a></p>
-        <p>David Michael Pena @<a href="https://github.com/DavidMichaelPena">github</a></p>
-        <p>Anna C @<a href="https://github.com/canelasa">github</a></p>
+      <div class="row architects right" style="text-align:center;padding-right:10px;">
+        <h4 style="text-align:center">The Architects</h4>
+        <p><a href="http://www.kathleenfrench.co"><b>Kathleen French</b></a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
+        <p><a href="http://haleymnatzaganian.getforge.io/"><b>Haley Mnatzaganian</b></a> @<a href="https://github.com/haleymnatz">github</a></p>
+        <p><b>Lindsay Dages </b>@<a href="https://github.com/lnzd17">github</a></p>
+        <p><b>David Michael Pena </b>@<a href="https://github.com/DavidMichaelPena">github</a></p>
+        <p><b>Anna C </b>@<a href="https://github.com/canelasa">github</a></p>
         <p>Mentored by: Abe Polishchuk</p>
       </div>
     </div>
