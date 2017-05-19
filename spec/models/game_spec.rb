@@ -204,7 +204,7 @@ RSpec.describe Game, type: :model do
       expect(user3.reload.games_played).to eq 11
     end
   end
-  
+
   describe 'game_played!' do
     it 'increments games_played when game ends for white' do
       white_player = create(:user)
@@ -214,7 +214,7 @@ RSpec.describe Game, type: :model do
       white_player.reload
       expect(white_player.games_played).to eq(1)
     end
-    
+
     it 'increments games_played when game ends for black' do
       white_player = create(:user)
       black_player = create(:user)
@@ -224,8 +224,8 @@ RSpec.describe Game, type: :model do
       expect(black_player.games_played).to eq(1)
     end
   end
-  
-  describe 'update_elo!' do 
+
+  describe 'update_elo!' do
     it 'if white player rating is 0 and wins increase elo rating' do
       white_player = create(:user)
       black_player = create(:user)
@@ -234,7 +234,7 @@ RSpec.describe Game, type: :model do
       white_player.reload
       expect(white_player.rating).to eq(1516)
     end
-    
+
     it 'if black player rating is not 0 and loses, decrease elo rating' do
       white_player = create(:user)
       black_player = create(:user)

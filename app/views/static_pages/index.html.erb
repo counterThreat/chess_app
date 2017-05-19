@@ -8,40 +8,20 @@
         <!-- bobby fischer -->
         <%= image_tag ("bobby.jpg"), :id => 'bobby-fischer' %> 
         <p id="info-text">Counter Threat Chess is a fullstack web application that allows users to play one another in fully-functional, live-updating chess matches.
-        <br><br>
+        <br><br>       
+        <%= image_tag ("cat_chess.gif"), :id => 'cat' %>
         Gameplay is completely rule-enforced, so whether you're a beginner at chess or a grandmaster Counter Threat is equipped to handle it. Keep track of your <a href="https://en.wikipedia.org/wiki/Elo_rating_system">Elo rating</a> against other players across the app, and share your successes.<br><br>
           
         Most of all, have fun!</p>
       </div>
       <!-- USER RANKINGS -->
       <div class="row rankings"><br>
-        <h4>PLAYER RESOURCES</h4><br>
-        <ul class="resources" id="resources">
-          <li style="padding-top: 10px"> 
-            <p><a style="font-size: 20px" href="https://www.reddit.com/r/chess">r/chess</a></p>
-          </li>
-          <li style="padding-top: 10px">
-            <p><a style="font-size: 20px"href="https://www.reddit.com/r/chess/comments/i3leh/chess_ressources_on_youtube/">Chess YouTubers</a></p>
-          </li>
-          <li style="padding-top: 10px">
-            <p><a style="font-size: 20px" href="https://discordapp.com/invite/4VwJ3mb">Chess Discord Channel</a></p>
-          </li>
-          <li style="padding-top: 10px">
-            <p><a style="font-size: 20px" href="http://webchat.freenode.net/?channels=chess">Chess IRC Channel</a></p>
-          </li>
-          <li style="padding-top: 10px">
-            <p>
-              <a style="font-size: 20px" href="https://www.chesscademy.com/">Chessacademy</a>
-            </p>
-          </li>
-        </ul>
         <div class="ranking">
           <% @top_users.each do |rank| %>
             <%= rank.username %>
             <%= rank.rating %>
           <% end %>
         </div>
-        <%= image_tag ("cat_chess.gif"), :class => 'img-responsive', :id => 'cat' %>
       </div>
     </div>
 
@@ -119,6 +99,28 @@
         <h4 style="text-align:center;margin-bottom:5px">Invite Friends To Play</h4>
           <button class="invitation-button" onclick="copyToClipboard('#invitation-link')">Copy Invitation Link to Clipboard</button>
           <a id="invitation-link" href="http://www.firehose-chess-app.herokuapp.com">http://www.firehose-chess-app.herokuapp.com</a>
+      </div>
+      <div class="row resources right" style="text-align:center;padding-right:10px;">
+        <h4 style="text-align:center;margin-bottom:5px">Player Resources</h4>
+          <ul class="resources" id="resources">
+            <li style="padding-top: 10px"> 
+              <p><a style="font-size: 20px" href="https://www.reddit.com/r/chess">r/chess</a></p>
+            </li>
+            <li style="padding-top: 10px">
+              <p><a style="font-size: 20px"href="https://www.reddit.com/r/chess/comments/i3leh/chess_ressources_on_youtube/">Chess YouTubers</a></p>
+            </li>
+            <li style="padding-top: 10px">
+              <p><a style="font-size: 20px" href="https://discordapp.com/invite/4VwJ3mb">Chess Discord Channel</a></p>
+            </li>
+            <li style="padding-top: 10px">
+              <p><a style="font-size: 20px" href="http://webchat.freenode.net/?channels=chess">Chess IRC Channel</a></p>
+            </li>
+            <li style="padding-top: 10px">
+              <p>
+                <a style="font-size: 20px" href="https://www.chesscademy.com/">Chessacademy</a>
+              </p>
+            </li>
+          </ul>
       </div>
     </div>
   </div>

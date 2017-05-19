@@ -29,7 +29,7 @@ class Game < ApplicationRecord
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
   end
-  
+
   def make_newboard
   # create and place white pieces
     (1..8).each do |i|
@@ -134,15 +134,15 @@ class Game < ApplicationRecord
       update(player_turn: 'white')
     end
   end
-  
+
   def winner(player_turn)
     player_turn == 'white' ? black_player : white_player
   end
-  
+
   def game_played!
     white_player.increment!(:games_played)
     black_player.increment!(:games_played)
-    if winning_player_id 
+    if winning_player_id
       User.find(winning_player_id).increment!(:wins)
     end
   end
