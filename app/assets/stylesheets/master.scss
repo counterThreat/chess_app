@@ -258,7 +258,7 @@ ul {
   border-radius: 30px;
   font-family: Arial;
   color: #004dff;
-  font-size: 22px;
+  font-size: 18px;
   padding: 11px 20px 10px 20px;
   border: solid #004dff 3px;
   text-decoration: none;
@@ -267,6 +267,7 @@ ul {
   margin-right: 3px;
   margin-top: 4px;
   clear:both;
+  display: inline;
 }
 
 .button:hover {
@@ -312,10 +313,10 @@ p {
 #prof-data {
   float:right;
   text-align:right;
-  padding-right:10px;
+  padding-right:3px;
   padding-left: 0;
   clear:both;
-  margin-left: 10px;
+  margin-left: 3px;
   //min-width: 100%;
 }
 
@@ -325,16 +326,29 @@ p {
 }
 
 .user-profile {
-  float:right;
-  min-width: 100%;
-  position: center;
+  float:left !important;
+  width: 150px;
 }
 
 .readyplay {
   float:right;
-  max-width: 28%;
+  width: 315px;
+  min-width: 310px;
+  max-width: 325px;
 }
 
 app-info {
   margin-right: 50px;
+}
+
+.play-rights {
+  float: right;
+}
+
+.active-side {
+  display: inline;
+}
+
+.play-buttons {
+  float:right;
 }
