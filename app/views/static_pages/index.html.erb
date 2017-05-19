@@ -40,17 +40,17 @@
               <p id="profile-header" style="text-align:left;font-size:17px">@<b><%= current_user.username %></b></p>
 
               <!-- user avatar -->
-              <%= gravatar_for current_user, :class => "img-responsive", :id => "gravatar" %>
+              <a href="http://en.gravatar.com/"><%= gravatar_for current_user, :class => "img-responsive", :id => "gravatar" %></a>
 
               <!-- profile info -->
               <ul id="prof-data">
-                <li><p><b>Wins: </b><%= current_user.win_count %></p></li>
-                <li><p><b>Rank: </b>#</p></li>
+                <li><p><b>WINS: </b><%= current_user.win_count %></p></li>
+                <li><p><b>RANK: </b>#</p></li>
               </ul> 
 
               <!-- sign out if not you -->
               <small style="display:inline">
-                Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %>
+                <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete, :class => 'sign-out-button'  %>
               </small>
             </div>
 
@@ -59,7 +59,9 @@
             <!-- new game  -->
             <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
             <!-- open games -->
-            <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
+            <%= button_to('Open Games', games_path(@game), :class=> 'button', method: 'get') %>
+            <!-- my games -->
+            <%= button_to('My Games', games_path(@game), :class=> 'button', method: 'get') %>
           </div>
         </div>
 

@@ -20,6 +20,7 @@ html, body {
 #full-row {
   background-color: #fff !important;
   padding-bottom: 30px;
+  padding-top: 20px;
 }
 
 #profile-header {
@@ -292,21 +293,44 @@ h5{
 }
 
 .button {
-  -webkit-border-radius: 30;
-  -moz-border-radius: 30;
-  border-radius: 30px;
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 20px;
   font-family: 'Roboto Mono', monospace;
   color: #333333;
-  font-size: 18px;
-  padding: 11px 20px 10px 20px;
+  font-size-adjust: auto;
+  padding: 8px 12px 12px 20px;
   border: solid #333333 3px;
   text-decoration: none;
   background: #fff;
   float:right;
   margin-right: 3px;
   margin-top: 4px;
-  clear:both;
   display: inline;
+  width: 120px;
+  text-align: center;
+}
+
+.sign-out-button {
+  border-radius: 10px;
+  font-family: 'Roboto Mono', monospace;
+  color: #333333;
+  font-size-adjust: auto;
+  padding: 5px 5px 5px 5px;
+  border: solid #333333 3px;
+  text-decoration: none;
+  background: #fff;
+  float:left;
+  margin-right: 3px;
+  margin-top: 4px;
+  display: inline;
+  width: 80px;
+  text-align: center;
+}
+
+.sign-out-button:hover {
+  background: #e4e6eb;
+  text-decoration: none;
 }
 
 .button:hover {
@@ -362,11 +386,13 @@ p {
 
 .user-profile {
   float:left !important;
-  width: 150px;
+  width: 160px;
   small, a, b {
-        font-weight: 600;
     color: inherit;
   }
+  padding-left: 5px;
+    padding-bottom: 10px;
+
 }
 
 #readyplay {
@@ -388,12 +414,13 @@ p {
 
 .play-buttons {
   float:right;
+  padding-bottom: 10px;
 }
 
 #info-text {
   font-size: 25px;
   text-align: justify;
-  margin-right: 5px;
+  margin-right: 0;
 }
 
 #app-info {
