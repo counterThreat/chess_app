@@ -279,10 +279,6 @@ p {
   font-size: 15px;
 }
 
-.about-app {
-  padding-right: 30px;
-}
-
 .turn {
   font-size: 18px;
   text-transform: uppercase;
@@ -330,15 +326,14 @@ p {
   width: 150px;
 }
 
-.readyplay {
+#readyplay {
   float:right;
   width: 315px;
   min-width: 310px;
   max-width: 325px;
-}
-
-app-info {
-  margin-right: 50px;
+  padding-right: 0;
+  margin-right: 25px;
+  //margin-left: 20px;
 }
 
 .play-rights {
