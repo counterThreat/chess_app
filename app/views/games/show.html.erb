@@ -15,9 +15,9 @@
     <div class="col-sm-3">
       <!-- PLAYER LABELS -->
       <div class="players">
-        <h4 style="text-align: center"><%= @game.name %></h4>
-        <h4 class="alignleft player">White Player: <%= get_username(@game.white_player_id)%></h4>
-        <h4 class="alignleft player">Black Player: <span id='blackPlayer'></span></h4>
+        <h4 id="game-name" style="text-align: center"><%= @game.name %></h4>
+        <h5 class="alignleft player">White Player: <br><span id="whitePlayer"><%= get_username(@game.white_player_id)%></span></h5>
+        <h5 class="alignleft player">Black Player: <br><span id='blackPlayer'></span></h5>
       </div>
       <!-- BUTTON TOOLBAR -->
       <div class="btn-toolbar">

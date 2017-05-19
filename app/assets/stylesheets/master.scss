@@ -235,6 +235,10 @@ table {
   border: 2px solid black;
 }
 
+#blackPlayer, #whitePlayer {
+  font-size: 14px;
+}
+
 td {
   width: 80px;
   height: 80px;
@@ -279,7 +283,12 @@ ul {
   border-radius: .25rem;
   text-align: center;
   padding: 10px;
+  min-width: 210px;
   max-width: 210px;
+}
+
+h5{
+  font-size: 18px;
 }
 
 .button {
@@ -419,4 +428,15 @@ p {
   background-color: rgba(181, 184, 191, 0.5);
   padding: 6px;
   border: solid #333333 2px;
+}
+
+#game-name {
+  background-color: rgba(181, 184, 191, 0.5);
+  border: 1px solid #333333;
+  color: #31708f;
+  border-radius: .25rem;
+  text-align: center;
+  padding: 10px;
+  min-width: 210px;
+  max-width: 210px;
 }
