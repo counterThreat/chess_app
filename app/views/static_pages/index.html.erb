@@ -61,7 +61,7 @@
             <!-- open games -->
             <%= button_to('Open Games', games_path(@game), :class=> 'button', method: 'get') %>
             <!-- my games -->
-            <%= button_to('My Games', games_path(@game), :class=> 'button', method: 'get') %>
+            <%= button_to('My Games', current_user, :class=> 'button', method: 'get') %>
           </div>
         </div>
 
