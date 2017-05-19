@@ -37,10 +37,7 @@ class PiecesController < ApplicationController
       Pusher.trigger("game-channel-#{game.id}", 'piece-moved', {
         message: 'A piece has been moved'
       })
-
-      Pusher.trigger("game-channel-#{game.id}", 'current-turn', {
-        message: "It is #{current_piece.color}'s move."
-      })
+      
     end
     render json: current_piece.game.pieces
   end
