@@ -1,6 +1,10 @@
 <h1>My Games</h1><br>
-
+<h4>Game List: <%= current_user.username %></h4> 
 <% current_user.games.each do |game| %>
+
+<% if !current_user.rating.nil? %>
+<p>User Rating: <%= current_user.rating %></p>
+<% end %>
 
   <ul class="list-group">
   <% if Game.active_games.include?(game) %>
@@ -49,12 +53,15 @@
     </li><br>
   <% else %>
       
-    <li class="row list-group-item">
-      <div class="col-sm-3">
-        <%= game.name %> - Outcome: <%= game.outcome %>
+    <li class="row list-group-item"> 
+    <div class="col-sm-3">
+        <p><b>GAME: </b><%= game.name %></p>
       </div>
-    </li><br>
-
+      
+      <div class="col-sm-4">
+        <p><b>OUTCOME: </b><%= game.outcome %></p>
+      </div>
+    </li>
   <% end %>
 
 <% end %>

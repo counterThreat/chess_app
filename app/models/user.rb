@@ -49,6 +49,20 @@ class User < ApplicationRecord
     "https://secure.gravatar.com/avatar/#{gravatar_id}?s=75"
   end
 
+  def elo_ranking!(self_elo, opponent_elo, winning_player_id)
+    player_win_chance = 1 / (1 + 10**((opponent_elo - self_elo) / 400)).to_f
+    player_outcome = self == winning_player_id ? 1 : 0
+    new_elo = (self_elo + 32 * (player_outcome - player_win_chance)).ceil
+  end
+
+  def loss_count
+    loss = games.where(outcome: 'checkmate').count + games.where(outcome: 'forfeit').count
+  end
+
+  def draw_count
+    draw = games.where(outcome: 'draw').count
+  end
+
   # validates :username,
   #           presence: true,
   #           uniqueness: {

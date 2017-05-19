@@ -8,19 +8,28 @@ class Game < ApplicationRecord
   validates :name, presence: true
 
   scope :active_games, (-> { where(winning_player: nil) })
-  
+
   def players
     [white_player, black_player].compact
   end
 
   def drawing_player!
     update(outcome: "draw")
+    game_played!
+    update_elo!(player_turn)
+  end
+
+  def update_elo!(player_turn)
+    white_elo = white_player.rating
+    black_elo = black_player.rating
+    white_player.elo_ranking!(white_elo, black_elo, winner(player_turn))
+    black_player.elo_ranking!(black_elo, white_elo, winner(player_turn))
   end
 
   def find_piece(x_position, y_position)
     pieces.find_by(x_position: x_position, y_position: y_position)
   end
-
+  
   def make_newboard
   # create and place white pieces
     (1..8).each do |i|
@@ -125,18 +134,37 @@ class Game < ApplicationRecord
       update(player_turn: 'white')
     end
   end
+  
+  def winner(player_turn)
+    player_turn == 'white' ? black_player : white_player
+  end
+  
+  def game_played!
+    white_player.increment!(:games_played)
+    black_player.increment!(:games_played)
+    if winning_player_id 
+      User.find(winning_player_id).increment!(:wins)
+    end
+  end
 
   def end_game_checkmate
+    puts "player turn #{player_turn}"
     winning_player_color = player_turn == 'white' ? 'black' : 'white'
-    winning_id = pieces.find_by(type: 'King', color: winning_player_color).user_id
+    puts "winning player color #{winning_player_color}"
+    winning_id = winning_player_color == 'white' ? white_player_id : black_player_id
+    puts "winning id #{winning_id}"
     update(winning_player_id: winning_id)
     update(outcome: 'checkmate')
     update(finished: Time.now)
+    game_played!
+    update_elo!(player_turn)
   end
 
   def end_game_stalemate
     update(outcome: 'stalemate')
     update(finished: Time.now)
+    game_played!
+    update_elo!(player_turn)
   end
 
   def end_game_forfeit(player)
@@ -144,5 +172,7 @@ class Game < ApplicationRecord
     update(winning_player_id: winning_player.id)
     update(outcome: 'forfeit')
     update(finished: Time.now)
+    game_played!
+    update_elo!(player_turn)
   end
 end

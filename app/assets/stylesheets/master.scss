@@ -311,6 +311,25 @@ h5{
   text-align: center;
 }
 
+.invitation-button {
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 20px;
+  font-family: 'Roboto Mono', monospace;
+  color: #333333;
+  font-size-adjust: auto;
+  padding: 8px 12px 12px 20px;
+  border: solid #333333 3px;
+  text-decoration: none;
+  background: #fff;
+  float:center;
+  margin-right: 3px;
+  margin-top: 18px;
+  //display: inline;
+  width: 200px;
+  text-align: center;
+}
+
 .sign-out-button {
   border-radius: 10px;
   font-family: 'Roboto Mono', monospace;
@@ -326,6 +345,22 @@ h5{
   display: inline;
   width: 80px;
   text-align: center;
+}
+
+.user-stats, ul.black-stats, ul.white-stats {
+  text-align: left;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+#player-headers {
+  text-transform: uppercase;
+  font-size: 19px;
+}
+
+.black-stats, .white-stats, li {
+  margin-left: 0;
+  text-align: left;
 }
 
 .sign-out-button:hover {
@@ -368,13 +403,44 @@ p {
 
 #prof-data {
   float:right;
-  text-align:right;
+  text-align:left;
   padding-right:3px;
   padding-left: 0;
   clear:both;
-  margin-left: 3px;
+  margin-left: 0;
 }
 
+.tooltip {
+    border-bottom: 1px dotted #0077AA;
+    cursor: help;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+ 
 .architects {
   clear: both !important;
   padding-top: 10px;
@@ -382,6 +448,26 @@ p {
     font-weight: 600;
     color: inherit;
   }
+}
+
+ul#resources {
+  margin-left: 0;
+  padding-left: 0;
+  float: left;
+}
+
+#cat {
+  float: right;
+}
+
+.textBox{
+  height:30px;
+  width:300px;
+  content: attr("#invitation-link");
+}
+
+#invitation-link {
+  visibility: hidden;
 }
 
 .user-profile {

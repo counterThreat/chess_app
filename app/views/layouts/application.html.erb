@@ -8,8 +8,9 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="611415831324-6racf1ta4f1ska6ns5eeupo0k3f84ves.apps.googleusercontent.com">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-
+        
+    <%= yield :header %>
+    
   </head>
 
   <body data-rails-env="<%= Rails.env %>">
@@ -33,12 +34,21 @@
                      <li><%= link_to 'Sign In', new_user_session_path %></li>
                      <li><%= link_to 'Sign Up', new_user_registration_path %></li>
                      <% else %>
+                     <li><%= link_to 'My Games', current_user %></li>
                      <li><%= link_to 'Account', edit_user_registration_path %></li>
                      <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
                    <% end %>
                  </ul>
                  <div class="navbar-right">
                    <h1 id="logo"><%= link_to 'Counter Threat', root_path %></h1>
+                   <div class="definition pull-right">
+  <b>
+  coun·ter threat
+  </b>
+  <p>
+    ˈkoun(t)ər/-THret/ˈ
+  </p>
+</div>
                  </div>
                </div>
              </div>

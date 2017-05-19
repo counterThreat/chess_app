@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518150442) do
+ActiveRecord::Schema.define(version: 20170519200642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,9 +65,13 @@ ActiveRecord::Schema.define(version: 20170518150442) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "games_played"
+    t.integer  "rating"
+    t.integer  "wins",                   default: 0
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["rating"], name: "index_users_on_rating", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
+    t.index ["wins"], name: "index_users_on_wins", using: :btree
   end
 
   add_foreign_key "games", "users", column: "winning_player_id"
