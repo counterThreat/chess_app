@@ -1,6 +1,4 @@
-<h1>my games</h1>
-
-<p><%= current_user.games.inspect %></p>
+<h1>My Games</h1><br>
 
 <% current_user.games.each do |game| %>
 
@@ -48,14 +46,14 @@
           <% end %>
         </div>
       </div>
-    </li>
+    </li><br>
   <% else %>
       
     <li class="row list-group-item">
       <div class="col-sm-3">
         <%= game.name %> - Outcome: <%= game.outcome %>
       </div>
-    </li>
+    </li><br>
 
   <% end %>
 
