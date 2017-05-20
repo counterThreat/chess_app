@@ -1,3 +1,27 @@
+<div class = "col-sm-5 animated slideInLeft" id = "whiteAttack"> &#9816; &#9817; &#9814; &#9817;</div>
+<div class = "col-sm-7 animated slideInRight" id ="blackAttack"> &#9819; &#9821; &#9823; &#9823; &#9823;</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script> 
+$("#blackAttack").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $('#blackAttack').removeClass("animated slideInRight");
+  $('#blackAttack').addClass("animated bounce");
+}); 
+
+$("#whiteAttack").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $('#whiteAttack').removeClass("animated slideInLeft");
+  $('#whiteAttack').addClass("animated wobble");
+
+});
+
+$("#whiteAttack").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $('#whiteAttack').removeClass("animated wobble");
+  $('#whiteAttack').addClass("animated hinge");
+
+});
+</script>
+
+
 <div class="container-fluid">
 
   <div class="row">
