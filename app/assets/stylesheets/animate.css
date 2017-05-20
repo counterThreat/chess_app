@@ -1,4 +1,4 @@
-@@charset "UTF-8";
+@charset "UTF-8";
 
 /*!
  * animate.css -http://daneden.me/animate
@@ -18,7 +18,10 @@
 }
 
 .animated.hinge {
-  animation-duration: 2s;
+  animation-duration: 3s;
+  -webkit-animation-delay: 3s;
+  text-align: right;
+  font-size: 70px;
 }
 
 .animated.flipOutX,
@@ -52,6 +55,10 @@
 .bounce {
   animation-name: bounce;
   transform-origin: center bottom;
+  -webkit-animation-delay: 1s;
+  -webkit-animation-iteration-count: 2;
+  text-align: left;
+  font-size: 70px;
 }
 
 @keyframes flash {
@@ -138,6 +145,7 @@
 
 .shake {
   animation-name: shake;
+  -webkit-animation-delay: 4s;
 }
 
 @keyframes headShake {
@@ -196,6 +204,7 @@
 .swing {
   transform-origin: top center;
   animation-name: swing;
+  -webkit-animation-delay: 5s;
 }
 
 @keyframes tada {
@@ -258,6 +267,11 @@
 
 .wobble {
   animation-name: wobble;
+  text-align: right;
+  font-size: 70px;
+  -webkit-animation-delay: 1s;
+  -webkit-animation-duration: 2s;
+  
 }
 
 @keyframes jello {
@@ -1218,6 +1232,9 @@
 
 .hinge {
   animation-name: hinge;
+  text-align: right;
+  font-size: 70px;
+  -webkit-animation-duration: 3s;
 }
 
 @keyframes jackInTheBox {
@@ -1462,6 +1479,8 @@
   from {
     transform: translate3d(0, -100%, 0);
     visibility: visible;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 3s;
   }
 
   to {
@@ -1486,6 +1505,9 @@
 
 .slideInLeft {
   animation-name: slideInLeft;
+  -webkit-animation-duration: 2s;
+  text-align: right;
+  font-size: 70px;
 }
 
 @keyframes slideInRight {
@@ -1501,6 +1523,10 @@
 
 .slideInRight {
   animation-name: slideInRight;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-delay: 1s;
+  text-align: left;
+  font-size: 70px;
 }
 
 @keyframes slideInUp {
@@ -1577,4 +1603,3 @@
 .slideOutUp {
   animation-name: slideOutUp;
 }
-
