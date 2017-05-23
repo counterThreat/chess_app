@@ -17,13 +17,13 @@
       <!-- USER RANKINGS -->
       <div class="row rankings"><br>
         <h4>What is Counter Threat?</h4>
-        <div class="container-fluid">
+        <div class="container-fluid" id="ranked">
           <table id="ranked">
             <% @top_users.each_with_index do |rank, index| %>
-              <% if index <= 10 %>
+              <% if index <= 6 %>
               <tr class="row">
                 <td><%= index + 1 %></td>
-                <td>User: <%= rank.username %></td>
+                <td><%= rank.username %></td>
                 <td>Rating: <%= rank.rating %></td>
               </tr>
               <% end %>
@@ -84,8 +84,8 @@
         <% else %>
         
         <!-- sign up if you're not a member -->
-        <p id="profile-header">Welcome! Sign up here to get started:
-        <%= link_to 'Sign Up', new_user_registration_path %>
+        <p style="text-align:center" id="profile-header">Welcome to Counter Threat!
+        <%= link_to 'Sign Up', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path %> if you're already a member!
         </p>
         
         <% end %>
