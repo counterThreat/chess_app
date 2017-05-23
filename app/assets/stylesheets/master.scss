@@ -257,6 +257,27 @@ tr:nth-child(even) td:nth-child(odd) {
 		opacity: 0.3;
 }
 
+#ranked {
+  max-width: 300px;
+  td {
+    //width: 80px;
+    height: 60px;
+    font-size: 27px;
+    text-align: left;
+  }
+  
+  table {
+    margin-left: 0;
+    //border-collapse: collapse;
+    border: 2px solid black;
+  }
+
+  tr:nth-child(odd) td:nth-child(even),
+  tr:nth-child(even) td:nth-child(odd) {
+    background: rgba(0,0,0, 0.5);
+  }
+}
+
 .btn {
   padding: 10px;
   margin: 10px;

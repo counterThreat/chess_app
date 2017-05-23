@@ -17,8 +17,8 @@
       <!-- USER RANKINGS -->
       <div class="row rankings"><br>
         <h4>What is Counter Threat?</h4>
-        <div class="container">
-          <table>
+        <div class="container-fluid">
+          <table id="ranked">
             <% @top_users.each_with_index do |rank, index| %>
               <% if index <= 10 %>
               <tr class="row">
@@ -32,17 +32,6 @@
         </div>
       </div>
     </div>
-    
-    <table class="chessboard">
-          <% (1..8).reverse_each do |column| %>
-          <tr class="row">
-          <% (1..8).each do |row| %>
-            <td class="square" id="<%=row%><%=column%>" data-x="<%=row%>" data-y="<%= column %>">
-            </td>
-          <% end %>
-            </tr>
-          <% end %>
-        </table>
 
     <!-- RIGHT SIDEBAR -->
     <div class="col-sm-3 col-sm-1" id="readyplay">
