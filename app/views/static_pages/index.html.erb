@@ -16,14 +16,33 @@
       </div>
       <!-- USER RANKINGS -->
       <div class="row rankings"><br>
-        <div class="ranking">
-          <% @top_users.each do |rank| %>
-            <%= rank.username %>
-            <%= rank.rating %>
-          <% end %>
+        <h4>What is Counter Threat?</h4>
+        <div class="container">
+          <table>
+            <% @top_users.each_with_index do |rank, index| %>
+              <% if index <= 10 %>
+              <tr class="row">
+                <td><%= index + 1 %></td>
+                <td>User: <%= rank.username %></td>
+                <td>Rating: <%= rank.rating %></td>
+              </tr>
+              <% end %>
+            <% end %>
+          </table>
         </div>
       </div>
     </div>
+    
+    <table class="chessboard">
+          <% (1..8).reverse_each do |column| %>
+          <tr class="row">
+          <% (1..8).each do |row| %>
+            <td class="square" id="<%=row%><%=column%>" data-x="<%=row%>" data-y="<%= column %>">
+            </td>
+          <% end %>
+            </tr>
+          <% end %>
+        </table>
 
     <!-- RIGHT SIDEBAR -->
     <div class="col-sm-3 col-sm-1" id="readyplay">
@@ -100,25 +119,25 @@
           <button class="invitation-button" onclick="copyToClipboard('#invitation-link')">Copy Invitation Link to Clipboard</button>
           <a id="invitation-link" href="http://www.firehose-chess-app.herokuapp.com">http://www.firehose-chess-app.herokuapp.com</a>
       </div>
-      <div class="row resources right" style="text-align:center;padding-right:10px;">
+      <div class="row right">
         <h4 style="text-align:center;margin-bottom:5px">Player Resources</h4>
           <ul class="resources" id="resources">
             <li style="padding-top: 10px"> 
-              <p><a style="font-size: 20px" href="https://www.reddit.com/r/chess">r/chess</a></p>
+              <a style="font-size: 15px; color:inherit !important" href="https://www.reddit.com/r/chess">r/chess</a>
             </li>
             <li style="padding-top: 10px">
-              <p><a style="font-size: 20px"href="https://www.reddit.com/r/chess/comments/i3leh/chess_ressources_on_youtube/">Chess YouTubers</a></p>
+              <a style="font-size: 15px; color:inherit !important"href="https://www.reddit.com/r/chess/comments/i3leh/chess_ressources_on_youtube/">Chess YouTubers</a>
             </li>
             <li style="padding-top: 10px">
-              <p><a style="font-size: 20px" href="https://discordapp.com/invite/4VwJ3mb">Chess Discord Channel</a></p>
+              <a style="font-size: 15px; color:inherit !important" href="https://discordapp.com/invite/4VwJ3mb">Chess Discord Channel</a>
             </li>
             <li style="padding-top: 10px">
-              <p><a style="font-size: 20px" href="http://webchat.freenode.net/?channels=chess">Chess IRC Channel</a></p>
+              <a style="font-size: 15px; color:inherit !important" href="http://webchat.freenode.net/?channels=chess">Chess IRC Channel</a>
             </li>
             <li style="padding-top: 10px">
-              <p>
-                <a style="font-size: 20px" href="https://www.chesscademy.com/">Chessacademy</a>
-              </p>
+              
+                <a style="font-size: 15px; color:inherit !important" href="https://www.chesscademy.com/">Chessacademy</a>
+              
             </li>
           </ul>
       </div>

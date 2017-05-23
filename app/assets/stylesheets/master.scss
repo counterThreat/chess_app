@@ -453,7 +453,24 @@ p {
 ul#resources {
   margin-left: 0;
   padding-left: 0;
-  float: left;
+  //float: center;
+  margin-left: 15px;
+  padding-left: 0;
+  margin-right: 15px;
+  text-align: center;
+}
+
+.resources {
+  //text-decoration: none;
+  color: inherit;
+  text-align: center;
+  ul {
+    margin-left: 0;
+    color: inherit;
+    li a p {
+      text-align: center !important;
+    }
+  }
 }
 
 #cat {
@@ -491,7 +508,7 @@ ul#resources {
   min-width: 310px;
   max-width: 325px;
   padding-right: 0;
-  margin-right: 25px;
+  margin-right: 30px;
 }
 
 .play-rights {
