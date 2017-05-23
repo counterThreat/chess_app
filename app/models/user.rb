@@ -53,14 +53,7 @@ class User < ApplicationRecord
     player_win_chance = 1 / (1 + 10**((opponent_elo - self_elo) / 400)).to_f
     player_outcome = self == winning_player_id ? 1 : 0
     new_elo = (self_elo + 32 * (player_outcome - player_win_chance)).ceil
-  end
-
-  def loss_count
-    loss = games.where(outcome: 'checkmate').count + games.where(outcome: 'forfeit').count
-  end
-
-  def draw_count
-    draw = games.where(outcome: 'draw').count
+    update(rating: new_elo)
   end
 
   # validates :username,

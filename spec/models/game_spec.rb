@@ -227,20 +227,19 @@ RSpec.describe Game, type: :model do
 
   describe 'update_elo!' do
     it 'if white player rating is 0 and wins increase elo rating' do
-      white_player = create(:user)
-      black_player = create(:user)
+      white_player = create(:user, rating: 1500)
+      black_player = create(:user, rating: 1500)
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
       game.update_elo!('black')
       white_player.reload
+      puts white_player.rating
       expect(white_player.rating).to eq(1516)
     end
 
     it 'if black player rating is not 0 and loses, decrease elo rating' do
-      white_player = create(:user)
-      black_player = create(:user)
+      white_player = create(:user, rating: 2111)
+      black_player = create(:user, rating: 2341)
       game = create(:game_player_associations, white_player: white_player, black_player: black_player)
-      white_player.update(rating: 2111)
-      black_player.update(rating: 2341)
       game.update_elo!('black')
       white_player.reload
 
