@@ -8,8 +8,9 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="611415831324-6racf1ta4f1ska6ns5eeupo0k3f84ves.apps.googleusercontent.com">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-
+        
+    <%= yield :header %>
+    
   </head>
 
   <body data-rails-env="<%= Rails.env %>">
@@ -33,15 +34,22 @@
                      <li><%= link_to 'Sign In', new_user_session_path %></li>
                      <li><%= link_to 'Sign Up', new_user_registration_path %></li>
                      <% else %>
+                     <li><%= link_to 'My Games', current_user %></li>
                      <li><%= link_to 'Account', edit_user_registration_path %></li>
                      <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
                    <% end %>
                  </ul>
                  <div class="navbar-right">
-                   <p><h1><%= link_to 'Counter Threat', root_path %></h1></p>
-                   <% if current_user %>
-                     <h5> Signed in as <%= current_user.username %></h5>
-                   <% end %>
+                   <h1 id="logo"><%= link_to 'Counter Threat', root_path %></h1>
+                   <div class="definition pull-right">
+  <b>
+  coun·ter threat
+  </b>
+  <p>
+    ˈkoun(t)ər/-THret/ˈ
+  </p>
+</div>
+
                  </div>
                </div>
              </div>
@@ -69,17 +77,16 @@
     <div id="footer">
       <div class="footer-container">
         <div class="footer-social-icons">
-          <a href="#" class="fa fa-facebook"></a>
-          <a href="#" class="fa fa-reddit"></a>
-          <a href="#" class="fa fa-twitter"></a>
-          <a href="#" class="fa fa-google"></a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ffirehose-chess-app.herokuapp.com%2F&amp;t=Counter%20Threat%20Chess" title="Share on Facebook" target="_blank" class="fa fa-facebook"></a>
+          <a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Ffirehose-chess-app.herokuapp.com%2F&amp;text=Counter%20Threat%20Chess:%20http%3A%2F%2Ffirehose-chess-app.herokuapp.com%2F" target="_blank" title="Tweet" class="fa fa-twitter" ></a>
+          <a href="https://plus.google.com/share?url=http%3A%2F%2Ffirehose-chess-app.herokuapp.com%2F" target="_blank" title="Share on Google+" class="fa fa-google"></a>
+          <a href="http://www.reddit.com/submit?url=http%3A%2F%2Ffirehose-chess-app.herokuapp.com%2F&amp;title=Counter%20Threat%20Chess" target="_blank" title="Submit to Reddit" class="fa fa-reddit"></a>
         </div>
         <hr>
         <div class="footer-content">
-          <a href="#"> FAQ | </a>
-          <a href="#"> About | </a>
-          <a href="#"> Team | </a>
-          <a href="#"> Contact</a>
+          <a href="http://www.chessusa.com/chess-rules.html"> How To Play | </a>
+          <a href="mailto:?subject=Counter%20Threat%20Chess&amp;body=Come%20play!:%20http%3A%2F%2Ffirehose-chess-app.herokuapp.com%2F" target="_blank" title="Send email"> Invite an Opponent | </a>
+          <a href="http://www.thechesswebsite.com/chess-strategy/"> Tips and Tricks</a>
           <br/><br/>
         </div>
       </div>

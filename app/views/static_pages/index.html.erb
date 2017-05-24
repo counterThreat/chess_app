@@ -1,55 +1,134 @@
 <div class="container-fluid">
-
-  <div class="row">
-    <div class="col-sm-8 col-sm-offset-1">
-      <div class="row about-app">
-
-      <h4>What is Counter Threat?</h4>
-      <%= image_tag ("logo.png"), :class => 'img-responsive' %>
-      <br>
-      <p>Counter Threat Chess is a fullstack web application that allows users to play one another in fully-functional, live-updating games of chess. Gameplay is completely rule-enforced whether you're a beginner at chess or a grandmaster. Enjoy! </p>
-      </div>
-      
+  <!-- LEFT HOMEPAGE -->
+  <div class="row" id="full-row">
+    <div class="col-sm-7 col-sm-offset-1" id="app-info">
+      <!-- APP DESCRIPTION -->
       <div class="row">
-        <h4>The Grand Masters</h4>
-        #leaderboard
+      <h4>What is Counter Threat?</h4>
+        <!-- bobby fischer -->
+        <%= image_tag ("bobby.jpg"), :id => 'bobby-fischer' %> 
+        <p id="info-text">Counter Threat Chess is a fullstack web application that allows users to play one another in fully-functional, live-updating chess matches.
+        <br><br>       
+        <%= image_tag ("cat_chess.gif"), :id => 'cat' %>
+        Gameplay is completely rule-enforced, so whether you're a beginner at chess or a grandmaster Counter Threat is equipped to handle it. Keep track of your <a href="https://en.wikipedia.org/wiki/Elo_rating_system">Elo rating</a> against other players across the app, and share your successes.<br><br>
+          
+        Most of all, have fun!</p>
+      </div>
+      <!-- USER RANKINGS -->
+      <div class="row rankings"><br>
+        <h4>What is Counter Threat?</h4>
+        <div class="container-fluid" id="ranked">
+          <table id="ranked">
+            <% @top_users.each_with_index do |rank, index| %>
+              <% if index <= 6 %>
+              <tr class="row">
+                <td><%= index + 1 %></td>
+                <td><%= rank.username %></td>
+                <td>Rating: <%= rank.rating %></td>
+              </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
       </div>
     </div>
 
-    <div class="col-sm-3 readyplay">
-      <div class="row" style="text-align:center">
-      <%= image_tag ("bobby.jpg"), :class => 'img-responsive' %>
-      <h4>Ready to Play?</h4>
-      
-          <% if user_signed_in? %>
-          <p><span>Welcome <%= link_to "#{current_user.username}", current_user %>! </span></p>
-          <%= gravatar_for current_user, :style =>"float:left" %>
-          
-          <p>Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
+    <!-- RIGHT SIDEBAR -->
+    <div class="col-sm-3 col-sm-1" id="readyplay">
+      <div class="row right" >
+        <h4 style="text-align:center">Match Portal</h4>
+
+        <% if user_signed_in? %>
+
+        <div class="active-side">
         
-          <!-- new game  -->
-          <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
-          <br>
-          <!-- open games -->
-          <%= button_to('Join Game', games_path(@game), :class=> 'button', method: 'get') %>
-          <br>
-      
-          <% else %>
-          
-            <p>Welcome! Sign up here to get started:
-            <%= link_to 'Sign Up', new_user_registration_path %>
-            </p>
-          <% end %>
-      </div>
-      <div class="row" style="text-align:center">
-        <h4>The Architects of CounterThreat</h4>
+          <!-- user profile -->
+          <div class="user-profile">
+
+              <!-- username block -->
+              <p id="profile-header" style="text-align:left;font-size:17px">@<b><%= current_user.username %></b></p>
+
+              <!-- user avatar -->
+              <a href="http://en.gravatar.com/"><%= gravatar_for current_user, :class => "img-responsive", :id => "gravatar" %></a>
+
+              <!-- profile info -->
+              <ul id="prof-data">
+                <li><small><b>WINS: </b><%= current_user.win_count %></small></li>
+                <li><small><b>RANK: </b>#</small></li>
+                <li>
+                  <small><b>ELO: </b> 
+                    <%= current_user.rating %>
+                  </small>
+                </li>
+              </ul> 
+
+              <!-- sign out if not you -->
+              <small style="display:inline">
+                <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete, :class => 'sign-out-button'  %>
+              </small>
+            </div>
+
+          <!-- BUTTONS -->
+          <div class="play-buttons">
+            <!-- new game  -->
+            <%= button_to('New Game', new_game_path(@game), :class => 'button', method: 'get') %>  
+            <!-- open games -->
+            <%= button_to('Open Games', games_path(@game), :class=> 'button', method: 'get') %>
+            <!-- my games -->
+            <%= button_to('My Games', current_user, :class=> 'button', method: 'get') %>
+          </div>
+        </div>
+
         <br>
-        <p><a href="http://www.kathleenfrench.co">Kathleen French</a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
-        <p>Haley Mnatzaganian @<a href="https://github.com/haleymnatz">github</a></p>
-        <p>Lindsay Dages @<a href="https://github.com/lnzd17">github</a></p>
-        <p>David Michael Pena @<a href="https://github.com/DavidMichaelPena">github</a></p>
-        <p>Anna C @<a href="https://github.com/canelasa">github</a></p>
+        
+        <% else %>
+        
+        <!-- sign up if you're not a member -->
+        <p style="text-align:center" id="profile-header">Welcome to Counter Threat!
+        <%= link_to 'Sign Up', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path %> if you're already a member!
+        </p>
+        
+        <% end %>
+      </div>
+      
+      <!-- CREATOR CREDITS -->
+      
+      <div class="row architects right" style="text-align:center;padding-right:10px;">
+        <h4 style="text-align:center">The Architects</h4>
+        <p><a href="http://www.kathleenfrench.co"><b>Kathleen French</b></a> @<a href="https://www.github.com/frenchamnesty">github</a></p>
+        <p><a href="http://haleymnatzaganian.getforge.io/"><b>Haley Mnatzaganian</b></a> @<a href="https://github.com/haleymnatz">github</a></p>
+        <p><b>Lindsay Dages </b>@<a href="https://github.com/lnzd17">github</a></p>
+        <p><b>David Michael Pena </b>@<a href="https://github.com/DavidMichaelPena">github</a></p>
+        <p><b>Anna C </b>@<a href="https://github.com/canelasa">github</a></p>
         <p>Mentored by: Abe Polishchuk</p>
+      </div>
+      <!-- INVITATION BUTTON -->
+      <div class="row invitations right" style="text-align:center;padding-right:10px;">
+        <h4 style="text-align:center;margin-bottom:5px">Invite Friends To Play</h4>
+          <button class="invitation-button" onclick="copyToClipboard('#invitation-link')">Copy Invitation Link to Clipboard</button>
+          <a id="invitation-link" href="http://www.firehose-chess-app.herokuapp.com">http://www.firehose-chess-app.herokuapp.com</a>
+      </div>
+      <div class="row right">
+        <h4 style="text-align:center;margin-bottom:5px">Player Resources</h4>
+          <ul class="resources" id="resources">
+            <li style="padding-top: 10px"> 
+              <a style="font-size: 15px; color:inherit !important" href="https://www.reddit.com/r/chess">r/chess</a>
+            </li>
+            <li style="padding-top: 10px">
+              <a style="font-size: 15px; color:inherit !important"href="https://www.reddit.com/r/chess/comments/i3leh/chess_ressources_on_youtube/">Chess YouTubers</a>
+            </li>
+            <li style="padding-top: 10px">
+              <a style="font-size: 15px; color:inherit !important" href="https://discordapp.com/invite/4VwJ3mb">Chess Discord Channel</a>
+            </li>
+            <li style="padding-top: 10px">
+              <a style="font-size: 15px; color:inherit !important" href="http://webchat.freenode.net/?channels=chess">Chess IRC Channel</a>
+            </li>
+            <li style="padding-top: 10px">
+              
+                <a style="font-size: 15px; color:inherit !important" href="https://www.chesscademy.com/">Chessacademy</a>
+              
+            </li>
+          </ul>
       </div>
     </div>
   </div>

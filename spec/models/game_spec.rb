@@ -188,9 +188,9 @@ RSpec.describe Game, type: :model do
 
   describe 'end_game_checkmate method' do
     it 'updates winning_player_id, outcome, and finished for a checkmate' do
-      user3 = FactoryGirl.create(:user)
+      user3 = FactoryGirl.create(:user, games_played: 10)
       user4 = FactoryGirl.create(:user)
-      check_game = FactoryGirl.create(:game)
+      check_game = FactoryGirl.create(:game, white_player_id: user3.id, black_player_id: user4.id)
       white_king = FactoryGirl.create(:king, color: 'white', game: check_game, user_id: user3.id, x_position: 1, y_position: 1)
       black_king = FactoryGirl.create(:king, color: 'black', game: check_game, user_id: user4.id, x_position: 8, y_position: 7)
       rook_b1 = FactoryGirl.create(:rook, color: 'black', game: check_game, x_position: 1, y_position: 3, user_id: user4.id)
@@ -201,6 +201,49 @@ RSpec.describe Game, type: :model do
       expect(check_game.reload.outcome).to eq 'checkmate'
       expect(check_game.finished.utc).to be_within(1.second).of Time.now
       expect(check_game.reload.winning_player_id).to eq user4.id
+      expect(user3.reload.games_played).to eq 11
+    end
+  end
+
+  describe 'game_played!' do
+    it 'increments games_played when game ends for white' do
+      white_player = create(:user)
+      black_player = create(:user)
+      game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.game_played!
+      white_player.reload
+      expect(white_player.games_played).to eq(1)
+    end
+
+    it 'increments games_played when game ends for black' do
+      white_player = create(:user)
+      black_player = create(:user)
+      game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.game_played!
+      black_player.reload
+      expect(black_player.games_played).to eq(1)
+    end
+  end
+
+  describe 'update_elo!' do
+    it 'if white player rating is 0 and wins increase elo rating' do
+      white_player = create(:user, rating: 1500)
+      black_player = create(:user, rating: 1500)
+      game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.update_elo!('black')
+      white_player.reload
+      puts white_player.rating
+      expect(white_player.rating).to eq(1516)
+    end
+
+    it 'if black player rating is not 0 and loses, decrease elo rating' do
+      white_player = create(:user, rating: 2111)
+      black_player = create(:user, rating: 2341)
+      game = create(:game_player_associations, white_player: white_player, black_player: black_player)
+      game.update_elo!('black')
+      white_player.reload
+
+      expect(black_player.rating).to eq(2312)
     end
   end
 
@@ -208,10 +251,10 @@ RSpec.describe Game, type: :model do
     it 'updates outcome and finished for a stalemate' do
       user3 = FactoryGirl.create(:user)
       user4 = FactoryGirl.create(:user)
-      game1 = FactoryGirl.create(:game)
+      game1 = FactoryGirl.create(:game, white_player_id: user3.id, black_player_id: user4.id)
       white_king = FactoryGirl.create(:king, color: 'white', game: game1, user_id: user3.id, x_position: 6, y_position: 7)
       black_king = FactoryGirl.create(:king, color: 'black', game: game1, user_id: user4.id, x_position: 8, y_position: 8)
-      white_queen = FactoryGirl.create(:queen, color: 'white', game: game1, user_id: user4.id, x_position: 7, y_position: 6)
+      white_queen = FactoryGirl.create(:queen, color: 'white', game: game1, user_id: user3.id, x_position: 7, y_position: 6)
       game1.player_turn = 'black'
       game1.end_game_stalemate
 

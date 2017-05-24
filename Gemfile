@@ -44,6 +44,8 @@ gem 'sprockets', '~> 3.7', '>= 3.7.1'
 gem 'devise'
 gem 'simple_form'
 
+# rankings
+gem 'ranked-model'
 
 # omniauth
 gem 'omniauth'

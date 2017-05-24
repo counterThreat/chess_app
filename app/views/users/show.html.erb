@@ -1,8 +1,68 @@
-<div class="container-fluid" id="user-profile">
-  <h2><%= current_user.username %></h2>
-  <br>
-  <%= gravatar_for current_user %>
-  <h4>player stats</h4>
-  <br>
-<p>Edit account info: <%= link_to "#{current_user.username}", edit_user_registration_path %>! Not you? <%= link_to 'Sign Out',  destroy_user_session_path, :method => :delete  %></p>
-</div>
+<h1>My Games</h1><br>
+<h4>Game List: <%= current_user.username %></h4> 
+<% current_user.games.each do |game| %>
+
+<% if !current_user.rating.nil? %>
+<p>User Rating: <%= current_user.rating %></p>
+<% end %>
+
+  <ul class="list-group">
+  <% if Game.active_games.include?(game) %>
+    <li class="row list-group-item">
+      <div class="col-sm-3">
+        <p><b>GAME: </b><%= link_to "#{game.name}", game_path(game.id) %></p>
+      </div>
+      
+      <% if game.white_player_id != current_user.id %>
+      <div class="col-sm-4">
+        <p><b>OPPONENT: </b><%= get_username(game.white_player_id) %></p>
+      </div>
+      
+      <% else %>
+      
+      <div class="col-sm-4">
+        <p><b>OPPONENT: </b><%= get_username(game.black_player_id) %></p>
+      </div>
+      
+      <% end %>
+      
+      <div class="col-sm-2">
+        <p><b>STATUS: </b>Active</p>
+      </div>
+      
+      <div class="col-sm-3">
+        <span class="badge badge-default badge-pill pull-right">
+          <% if game.outcome %>
+            Completed
+          <% elsif current_user && (current_user == game.white_player ||
+            current_user == game.black_player) %>
+            <%= link_to 'Continue', game_path(game.id), :style => "color:white" %>
+          <% elsif game.white_player_id && game.black_player_id %>
+            Game is full
+          <% else %>
+            <%= link_to 'Join', edit_game_path(game.id), :style => "color:white" %>
+          <% end %>
+        </span>
+        <div>
+          <% if game.winning_player_id %>
+            <% winner = get_username(game.winning_player_id) %>
+            Winner: <%= winner if winner %>
+          <% end %>
+        </div>
+      </div>
+    </li><br>
+  <% else %>
+      
+    <li class="row list-group-item"> 
+    <div class="col-sm-3">
+        <p><b>GAME: </b><%= game.name %></p>
+      </div>
+      
+      <div class="col-sm-4">
+        <p><b>OUTCOME: </b><%= game.outcome %></p>
+      </div>
+    </li>
+  <% end %>
+
+<% end %>
+</ul>
