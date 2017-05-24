@@ -2,6 +2,16 @@ $( document ).ready(function(){
   $('.alert-notice').fadeOut(4000);
 });
 
+// Enable pusher logging - don't include this in production
+var environment = $('body').data('rails-env');
+if (environment != 'production') {
+Pusher.logToConsole = true;
+}
+
+var pusher = new Pusher('85619837e880f6d5568c', {
+  encrypted: true
+});
+
 function appendPieceToSquare(piece) {
   var cssSelector = "#" + piece.x_position + piece.y_position;
   var square = $(cssSelector);
@@ -59,9 +69,9 @@ function handleDrag(event, ui){
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
   var user = chess_piece.attr('data-user-id');
-  
+
   var url = window.location.href + '/pieces/' + piece_id;
-  
+
   $.ajax({
     url: url,
     type: 'PUT',
@@ -100,16 +110,6 @@ function getPath() {
 }
 
 function showMove() {
-  // Enable pusher logging - don't include this in production
-  var environment = $('body').data('rails-env');
-  if (environment != 'production') {
-  Pusher.logToConsole = true;
-  }
-
-  var pusher = new Pusher('85619837e880f6d5568c', {
-    encrypted: true
-  });
-
   var number = getPath();
 
   var channel = pusher.subscribe("game-channel-" + number);
@@ -119,15 +119,6 @@ function showMove() {
 }
 
 function newPlayer(){
-  var environment = $('body').data('rails-env');
-  if (environment != 'production') {
-    Pusher.logToConsole = true;
-  }
-
-  var pusher = new Pusher('85619837e880f6d5568c', {
-    encrypted: true
-  });
-
   var number = getPath();
 
   var channel = pusher.subscribe("player-channel-" + number);
@@ -143,16 +134,25 @@ function showNewPlayer(){
     newPlayer();
     $.get(userViewUrl).success(function(user){
      var userName = '';
+     var rating = '';
+     var wins = '';
+     var played = '';
      user.forEach(
            function(userID){
             if(userID.id == data.black_player_id ){
               console.log(userID.username);
               userName = userID.username;
+              rating = userID.rating;
+              wins = userID.wins;
+              played = userID.games_played;
             }
           });
       if(data.black_player_id > 0){
         $('#blackPlayer').html(userName);
         $('.alignright').addClass('player');
+        $('#rating').html(rating);
+        $('#wins').html(wins);
+        $('#played').html(played);
       }else{
         $('#blackPlayer').html('*waiting*');
       }

@@ -66,9 +66,9 @@
         </ul>
         <b id="player-headers">Black Player</b>
         <ul class="black-stats">
-          <li>Rating: <%= @game.black_player.rating %></li>
-          <li>Total Wins: <%= @game.black_player.win_count %></li>
-          <li>Games Played: <%= @game.black_player.games_played || "0" %></li>
+          <li>Rating: <span id='rating'></span></li>
+          <li>Total Wins: <span id='wins'></span></li>
+          <li>Games Played: <span id='played'></span></li>
         </ul>
       </div>
       <!-- OUTCOME -->
