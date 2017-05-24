@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
-    render json: @users.to_json(only: [:id, :username])
+    render json: @users.to_json(only: [:id, :username, :rating, :wins, :games_played])
   end
 
   def show

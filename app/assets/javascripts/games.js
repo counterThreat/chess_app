@@ -59,9 +59,9 @@ function handleDrag(event, ui){
   var dx = square.attr('data-x');
   var dy = square.attr('data-y');
   var user = chess_piece.attr('data-user-id');
-  
+
   var url = window.location.href + '/pieces/' + piece_id;
-  
+
   $.ajax({
     url: url,
     type: 'PUT',
@@ -143,16 +143,25 @@ function showNewPlayer(){
     newPlayer();
     $.get(userViewUrl).success(function(user){
      var userName = '';
+     var rating = '';
+     var wins = '';
+     var played = '';
      user.forEach(
            function(userID){
             if(userID.id == data.black_player_id ){
               console.log(userID.username);
               userName = userID.username;
+              rating = userID.rating;
+              wins = userID.wins;
+              played = userID.games_played;
             }
           });
       if(data.black_player_id > 0){
         $('#blackPlayer').html(userName);
         $('.alignright').addClass('player');
+        $('#rating').html(rating);
+        $('#wins').html(wins);
+        $('#played').html(played);
       }else{
         $('#blackPlayer').html('*waiting*');
       }
