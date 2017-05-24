@@ -64,12 +64,14 @@
           <li>Total Wins: <%= @game.white_player.win_count %></li>
           <li>Games Played: <%= @game.white_player.games_played || "0" %></li>
         </ul>
+        <% if @game.black_player.present? %>
         <b id="player-headers">Black Player</b>
         <ul class="black-stats">
           <li>Rating: <%= @game.black_player.rating %></li>
           <li>Total Wins: <%= @game.black_player.win_count %></li>
           <li>Games Played: <%= @game.black_player.games_played || "0" %></li>
         </ul>
+        <% end %>
       </div>
       <!-- OUTCOME -->
       <div class="outcome" data-outcome="<%= @game.outcome %>"></div>
