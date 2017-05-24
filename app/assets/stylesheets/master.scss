@@ -301,7 +301,7 @@ a {
 }
 
 ul {
-  list-style: none; 
+  list-style: none;
 }
 
 .alert-notice{
@@ -399,6 +399,14 @@ h5{
 
 .sign-out-button:hover {
   background: #e4e6eb;
+  -webkit-border-radius: 30;
+  -moz-border-radius: 30;
+  border-radius: 30px;
+  font-family: Arial;
+  color: white;
+  font-size: 26px;
+  padding: 11px 20px 10px 20px;
+  border: solid #004dff 3px;
   text-decoration: none;
 }
 
@@ -609,4 +617,14 @@ ul#resources {
   padding: 10px;
   min-width: 210px;
   max-width: 210px;
+}
+  .game-end {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.game-winner {
+  font-size: 18px;
+  font-weight: 400;
 }

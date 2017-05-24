@@ -29,7 +29,7 @@
             <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li><button id="btnShowModal" type="button" class="btn btn-warning btn-sm">Offer Draw</button></li>
-              <li><button type="button" class="btn btn-danger btn-sm"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit, :style => "color:white" %></button></li>
+              <li><button type="button" class="btn btn-danger btn-sm disable-button"> <%= link_to 'Resign', forfeit_game_path(@game), method: 'POST', action: :forfeit %></button></li>
               <hr>
               <li class="divider"></li>
               <li><a href="#">Flip Board</a></li>
@@ -42,8 +42,17 @@
       <!-- TURN STATUS -->
       <div class="game-status"><br>
         <div class="turn-status">
-          <h4 class="turn-notice">Turn Status</h4>
-          <p><span class="turn"><%= @game.player_turn %></span></p>
+          <% if @game.outcome %>
+            <div class="game-winner">
+              Winner: <%= get_username(@game.winning_player_id) %>
+            </div>
+            <div class="game-end">
+              <%= @game.outcome %>
+            </div>
+          <% else %>
+            <h4 class="turn-notice">Turn Status</h4>
+            <p><span class="turn"><%= @game.player_turn %></span></p>
+          <% end %>
         </div>
       </div>
       <!-- USER STATS -->
@@ -109,4 +118,5 @@
         </div>
 
       </div>
+
     </div>
