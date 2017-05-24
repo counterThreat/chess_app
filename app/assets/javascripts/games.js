@@ -2,6 +2,16 @@ $( document ).ready(function(){
   $('.alert-notice').fadeOut(4000);
 });
 
+// Enable pusher logging - don't include this in production
+var environment = $('body').data('rails-env');
+if (environment != 'production') {
+Pusher.logToConsole = true;
+}
+
+var pusher = new Pusher('85619837e880f6d5568c', {
+  encrypted: true
+});
+
 function appendPieceToSquare(piece) {
   var cssSelector = "#" + piece.x_position + piece.y_position;
   var square = $(cssSelector);
@@ -100,16 +110,6 @@ function getPath() {
 }
 
 function showMove() {
-  // Enable pusher logging - don't include this in production
-  var environment = $('body').data('rails-env');
-  if (environment != 'production') {
-  Pusher.logToConsole = true;
-  }
-
-  var pusher = new Pusher('85619837e880f6d5568c', {
-    encrypted: true
-  });
-
   var number = getPath();
 
   var channel = pusher.subscribe("game-channel-" + number);
@@ -119,15 +119,6 @@ function showMove() {
 }
 
 function newPlayer(){
-  var environment = $('body').data('rails-env');
-  if (environment != 'production') {
-    Pusher.logToConsole = true;
-  }
-
-  var pusher = new Pusher('85619837e880f6d5568c', {
-    encrypted: true
-  });
-
   var number = getPath();
 
   var channel = pusher.subscribe("player-channel-" + number);
