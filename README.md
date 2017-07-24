@@ -14,7 +14,7 @@
 * **Haley Mnatzaganian**
 * **Lindsay Dages**
 * **David Michael Pena** 
-* **Anna C* 
+* **Anna C**
 
 Mentored by: **Abe Polishchuk**
 
