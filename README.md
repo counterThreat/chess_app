@@ -10,11 +10,11 @@
 
 ## Authors
 
-**Kathleen French** - [Portfolio](http://www.kathleenfrench.co)
-**Haley Mnatzaganian**
-**Lindsay Dages**
-**David Michael Pena** 
-**Anna C* 
+* **Kathleen French** - [Portfolio](http://www.kathleenfrench.co)
+* **Haley Mnatzaganian**
+* **Lindsay Dages**
+* **David Michael Pena** 
+* **Anna C* 
 
 Mentored by: **Abe Polishchuk**
 
